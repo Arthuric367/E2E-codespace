@@ -1,0 +1,27 @@
+{
+  "name": "e2e-communication-platform-tests",
+  "version": "1.0.0",
+  "description": "Automated UI tests for E2E Communication Platform prototypes",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:admin": "npx playwright test tests/administration/",
+    "test:users": "npx playwright test tests/administration/user-management.spec.js",
+    "test:roles": "npx playwright test tests/administration/role-management.spec.js", 
+    "test:settings": "npx playwright test tests/administration/settings.spec.js",
+    "test:ui": "npx playwright test --ui",
+    "test:headed": "npx playwright test --headed",
+    "test:debug": "npx playwright test --debug",
+    "test:report": "npx playwright show-report",
+    "test:install": "npx playwright install"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "main": "playwright.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": ["testing", "playwright", "e2e", "ui", "automation"],
+  "author": "E2E Platform Team",
+  "license": "ISC"
+}

@@ -1,0 +1,613 @@
+﻿Section,Module,Function,Action,Description,Priority,Severity,Test Data
+Happy Flow,Administration,User Management,Display user list,"1. Click the menu and at the top left side, navigate to Administration
+2. Users tab and verify all users are displayed with correct information
+3. Users navigate through pages
+     -  verify pagination functionality",High,High,Valid user data with various roles and statuses
+Happy Flow,Administration,User Management,Sort by different columns,"1. Click different column headers to sort
+     - Verify sorting works for all sortable columns",Low,Low,Sort by: Name Email Role Status Last Login
+Happy Flow,Administration,User Management,Filter by role,"1. Click to open the role filter dropdown
+     - Verify dropdown opens with all available roles listed (System Admin / CIC Team / Account Manager / Corporate Affairs / Management / PSBG Engineers / Alert Group)
+     - Click anywhere on screen to close it
+     - Open the filter and click 1 more time to close it
+2. Verify the filter function
+    - Select System Admin > Verify users ""John Smith"" & ""Jane Doe"" are displayed
+    - And select Account Manager > Verify users matched either roles: ""John Smith"", ""Jane Doe"" & ""James Smith"" are displayed
+    - Clear all filters and verify all users return to view",Medium,Low,"Roles: System Admin / CIC Team / Account Manager / Corporate Affairs / Management / PSBG Engineers / Alert Group
+
+Expected users: John Smith , Jane Doe, James Smith"
+Happy Flow,Administration,User Management,Enable/Disable user,"1. Locate active user Mike Johnson in the user list
+     - Verify current status shows Active with green status badge
+     - Click toggle switch to disable user
+     - Verify user status changes to Inactive with red status badge
+     - Verify confirmation popup User [name] has been disabled appears
+2. Verify user can no longer access platform (if login testing available)
+3. Click toggle switch again to re-enable user
+     - Verify status returns to Active",Medium,Medium,Active user: Mike Johnson
+Happy Flow,Administration,User Management,Delete existing user,"1. Locate inactive user Sarah Wilson in the user list
+     - Click Delete button (trash icon) on user row
+     - Verify confirmation dialog opens asking to confirm or cancel deletion
+     - Click Confirm button in dialog
+3. Verify user is permanently removed from user list
+4. Verify confirmation message User has been deleted successfully appears
+5. Verify deleted user no longer appears in any filtered views",Medium,High,User: Sarah Wilson (Inactive user)
+Happy Flow,Administration,User Management,Filter by status,"1. Locate and click the status filter dropdown
+     - Verify dropdown shows All Statuses, Active, and Inactive options
+2. Select Active from the dropdown options
+     - Verify only users with Active status (John Smith, Jane Doe, Mike Johnson) are displayed
+3. Change filter to Inactive
+     - Verify only inactive users (Sarah Wilson) are displayed
+4. Select All Statuses to reset filter
+     - Verify all users return to the list view",Medium,Low,"Filter: Active status
+Expected active users: John Smith / Jane Doe / Mike Johnson"
+Happy Flow,Administration,User Management,Search user by name,"1. Locate the search input box with placeholder Search for user by name
+     - Enter partial name john in search box
+     - Verify search results dynamically filter to show John Smith
+2. Clear search and enter email john.smith@clp.com.hk
+     - Verify search results show matching user by email
+3. Enter non-existent name XYZ123
+     - Verify No users found message appears
+4. Clear search box and verify all users return to list",Medium,Low,"User
+Name: John Smith 
+Email: john.smith@clp.com.hk
+
+Search terms: 
+1. john
+2. john.smith@clp.com.hk
+3. XYZ123"
+Happy Flow,Administration,User Management,Add new user,"1. Click Add New User button in the action buttons section
+     - Verify popup form opens with input fields for StaffID and Role
+     - Enter StaffID 93313 in the StaffID field
+     - Verify auto-filled name and email fields populate correctly
+     - Select System Admin from role dropdown
+     - Click Create button
+2. Verify new user appears in first row of user list
+3. Verify success confirmation message displays",High,High,"Staff Data 
+Staff ID: 93313
+Name: Arthur Smith
+Email: arthur.smith@clp.com.hk
+
+StaffID: 93313; Role: System Admin; Expected Name: Arthur Smith; Expected Email: Arthur.smith@clp.com.hk"
+Happy Flow,Administration,User Management,Edit user information,"1. Locate user [Arthur Smith] in the user list
+     - Click Edit button (pencil icon) on user row
+     - Verify Edit and Delete buttons change to Save and Cancel buttons
+     - Verify role field becomes editable while name and email remain read-only
+     - Change role from User to Account Manager using dropdown
+     - Click Save button
+2. Verify changes are applied and reflected in user list
+3. Verify confirmation message User [name] has been updated appears",High,Medium,User: John Smith; Change role from User to Account Manager
+Happy Flow,Administration,User Management,Bulk upload users,"1. Click Add New User by Bulk Upload button
+     - Verify bulk upload modal opens with download template option
+2. Click Download Sample CSV Template link
+     - Verify CSV template downloads with required columns (StaffID, Role)
+3. Create test CSV file with 5 valid user records
+     - Click Upload CSV button and select the test file
+     -  Verify file upload progress indicator displays
+     - Verify import summary modal shows successful import statistics
+4. Verify new users appear in user list with correct information",Medium,Medium,"CSV file with 5 valid user records: 
+StaffID 93318-93322; 
+Roles: Various; 
+File size: <10MB"
+Happy Flow,Administration,Settings,Manual opt-out customer,"1. Navigate to Settings tab and locate Customer Management section
+2. Select Manual Input radio button option
+     - Verify customer account input field and Load Preference button are displayed
+3. Enter Customer Account B1012345 in the input field
+     - Click Load Preference button to retrieve current customer preferences
+     - Verify channel preferences (App Push, SMS, Email) are displayed with current opt-in/out status
+     - Change Email toggles as opt-out position
+     - Click Save button to update customer preferences
+7. Verify confirmation message Customer preference updated successfully appears
+8. Verify updated preferences persist and are applied to future notifications
+     - For example, send a manual notification to CA: B1012345 by email",Medium,Medium,"Customer Data
+Account: B1012345; Test channels: App Push SMS Email; Expected status changes"
+Happy Flow,Administration,Settings,Bulk opt-out via CSV,"1. Navigate to Settings tab and locate Customer Management section
+     - Select Bulk Upload radio button option
+     - Verify file upload interface and instructions are displayed
+2. Click Download Sample CSV Template link
+     - Verify sample CSV downloads with required columns (Customer Account, App Push, SMS, Email)
+3. Create test CSV file with 2 customer opt-out preference records
+     CA1: AD1234 / Y / Y / Y & CA2: AD1234 / Y / Y / N
+     - Click file upload area and select the test CSV file
+4. Verify file upload progress indicator displays
+5. Click Upload button to process the bulk update
+6. Verify import summary modal shows successful update statistics and any errors
+7. Verify bulk preference changes are applied to all customers in the CSV
+     - Send a manual notification of email to CA1 & CA2 to test functionality",Medium,Medium,CSV with 10 customer records; File format: Customer Account App Push SMS Email; Test both opt-in and opt-out values
+Happy Flow,Administration,Settings,Built-in opt-out exception report,"1. Navigate to Settings tab and locate Opt-out Exception Report
+     - Click to open the Opt-out Exception Report window
+2. Verify report interface opens with date filter and customer search options
+     - Select Today from the date filter dropdown options
+     - Verify report data refreshes to match the applied filters
+3. Enter customer account B1012345 in the customer search field
+     - Verify accumulated records of wrong opt-out replies are displayed
+4. Review report data columns (Date, Customer Account, Reply Time, Reply Message)
+5. Click ""X"" button to close the report window
+6. Verify window closes and returns to settings page",Medium,Low,"Customer Data
+Customer account: B1012345"
+Happy Flow,Administration,Settings,Enable daily opt-out exception report email,"1. Navigate to Administration section and click Roles tab
+2. Locate role [Account Manager]
+     - Click Edit button on the selected role card
+     - In the permissions list, locate ""Receive Alert message""
+     - Check the checkbox to enable this permission for the role
+     - Click Save button to update role permissions
+     - Verify confirmation message appears for successful permission update
+3. Verify email delivery is enabled for users with the configured permission
+4. Test that daily opt-out exception report emails are sent to users in [Account Manager]
+5. Verify email contains Excel format data, which is same as ""opt-out exception records"" in #18 ",Low,Low,Role: System Admin; Email: enabled; Permission: Receive opt-out exception report; Test email delivery
+Happy Flow,Administration,Role Management,Display role list,"1. Navigate to Administration section and click Roles tab
+2. Verify all predefined roles are displayed in card format (System Admin, CIC Team, Account Manager, Corporate Affairs, Management, PSBG Engineers, User)
+3. For each role card verify the following information is displayed:
+   - Role name as header
+   - Number of active users assigned to role
+   - Edit and Delete action buttons
+   - Complete list of permissions with granted/denied status indicated by checkmarks/X marks
+4. Verify role cards are properly arranged in grid layout",High,Medium,"Default roles
+System Admin
+CIC Team
+Account Manager
+Corporate Affairs
+Management
+PSBG Engineers
+User"
+Happy Flow,Administration,Role Management,Create new role,"1. Click Create New Role button in the action buttons section
+   - Verify role creation modal opens with empty form
+   - Enter role name ""Custom Test Role"" in the name field
+   - Review available permissions list and select the following permissions: Full Dashboard Access & Send Notifications & Download Data
+   - Verify selected permissions show as checked with green checkmarks
+   - Click Save button to create the role 
+2. Verify success message Role [Custom Test Role] has been created successfully appears
+3. Verify new role appears in roles grid with correct permissions and 0 users count",Medium,Medium,"Role name: Custom Test 
+Permissions: Full Dashboard Access Send Notifications Download Data"
+Happy Flow,Administration,Role Management,Edit role permissions,"1. Locate Account Manager role card in the roles grid
+     - Click Edit button (pencil icon) on the Account Manager role card
+     - Verify role edit modal opens with current role name and permissions pre-selected
+     - Add Template Management permission by checking the checkbox
+     - Remove Outage Management permission by unchecking the checkbox
+     - Verify permission changes are reflected visually in the modal
+     - Click Save button to apply changes
+2. Verify confirmation message Permissions for role [Account Manager] have been updated appears
+3. Verify Account Manager role card shows updated permissions in the grid",High,High,Role: Account Manager; Add: Template Management permission; Remove: Outage Management permission
+Happy Flow,Administration,Role Management,Delete role,"1. Ensure [Custom Test] Role exists and has no assigned users (0 users count)
+     - Locate [Custom Test] Role card in the roles grid
+     - Click Delete button (trash icon) on the role card
+     - Verify confirmation dialog opens with warning message about permanent deletion
+     - Click Confirm button in the confirmation dialog
+     - Verify role is immediately removed from the roles grid
+2. Verify success message Role has been deleted successfully appears
+3. Verify deleted role no longer appears in any role dropdowns throughout the application",Medium,High,Role: Custom Test Role (with no assigned users); Prerequisite: Role must exist and have 0 assigned users
+Happy Flow,Administration,Settings,Configure data retention period,"1. Navigate to Administration section and locate Setting tab
+     - Expand System settings section by clicking the header
+     - Locate Data Retention settings
+2. Verify current retention period values are displayed
+     - Click on data retention input field and change value to 365 days
+     - Verify input fields only accept positive integer values
+     - Click Save button in the settings actions section
+4. Verify confirmation message Data retention periods have been updated successfully appears
+5. Refresh page and verify both settings persist correctly
+6. Verify retention policies are applied to future data management",Medium,Medium,
+Happy Flow,Administration,Settings,Configure auto-update interval,"1. Navigate to Administration section and locate Setting tab
+     - Expand System settings section by clicking the header
+     - Locate Auto-Update Interval settings
+2. Verify current auto-update interval value is displayed clearly
+     - Click on the interval input field and change value to 30 minutes
+     - Verify input accepts only positive integer values
+     - Click Save button in the settings actions section
+3. Verify confirmation message Auto-update interval has been updated successfully appears
+4. Refresh page and verify setting persists at 30 minutes
+5. Test that the updated interval is applied to future interim notifications",High,High,
+Happy Flow,Administration,Settings,Configure max update limit,"1. Navigate to Administration section and locate Setting tab
+     - Expand System settings section by clicking the header
+     - Locate max update limit
+2. Verify current maximum number of updates value is displayed
+     - Click on the max updates input field
+     - Change value to 3 updates
+     - Verify field only accepts positive integer values
+     - Click Save button in the settings actions section
+3. Verify confirmation message Maximum update limit has been updated successfully appears
+4. Refresh page and verify setting persists at 5 updates
+5. Test that updates are blocked when the configured limit is reached",Medium,Medium,
+Happy Flow,Administration,Settings,Enable/Disable internal communication,"1. Navigate to Administration section and locate Setting tab
+     - Expand System settings section by clicking the header
+     - Locate the Internal communication toggle
+2. Verify current status (Enabled/Disabled) is displayed clearly
+     - Click toggle switch to change from current state
+     - !Trigger the existing communication checking which ongoing notification continue to proceed
+     - Click Continue in the warning dialog to proceed
+2. Verify toggle switch changes state and save confirmation appears
+3. Verify success message Internal communication setting has been updated successfully
+4. Test that all active internal communication processes continue to proceed
+5. Verify internal notification functionality respects the new setting",High,Critical,
+Happy Flow,Administration,Settings,Enable/Disable external communication,"1. Navigate to Administration section and locate Setting tab
+     - Expand System settings section by clicking the header
+     - Locate the external communication toggle
+2. Verify current status (Enabled/Disabled) is displayed clearly
+     - Click toggle switch to change from current state
+     - !Trigger the existing communication checking which ongoing notification continue to proceed
+     - Click Continue in the warning dialog to proceed
+3. Verify toggle switch changes state and save confirmation appears
+4. Verify success message External communication setting has been updated successfully
+5. Verify that all active external communication processes continue to proceed
+6. Verify external notification functionality respects the new setting",High,Critical,
+Happy Flow,Administration,Settings,Set trigger mode,"1. Navigate to Settings tab and locate Trigger Mode section
+     - Expand Trigger Mode group by clicking the header
+     - Verify current Auto Trigger and Manual Trigger toggle states are displayed
+2. Click Auto Trigger toggle to enable (ON position)
+     - Click Save button in the settings actions section
+     - Verify toggle states are visually updated with correct labels
+     - Verify confirmation message Trigger mode settings have been updated successfully appears
+     - Verify settings persist after page refresh
+     - Test the auto-triggering notification function correctly
+3. Click Manual Trigger toggle to disable (OFF position)
+     - Click Save button in the settings actions section
+     - Verify toggle states are visually updated with correct labels
+     - Verify confirmation message Trigger mode settings have been updated successfully appears
+     - Verify settings persist after page refresh
+     - Test to send manual notification function is disabled",High,High,
+Happy Flow,Administration,Settings,Enable extreme weather mode,"1. Navigate to Settings tab and locate Trigger Mode section
+     - Expand Trigger Mode settings group by clicking the header
+     - Locate Extreme Weather Mode toggle switch
+2. Verify current extreme weather mode status is displayed clearly
+     - Click toggle switch to enable Extreme Weather Mode (ON position)
+     - Verify warning popup appears stating system will continue to send all ongoing messages
+     - Click Continue in the warning dialog to proceed
+3. Verify toggle switch changes to ON position with visual confirmation
+4. Verify confirmation message appears for successful activation
+5. Verify mode status persists after page refresh
+6. Test that system uses extreme weather message templates when mode is enabled
+7. Test that system apply the extreme weather delay when mode is enabled",Medium,High,
+Happy Flow,Administration,Settings,Set external notification delay,"1. Navigate to Settings tab and locate Delay Control section
+     - Expand Delay Control section by clicking the header
+2. Verify current Delay Before External Send (Minutes) value is displayed
+     - Update the delay value to 10 minutes in the input field
+     - Verify field only accepts positive integer values
+     - Click Save button to apply the delay setting
+3. Verify confirmation message Delay Time has been updated successfully appears
+4. Verify the updated delay value 10 minutes persists after page refresh
+5. Send manual notification to test that extreme weather notifications are delayed by the configured time",High,High,
+Happy Flow,Administration,Settings,Configure extreme weather delay,"1. Navigate to Settings tab and locate Delay Control section
+     - Expand Delay Control settings group by clicking the header
+2. Locate Delay Before External Send under Extreme Weather section
+     - Verify current extreme weather delay value is displayed
+3. Click on the extreme weather delay input field
+     - Change value to 15 minutes in the input field
+     - Verify field only accepts positive integer values
+     - Click Save button in the settings actions section
+4. Verify confirmation message Extreme weather delay has been updated successfully appears
+5. Refresh page and verify setting persists at 15 minutes
+6. Send manual notification to test that extreme weather notifications are delayed by the configured time",Medium,Medium,
+Happy Flow,Administration,Settings,Configure alert group settings,"1. Navigate to Settings tab and locate Alert Message Triggering section
+     - Expand Alert Message Triggering settings group by clicking the header
+2. Verify current alert time between stage 1 & stage 3 is displayed in minutes
+     - Click on the alert time input field
+     - Change value to 45 minutes
+     - Verify field only accepts positive integer values
+     - Click Save button in the settings actions section
+     - Verify confirmation message Alert time has been updated successfully appears
+3. Refresh page and verify setting persists at 45 minutes
+4. Test that alert notifications are triggered after the configured time when stage 3 is delayed",Medium,Medium,
+Unhappy Flow,Administration,User Management,Add user with invalid StaffID,"1. Click Add New User button in the action buttons section
+     - Verify popup form opens with input fields for StaffID and Role
+     - Enter invalid StaffID 99999 in the StaffID field
+     - Verify system attempts to auto-fill name and email fields
+     - Verify error message appears stating User not found or StaffID does not exist
+     - Verify name and email fields remain empty or show error indicators
+2. Click Cancel to close the modal without creating user
+3. Verify no new user is added to the user list",Medium,Medium,Invalid StaffID: 99999; Expected error: User not found; Verify auto-fill failure
+Unhappy Flow,Administration,User Management,Add duplicate user,"1. Click Add New User button in the action buttons section
+     - Verify popup form opens with input fields for StaffID and Role
+     - Enter existing StaffID 93313 (already exists in system)
+     - Verify system auto-fills name and email fields correctly
+     - Select any role from the role dropdown
+     - Click Create button to attempt user creation
+     - Verify error message appears stating User already exists or Duplicate StaffID
+     - Verify system prevents duplicate user creation
+2. Verify original user remains unchanged in the user list
+3. Click Cancel to close the modal",Medium,Medium,Existing StaffID: 93313; Expected error: User already exists; Verify duplicate prevention
+Unhappy Flow,Administration,User Management,Delete user assigned to role in use,"1. Locate user [Arthur Smith] who is currently assigned to an active role and has system dependencies
+     - Click Delete button (trash icon) on the user row
+     - Verify confirmation dialog opens with warning about user deletion
+     - Click Confirm button to attempt deletion
+     - Verify system displays error message preventing deletion
+     - Verify error message explains user has active role assignments or dependencies
+2. Verify user remains in the user list unchanged
+3. Verify system suggests removing role assignments first before deletion
+4. Close any error dialogs and verify user status remains unchanged",Medium,High,User [Arthur Smith] with active role assignments; Expected error: Cannot delete user with active roles; Suggest remove assignments first
+Unhappy Flow,Administration,User Management,Bulk upload invalid CSV format,"1. Click Add New User by Bulk Upload button
+     - Verify bulk upload modal opens with file selection options
+2. Create test CSV file with 2 users, one missing required StaffID column (only Role column present)
+     - Click Upload CSV button and select the invalid CSV file
+     - Verify system attempts to process the file
+     - Verify detailed error message appears listing missing required columns
+     - Verify error message specifically mentions Missing required column: StaffID
+3. Verify no users are imported due to format validation failure
+4. Verify import summary shows 1 successful imports and format error details
+5. Close error modal and verify only 1 user added",Medium,Medium,"User data
+Staff ID: 90001
+Role: System Admin, CIC Team"
+Unhappy Flow,Administration,User Management,Bulk upload oversized file,"1. Click Add New User by Bulk Upload button
+     - Verify bulk upload modal opens with file selection options
+2. Create or select test CSV file larger than 10MB file size limit
+     - Click Upload CSV button and select the oversized file
+     - Verify system attempts to validate file before processing
+     - Verify file size error message appears immediately
+     - Verify error message states File size exceeds maximum limit of 10MB
+3. Verify file upload is rejected and no processing occurs
+4. Verify import process does not start due to size validation
+5. Close error modal and verify no changes to user list",Low,Low,CSV file size: 15MB; Expected error: File size exceeds 10MB limit; Verify size validation
+Unhappy Flow,Administration,User Management,Search with no results,"1. Locate the search input box with placeholder Search for user by name
+     - Enter non-existent user name NonExistentUser in the search box
+2. Verify search executes automatically as user types
+3. Verify user list becomes empty showing no matching results
+4. Verify No users found message displays prominently in the table area
+5. Verify message is clear and user-friendly
+6. Clear the search box by deleting all text
+     - Verify all users return to the list view
+     - Verify search functionality works correctly for subsequent searches",Low,Low,
+Unhappy Flow,Administration,Role Management,Create role with duplicate name,"1. Click Create New Role button in the action buttons section
+     - Verify role creation modal opens with empty form
+     - Enter existing role name [System Admin] in the name field
+     - Select any permissions from the available permissions list
+     - Click Save button to attempt role creation
+2. Verify error message appears preventing duplicate role creation
+3. Verify error message states Role name already exists or similar validation message
+4. Verify system prevents saving the duplicate role
+5. Verify original System Admin role remains unchanged
+6. Click Cancel to close the modal without creating duplicate role",Medium,Medium,
+Unhappy Flow,Administration,Role Management,Create role with empty name,"1. Click Create New Role button in the action buttons section
+     - Verify role creation modal opens with empty form
+     - Leave role name field completely blank (empty)
+     - Select some permissions from the available permissions list
+     - Click Save button to attempt role creation
+2. Verify validation error message appears for empty role name
+3. Verify no role is created due to validation failure",Medium,Medium,
+Unhappy Flow,Administration,Role Management,Delete role with assigned users,"1. Locate [Account Manager] role card which has assigned users [Arthur Smith]
+2. Click Delete button (trash icon) on the System Admin role card
+     - Verify confirmation dialog opens for role deletion
+     - Click Confirm button to attempt deletion
+     - Verify system displays error message preventing deletion
+     - Verify error message explains role cannot be deleted because it is only assigned role for user
+     - Verify error suggests removing user assignments before deletion
+3. Close error dialog and verify [Account Manager] role remains unchanged in the roles grid
+4. Verify role user count and permissions remain intact",High,High,Role: Account Manager (with Arthur Smith assigned)
+Unhappy Flow,Administration,Settings,Opt-out non-existent customer,"1. Navigate to Settings tab and locate Customer Management section
+     - Select Manual Input radio button option
+     - Enter invalid customer account X9999999 in the input field
+     - Click Load Preference button to attempt retrieving preferences
+2. Verify system attempts to lookup customer account
+     - Verify error message appears stating Customer not found or Account does not exist
+3. Verify customer preferences section remains empty or shows error state
+4. Verify error message is clear and helpful for user
+5. Clear the invalid account and verify field resets properly
+6. Test with another invalid format to verify consistent error handling",Medium,Medium,
+Unhappy Flow,Administration,Settings,Upload invalid opt-out CSV,"1. Navigate to Settings tab and locate Customer Management section
+     - Select Bulk Upload radio button option
+2. Create test CSV file with 2 CA no, which 1 with wrong format (missing Customer Account column)
+     - Add some invalid customer account numbers in the CSV
+     - Click file upload area and select the invalid CSV file
+     -  Click Upload button to attempt processing the file
+3. Verify system validates CSV format and data
+4. Verify detailed error report appears listing specific issues
+5. Verify error report shows missing columns and invalid customer accounts
+6. Verify no preference changes are applied due to validation failures
+7. Verify summary shows 1 successful updates and detailed error breakdown",Medium,Medium,
+Edge Case,Administration,User Management,Add user at system limit,"1. Determine current system user capacity limit (if configurable)
+2. Navigate to user management and verify current user count
+     - Add users until approaching the maximum system capacity
+     - Attempt to add one more user when at maximum limit
+     - Click Add New User button at system capacity limit
+     - Enter valid StaffID and role information
+     - Click Create button to attempt adding user at limit
+3. Verify system handles limit gracefully with appropriate message
+4. Verify error message explains system capacity has been reached
+5. Verify existing users remain functional and unchanged
+6. Verify system suggests capacity increase or user cleanup options",Low,Medium,System at max user limit
+Edge Case,Administration,User Management,Rapid consecutive user actions,"1. Open multiple browser tabs or sessions with administration access
+2. Navigate to user management in all sessions
+3. Simultaneously perform edit operations on different users
+     - Rapidly click edit/save/delete buttons in quick succession
+     - Attempt concurrent operations on the same user from different sessions
+4. Verify system handles concurrent operations without conflicts
+5. Verify data integrity is maintained during rapid operations
+6. Verify appropriate locking or conflict resolution mechanisms
+7. Verify error messages for conflicting operations are clear
+8. Verify system remains stable under rapid user interaction load
+9. Verify audit logs capture all operations correctly",Medium,High,
+Edge Case,Administration,User Management,Filter with multiple criteria,"1. Navigate to user management section
+     - Apply role filter by selecting System Admin from role dropdown
+     - Verify filtered results show only System Admin users
+     - Additionally apply status filter by selecting Active status
+     - Verify combined filtering shows only Active System Admin users
+2. Add name search criteria while filters are active
+     - Verify search works within the already filtered results
+3. Clear filters one by one and verify results update correctly
+     - Apply multiple role selections simultaneously (System Admin + CIC Team)
+     - Verify multiple criteria filtering works correctly across all filter types
+4. Test edge combinations like Active status + multiple roles + partial name search",Medium,Low,
+Edge Case,Administration,User Management,Sort by different columns,"1. Navigate to user management and verify full user list is displayed
+     - Click Name column header to sort ascending
+     - Verify ascending sort indicator (up arrow) appears and data is sorted correctly
+2. Click Name column again to sort descending
+     - Verify descending sort indicator (down arrow) appears
+3. Click Email column header and verify sort changes to email field
+     - Repeat sorting test for Role, Status, and Last Login columns
+4. Test sorting with filtered results (apply filter then sort)
+     - Verify sort persists when navigating between pages in pagination
+5. Test sorting with large datasets to verify performance
+     - Verify sort indicators are visually clear and correct for all sortable columns",Low,Low,
+Edge Case,Administration,User Management,Pagination with large dataset,"1. Create test scenario with 150+ users in the system (or simulate)
+2. Navigate to user management to view the large user dataset
+     - Verify pagination controls appear at bottom of user table
+     - Verify page numbers and navigation arrows are displayed
+3. Click through multiple pages using page number buttons
+     - Test First Page, Previous Page, Next Page, Last Page navigation
+     - Verify user data loads correctly on each page without duplicates
+4. Apply filters and verify pagination adjusts to filtered results
+5. Test sorting across paginated results
+6. Test performance with large datasets during page navigation",Medium,Medium,Dataset with 150+ users; Expected: Smooth pagination; Verify performance with large datasets
+Edge Case,Administration,Role Management,Create role with all permissions,"1. Click Create New Role button to open role creation modal
+     - Enter unique role name [Maximum Permission Role]
+     - Review complete list of available permissions
+     - Select all available permissions by checking every permission checkbox
+     - Verify all permissions show as selected with proper visual indicators
+     - Click Save button to create role with all permissions
+2. Verify role is created successfully with all permissions granted
+     - Review role card to confirm all permissions are displayed correctly
+3. Test role functionality by assigning to test user (if possible)
+4. Verify system performance with maximum permission role
+5. Verify role displays properly in role selection dropdowns",Medium,Medium,All available permissions selected; Expected: Successful creation; Verify performance with maximum permissions
+Edge Case,Administration,Role Management,Edit role while users are active,"1. Identify a role that has active users currently logged into the system
+     - Navigate to role management and locate the role with active users
+2. Click Edit button on the role card to open editing modal
+     - Modify some permissions for the role (add or remove permissions)
+     - Click Save to apply permission changes while users are active
+3. Verify system handles the role modification gracefully
+4. Test if permission changes take effect immediately for active users
+5. Verify no active sessions are interrupted by role modifications
+6. Verify audit logs capture role changes with active user context
+7. Test edge cases like removing critical permissions from active users",Medium,High,Active users with role being modified; Expected: Graceful handling; Verify immediate permission updates
+Edge Case,Administration,Settings,Change settings during system maintenance,"1. Schedule or simulate system maintenance mode
+     - Navigate to Settings tab during maintenance window
+     - Attempt to modify various settings (intervals, delays, communication toggles)
+2. Verify system behavior during maintenance mode
+     - Verify appropriate messaging about maintenance mode if applicable
+3. Test if settings changes are queued or blocked during maintenance
+4. Verify data integrity of settings during maintenance operations
+5. Test settings persistence after maintenance window ends
+     - Verify no settings corruption occurs during maintenance
+6. Verify proper error handling and user messaging during maintenance
+7. Test rollback scenarios if settings changes fail during maintenance",Medium,Medium,During maintenance mode; Expected: Appropriate handling; Verify data integrity during maintenance
+Edge Case,Administration,Settings,Simultaneous settings changes,"1. Open administration settings in multiple browser tabs or user sessions
+     - Navigate to different settings sections in each session
+2. Simultaneously modify different settings from multiple sessions
+     - Test concurrent changes to the same setting from different sessions
+     - Click Save buttons simultaneously from multiple sessions
+3. Verify system handles concurrent settings modifications properly
+4. Verify last-saved-wins or conflict resolution mechanism
+5. Verify no settings corruption occurs from simultaneous changes
+6. Verify appropriate error messages for conflicting operations
+7. Verify audit logs capture all concurrent settings changes correctly",Medium,High,Two admins modifying settings concurrently; Expected: Conflict resolution; Verify data integrity
+Edge Case,Administration,Settings,Large batch opt-out operation,"1. Create test CSV file with 10000+ customer opt-out preference records
+     - Ensure CSV file is properly formatted with required columns
+2. Navigate to Settings tab and select Bulk Upload option
+3. Upload the large CSV file (10000+ records)
+     - Click Upload button to start processing large batch operation
+     - Monitor system performance during large batch processing
+     - Verify progress indicators work correctly for large datasets
+     - Verify system remains responsive during bulk processing
+     - Verify memory and CPU usage remain within acceptable limits
+     - Verify batch processing completes successfully without timeouts
+     - Verify import summary accurately reports results for large dataset
+4. Test system stability after large batch operation completion",Medium,Medium,CSV with 10000+ records; Expected: Successful processing; Verify performance and system stability
+Edge Case,Administration,Settings,Rapid toggle of communication switches,"1. Navigate to Settings tab and locate communication toggle switches
+2. Rapidly click External Communication toggle multiple times in quick succession
+     - Verify system handles rapid toggle operations without errors
+     - Test rapid toggling of Internal Communication switch
+     - Rapidly toggle between Extreme Weather Mode on/off states
+3. Verify each toggle operation registers correctly despite rapid clicking
+4. Verify system state consistency after rapid toggle operations
+5. Test warning dialogs appear and function correctly during rapid toggling
+6. Verify no race conditions or state corruption occurs
+7. Verify final switch states match the last intentional toggle action",Medium,High,
+Exception/Error,Administration,User Management,Database connection failure during user add,"1. Set up scenario to simulate database connectivity issues (if possible in test environment)
+2. Navigate to user management and click Add New User button
+     - Enter valid StaffID and role information in the form
+     - Simulate database connection failure during save operation
+     - Click Create button to trigger database operation during failure
+3. Verify system displays appropriate error message about database connectivity
+4. Verify error message is user-friendly and doesn't expose technical details
+5. Verify user creation operation is properly rolled back
+6. Verify no partial user data is saved in inconsistent state
+7. Verify system provides guidance on next steps or retry options
+8. Verify audit logs capture the database failure event appropriately",High,Critical,
+Exception/Error,Administration,User Management,Session timeout during user edit,"1. Navigate to user management and start editing a user
+     - Click Edit button on any user row to enter edit mode
+     - Make some changes to user role but don't save immediately
+     - Wait for user session to timeout (or force session expiration)
+     - Attempt to click Save button after session has expired
+2. Verify system detects session timeout and handles appropriately
+3. Verify user is redirected to login page or session renewal prompt
+4. Verify unsaved changes are handled gracefully (lost with warning or preserved)
+5. Verify clear messaging about session expiration to user
+6. Verify session timeout doesn't corrupt any existing user data",Medium,High,
+Exception/Error,Administration,User Management,Concurrent user deletion,"1. Set up two admin sessions accessing same user management interface
+     - Navigate to user management in both sessions
+2. Add a [Test user] for concurrent deletion
+3. Select the same user (e.g., test user) for deletion in both sessions
+     - Click Delete button simultaneously from both sessions
+     - Attempt to confirm deletion from both sessions at nearly the same time
+4. Verify system handles concurrent deletion attempts properly
+5. Verify only one deletion succeeds and the other gets appropriate error
+6. Verify error message explains user was already deleted by another admin
+7. Verify no system errors or corruption occurs from concurrent operations
+8. Verify audit logs capture both deletion attempts with proper timestamps
+9. Verify user lists refresh properly in both sessions after conflict resolution",Medium,High,"New User
+Staff ID: TEST001
+Name: Test user"
+Exception/Error,Administration,User Management,CSV processing system error,"1. Navigate to bulk upload functionality for user management
+     - Create valid CSV file with proper format and user data
+2. Simulate system error during CSV processing (memory error, processing failure)
+     - Upload the CSV file and start processing
+     - Force or simulate system error during file processing
+3. Verify system handles processing errors gracefully
+4. Verify appropriate error message appears explaining processing failure
+5. Verify error details are logged for administrative review
+6. Verify no partial user imports occur due to processing failure
+7. Verify system remains stable after processing error recovery",Medium,High,
+Exception/Error,Administration,Role Management,Permission update failure,"1. Navigate to role management section in administration
+2. Select existing role that has assigned permissions to modify
+     - Click Edit button on the role to open permission modification interface
+     -  Modify several permission settings (add/remove specific permissions)
+     - Click Save button to initiate permission update process
+     - Simulate system failure during permission update (database error service failure)
+3. Verify system detects permission update failure immediately
+4. Verify error message appears explaining permission update could not be completed
+5. Verify original role permissions remain unchanged after failure
+     - Verify no partial permission updates are applied leaving role in inconsistent state
+6. Verify system logs error details for administrative troubleshooting
+7. Verify users assigned to this role maintain original access levels",High,Critical,
+Exception/Error,Administration,Role Management,Role deletion during assignment,"1. Set up two administrative sessions with same role management access
+2. Navigate to role management in both sessions
+3. Create a [Test] role with 2-3 permissions
+     - In first session select role [Test] and initiate assignment to a user
+     - In second session simultaneously attempt to delete the same role
+4. Complete role assignment process in first session while deletion occurs
+5. Verify system handles concurrent role operations properly
+     - Verify transaction integrity is maintained during conflicting operations
+     - Verify either assignment fails with role deleted error OR deletion fails with role in use error
+     - Verify clear error messages explain the conflict to administrators
+6. Verify no orphaned assignments or invalid role states exist
+7. Verify audit logs capture both conflicting operations with timestamps
+8. Verify system data consistency after conflict resolution",Medium,Critical,"Role
+Name: Test
+Permission: select 2-3 for testing"
+Exception/Error,Administration,Settings,Configuration save failure,"1. Navigate to Settings tab and modify several configuration parameters
+2. Change multiple settings including timeouts notification preferences and data retention
+     - Click Save button to store configuration changes
+3. Simulate network interruption or connection failure during save operation
+     - Verify system detects network failure during configuration save
+4. Verify appropriate error message appears about network connectivity issues
+     - Verify system maintains original configuration values if save fails completely
+5. Verify no partial configuration updates occur due to network failure
+6. Verify retry mechanism is available after network is restored
+7. Verify configuration integrity is maintained throughout failure",High,Critical,
+Exception/Error,Administration,All Functions,Unauthorized access attempt,"1. Access administration interface with standard user credentials (non-admin)
+     - Attempt to access user management functions without proper permissions
+     - Try to navigate directly to admin URLs or endpoints without authorization
+2. Verify system blocks unauthorized access attempts immediately
+3. Verify appropriate access denied error messages appear
+4. Verify security controls prevent privilege escalation attempts
+5. Verify unauthorized access attempts are logged for security review
+6. Verify user is redirected to appropriate access level interface
+7. Verify no sensitive information is exposed during access denial
+8. Verify audit trail captures all unauthorized access attempts with user details",High,Critical,
+Exception/Error,Administration,All Functions,Audit log failure,"1. Perform various administration operations (user creation role assignment settings changes)
+     - Verify audit logging is functioning normally for these operations
+2. Simulate audit logging system failure during operation execution
+     - Continue performing administration actions during audit log failure
+     - Verify system detects audit logging system failure
+     - Verify alternative logging mechanisms are activated automatically
+3. Verify error notification is sent about audit log system failure
+4. Verify critical operations continue despite audit logging issues
+5. Verify temporary audit data is preserved until logging system recovery
+6. Verify alternative audit trail methods capture essential security events
+7. Verify system administrators are notified of audit system failure immediately
+8. Test audit log system recovery and normal logging restoration",Medium,High,

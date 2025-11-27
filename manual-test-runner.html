@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E2E Platform - Manual Test Runner</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .test-item { margin: 10px 0; }
+        .checkbox { margin-right: 10px; }
+        .passed { color: green; }
+        .failed { color: red; }
+        .pending { color: orange; }
+        h2 { color: #2c5aa0; }
+        .instructions { background: #f0f4ff; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 15px; margin: 5px; background: #2c5aa0; color: white; border: none; cursor: pointer; }
+        button:hover { background: #1e3d6f; }
+    </style>
+</head>
+<body>
+    <h1>🎯 E2E Communication Platform - Manual Testing</h1>
+    
+    <div class="instructions">
+        <strong>Instructions:</strong>
+        <ol>
+            <li>Open <code>admin-prototype.html</code> in another tab</li>
+            <li>Follow the test steps below</li>
+            <li>Check ✅ for pass, ❌ for fail, ⏳ for pending</li>
+            <li>Click "Generate Report" when done</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>👥 User Management (EP-3, EP-23-29)</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="user-display">
+            <label for="user-display"><strong>EP-3: Display User List</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Table shows all columns: Name, Email, Role, Status, Last Login, Actions<br>
+                • Action buttons visible: Edit, Delete, Disable/Enable
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="user-add">
+            <label for="user-add"><strong>EP-23: Add New User</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • "+ Add New User" button opens modal<br>
+                • StaffID entry triggers name/email auto-fill<br>
+                • Role dropdown works<br>
+                • Create button saves and shows success message
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="user-edit">
+            <label for="user-edit"><strong>EP-24: Edit User</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Edit button activates edit mode<br>
+                • Only Role field is editable<br>
+                • Save/Cancel buttons work correctly
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="user-status">
+            <label for="user-status"><strong>EP-25: Disable/Enable User</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Disable button changes status to Inactive<br>
+                • Enable button changes status to Active<br>
+                • Button text updates based on status
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="user-delete">
+            <label for="user-delete"><strong>EP-26: Delete User</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Delete button shows confirmation dialog<br>
+                • Confirm deletes user<br>
+                • Cancel preserves user
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="user-filter">
+            <label for="user-filter"><strong>EP-27: Filter Users</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Role filter dropdown works<br>
+                • Status filter dropdown works<br>
+                • Combined filters work together
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="user-search">
+            <label for="user-search"><strong>EP-28: Search Users</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Search by name works<br>
+                • Search by email works<br>
+                • Partial matches work<br>
+                • Case insensitive search
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔐 Role Management (EP-30-32, EP-40-41)</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="role-display">
+            <label for="role-display"><strong>EP-30: Display Roles</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Role cards show name, user count, permissions<br>
+                • Permissions marked as granted/denied<br>
+                • Action buttons visible (Edit, Delete)
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="role-create">
+            <label for="role-create"><strong>EP-32: Create Role</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • "+ Add New Role" opens modal<br>
+                • Role name input works<br>
+                • Permission checkboxes selectable<br>
+                • Save creates new role
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="role-edit">
+            <label for="role-edit"><strong>EP-31: Edit Role</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Edit button opens modal with existing data<br>
+                • Role name is editable<br>
+                • Permissions can be changed<br>
+                • Save updates role
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="role-delete">
+            <label for="role-delete"><strong>EP-41: Delete Role</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Delete shows confirmation<br>
+                • System roles protected<br>
+                • Warning for roles with assigned users
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>⚙️ Settings (EP-33-40, EP-44, EP-90, EP-101, EP-110-112)</h2>
+        
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="settings-comm">
+            <label for="settings-comm"><strong>EP-44/EP-35: Communication Settings</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Internal/External communication toggles<br>
+                • Warning messages for disabling<br>
+                • Save button applies changes
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="settings-trigger">
+            <label for="settings-trigger"><strong>EP-36: Trigger Mode</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Auto trigger toggle<br>
+                • Manual trigger toggle<br>
+                • Both can be enabled simultaneously
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="settings-delay">
+            <label for="settings-delay"><strong>EP-37: Delay Settings</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • External notification delay input<br>
+                • Numeric validation<br>
+                • Range validation (positive numbers)
+            </div>
+        </div>
+
+        <div class="test-item">
+            <input type="checkbox" class="checkbox" id="settings-weather">
+            <label for="settings-weather"><strong>EP-101/EP-110: Extreme Weather</strong></label>
+            <div style="margin-left: 30px; color: #666;">
+                • Extreme weather toggle<br>
+                • Warning about ongoing messages<br>
+                • Extreme weather delay input
+            </div>
+        </div>
+    </div>
+
+    <button onclick="generateReport()">📊 Generate Test Report</button>
+    <button onclick="resetTests()">🔄 Reset All Tests</button>
+
+    <div id="report" style="margin-top: 20px;"></div>
+
+    <script>
+        function generateReport() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            let passed = 0;
+            let total = checkboxes.length;
+            let details = [];
+
+            checkboxes.forEach(checkbox => {
+                const label = checkbox.nextElementSibling.textContent;
+                if (checkbox.checked) {
+                    passed++;
+                    details.push(`✅ ${label}`);
+                } else {
+                    details.push(`❌ ${label}`);
+                }
+            });
+
+            const percentage = Math.round((passed / total) * 100);
+            const reportHTML = `
+                <div style="border: 2px solid #2c5aa0; padding: 20px; margin: 20px 0; background: #f9f9f9;">
+                    <h3>📊 Test Report</h3>
+                    <p><strong>Completion:</strong> ${passed}/${total} tests (${percentage}%)</p>
+                    <p><strong>Status:</strong> ${percentage >= 80 ? '🎉 Good Progress!' : percentage >= 50 ? '⚠️ Needs Work' : '❌ Major Issues'}</p>
+                    <hr>
+                    <h4>Details:</h4>
+                    ${details.map(detail => `<div>${detail}</div>`).join('')}
+                    <hr>
+                    <p><strong>Next Steps:</strong></p>
+                    <ul>
+                        <li>Fix any failed tests in your HTML prototype</li>
+                        <li>Re-test after making changes</li>
+                        <li>Document any missing functionality for development</li>
+                    </ul>
+                </div>
+            `;
+            
+            document.getElementById('report').innerHTML = reportHTML;
+        }
+
+        function resetTests() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+            document.getElementById('report').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

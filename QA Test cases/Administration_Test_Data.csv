@@ -1,0 +1,37 @@
+Test_Category,Data_Type,Field_Name,Valid_Values,Invalid_Values,Edge_Cases,Notes
+User Management,StaffID,StaffID,"93313,93314,93315,93316,93317","99999,INVALID,12345","000001,999999",StaffID should auto-populate name and email
+User Management,User_Info,Name,"John Smith,Jane Doe,Mike Johnson,Sarah Wilson","",Very Long Name That Exceeds Character Limit,Names auto-populated from StaffID lookup
+User Management,User_Info,Email,"john.smith@clp.com.hk,jane.doe@clp.com.hk","invalid-email,test@","email@verylongdomainname.com",Email format validation required
+User Management,Role,Role_Assignment,"System Admin,CIC Team,Account Manager,Corporate Affairs,Management,PSBG Engineers,User","Invalid Role,","",Role must exist in system
+User Management,Status,User_Status,"Active,Inactive","Invalid,Pending","",Binary status only
+User Management,CSV_Upload,File_Size,"<10MB",">10MB","9.99MB,10.01MB",File size validation for bulk upload
+User Management,CSV_Upload,File_Format,".csv",".txt,.xlsx,.pdf","",Only CSV format accepted
+User Management,CSV_Upload,CSV_Structure,"StaffID,Role columns required","Missing StaffID,Missing Role","Extra columns allowed",Required columns must be present
+Role Management,Role_Creation,Role_Name,"Custom Role,Test Role,Demo Role","System Admin,","Very Long Role Name That May Exceed Limits",Cannot duplicate existing role names
+Role Management,Permissions,Permission_List,"Full Dashboard Access,Outage Management,Emergency Stop,User Administration,Template Management,Send Notifications,Receive Notifications,Access Residential Customer Information,Access Non-Residential Customer Information,Download Data,Receive Alert Message","Invalid Permission","",Predefined permission list
+Role Management,Role_Assignment,User_Count,"0,1,5,10","","",Number of users assigned to role
+Settings,Time_Configuration,Auto_Update_Interval,"15,30,45,60","0,-1,abc","1,1440",Minutes only positive integers
+Settings,Time_Configuration,External_Delay,"5,10,15,20","0,-1,invalid","1,1440",Minutes for external notification delay
+Settings,Time_Configuration,Extreme_Weather_Delay,"10,15,20,30","0,-1,text","1,1440",Minutes for extreme weather delay
+Settings,Time_Configuration,Alert_Time,"30,45,60,90","0,-1,xyz","1,2880",Minutes between stage 1 and stage 3
+Settings,Data_Retention,Customer_Data_Days,"180,365,730,1095","0,-1,invalid","1,3650",Days for customer data retention
+Settings,Data_Retention,Outage_Data_Days,"90,180,365,730","0,-1,text","1,3650",Days for outage data retention
+Settings,Update_Limit,Max_Updates,"3,5,8,10","0,-1,abc","1,100",Maximum number of updates allowed
+Settings,Toggle_Settings,Communication_Status,"Enabled,Disabled","Invalid,","",Binary toggle for communication
+Settings,Toggle_Settings,Trigger_Mode,"Auto,Manual","Invalid,Both","",Trigger mode configuration
+Settings,Toggle_Settings,Extreme_Weather_Mode,"ON,OFF","Invalid,Partial","",Binary toggle for weather mode
+Customer_Management,Customer_Account,Customer_Account,"B1012345,B1012346,B1012347","INVALID,99999999,","A0000001,Z9999999",Valid customer account format
+Customer_Management,Opt_Status,Opt_In_Out,"opt-in,opt-out","invalid,maybe,yes,no","",Binary preference setting
+Customer_Management,Channel,Communication_Channel,"App Push,SMS,Email","Phone,Letter,Fax","",Supported communication channels
+Customer_Management,CSV_Upload,Customer_CSV_Structure,"Customer Account,App Push,SMS,Email columns required","Missing Customer Account,Invalid Channel Values","Extra columns,Special characters",Required structure for bulk opt-out
+System_Data,Date_Time,Timestamp,"2025-11-21 10:00:00,2025-11-21 15:30:00","Invalid format,Future date","Edge of time zones",Standard datetime format
+System_Data,Search,Search_Terms,"John,Smith,john.smith@clp.com.hk","","Special characters !@#$%",Case insensitive search
+System_Data,Filter,Filter_Combinations,"Role AND Status,Multiple roles","Invalid combinations","All filters applied",Complex filtering scenarios
+System_Data,Pagination,Page_Size,"10,25,50,100","0,-1,invalid","1,1000",Records per page limits
+System_Data,Sort,Sort_Columns,"Name,Email,Role,Status,Last Login","Invalid column","",Available sortable columns
+Security_Data,Access_Control,Permission_Levels,"Read,Write,Admin,Super Admin","Invalid level","",System permission hierarchy
+Security_Data,Session,Session_Duration,"30 minutes,1 hour,4 hours","Invalid timeout","",Session timeout periods
+Error_Scenarios,Database,Connection_Status,"Available,Unavailable,Timeout","","Intermittent connection",Database connectivity states
+Error_Scenarios,Network,Network_Status,"Online,Offline,Slow","","Poor connection quality",Network connectivity scenarios
+Error_Scenarios,File_Processing,File_Status,"Valid,Corrupted,Too Large,Wrong Format","","Boundary file sizes",File processing scenarios
+Error_Scenarios,Integration,External_System_Status,"Available,Unavailable,Partial","","Degraded performance",External system integration status

@@ -1,0 +1,73 @@
+Section,Module,Function,Action,Description,Priority,Severity,Test Data
+Happy Flow,Administration,User Management,Display user list,Navigate to Administration > Users tab and verify all users are displayed with correct information,High,High,Valid user data with various roles and statuses
+Happy Flow,Administration,User Management,Add new user,Click Add New User button > Enter StaffID 93313 > Verify auto-filled name and email > Select role > Click Create,High,High,StaffID: 93313; Role: System Admin
+Happy Flow,Administration,User Management,Edit user information,Click Edit button on user row > Modify role field > Click Save > Verify changes are applied,High,Medium,User: John Smith; Change role from User to Account Manager
+Happy Flow,Administration,User Management,Enable/Disable user,Click toggle switch to disable active user > Verify user status changes to Inactive,Medium,Medium,Active user: Mike Johnson
+Happy Flow,Administration,User Management,Delete existing user,Click Delete button > Confirm deletion > Verify user is removed from list,Medium,High,User: Sarah Wilson (Inactive user)
+Happy Flow,Administration,User Management,Filter by role,Use role filter dropdown > Select System Admin > Verify only System Admin users are displayed,Medium,Low,Filter: System Admin role
+Happy Flow,Administration,User Management,Filter by status,Use status filter > Select Active > Verify only active users are displayed,Medium,Low,Filter: Active status
+Happy Flow,Administration,User Management,Search user by name,Enter user name in search box > Verify filtered results match search criteria,Medium,Low,Search term: John Smith
+Happy Flow,Administration,User Management,Bulk upload users,Click Add New User by Bulk Upload > Download sample CSV > Upload valid CSV file > Verify successful import,Medium,Medium,CSV file with 5 valid user records
+Happy Flow,Administration,Role Management,Display role list,Navigate to Roles tab > Verify all roles are displayed with permissions and active user count,High,Medium,Default roles: System Admin CIC Team Account Manager etc.
+Happy Flow,Administration,Role Management,Create new role,Click Create New Role > Enter role name Custom Role > Select permissions > Save > Verify role appears in list,Medium,Medium,Role name: Custom Test Role; Permissions: Dashboard Access Send Notifications
+Happy Flow,Administration,Role Management,Edit role permissions,Click Edit button on role card > Modify permissions > Save > Verify permission changes are applied,High,High,Role: Account Manager; Add Template Management permission
+Happy Flow,Administration,Role Management,Delete role,Click Delete button on role card > Confirm deletion > Verify role is removed,Medium,High,Role: Custom Test Role (with no assigned users)
+Happy Flow,Administration,Settings,Configure auto-update interval,Navigate to Settings > Open Auto-Update section > Change interval to 30 minutes > Save > Verify setting persists,High,High,Interval: 30 minutes
+Happy Flow,Administration,Settings,Set external notification delay,Open Delay Control section > Set delay to 10 minutes > Save > Verify confirmation message appears,High,High,Delay: 10 minutes
+Happy Flow,Administration,Settings,Enable/Disable external communication,Toggle External Communication switch > Save > Verify warning message about active processes,High,Critical,Toggle from Enabled to Disabled
+Happy Flow,Administration,Settings,Enable/Disable internal communication,Toggle Internal Communication switch > Save > Verify confirmation and active processes termination,High,Critical,Toggle from Enabled to Disabled
+Happy Flow,Administration,Settings,Set trigger mode,Configure Auto Trigger and Manual Trigger toggles > Save > Verify settings are applied,High,High,Auto Trigger: ON Manual Trigger: OFF
+Happy Flow,Administration,Settings,Configure data retention period,Set Customer data retention to 365 days and Outage data retention to 180 days > Save > Verify confirmation,Medium,Medium,Customer data: 365 days; Outage data: 180 days
+Happy Flow,Administration,Settings,Manual opt-out customer,Enter Customer Account B1012345 > Select opt-out > Save > Verify customer preference updated,Medium,Medium,Customer Account: B1012345
+Happy Flow,Administration,Settings,Bulk opt-out via CSV,Download sample CSV > Upload file with customer opt-out preferences > Verify bulk update summary report,Medium,Medium,CSV with 10 customer records
+Happy Flow,Administration,Settings,Configure extreme weather delay,Set extreme weather delay to 15 minutes > Save > Verify setting is saved correctly,Medium,Medium,Extreme weather delay: 15 minutes
+Happy Flow,Administration,Settings,Enable extreme weather mode,Toggle Extreme Weather Mode > Confirm warning about ongoing messages > Verify mode is activated,Medium,High,Extreme Weather Mode: ON
+Happy Flow,Administration,Settings,Configure alert group settings,Navigate to Alert Group section > Configure alert time between notifications > Save settings,Medium,Medium,Alert time: 45 minutes
+Happy Flow,Administration,Settings,Configure max update limit,Set maximum number of updates to 5 > Save > Verify limit is applied,Medium,Medium,Max updates: 5
+Happy Flow,Administration,Settings,Built-in opt-out exception report,Navigate to Opt-out Exception Report > Apply date filter Today > Search by customer account > View results,Medium,Low,Date filter: Today; Customer account: B1012345
+Happy Flow,Administration,Settings,Enable daily opt-out exception report email,Configure role permissions for Receive opt-out exception report > Enable email delivery,Low,Low,Role: System Admin; Email: enabled
+Unhappy Flow,Administration,User Management,Add user with invalid StaffID,Enter invalid StaffID 99999 > Verify error message for user not found,Medium,Medium,Invalid StaffID: 99999
+Unhappy Flow,Administration,User Management,Add duplicate user,Try to add user with existing StaffID > Verify system prevents duplicate creation,Medium,Medium,Existing StaffID: 93313
+Unhappy Flow,Administration,User Management,Delete user assigned to role in use,Try to delete user currently assigned to active role > Verify system prevents deletion,Medium,High,User with active role assignments
+Unhappy Flow,Administration,User Management,Bulk upload invalid CSV format,Upload CSV with missing required columns > Verify detailed error messages,Medium,Medium,CSV missing StaffID column
+Unhappy Flow,Administration,User Management,Bulk upload oversized file,Upload CSV file larger than 10MB > Verify file size error message,Low,Low,CSV file size: 15MB
+Unhappy Flow,Administration,User Management,Search with no results,Search for non-existent user name > Verify No users found message,Low,Low,Search term: NonExistentUser
+Unhappy Flow,Administration,Role Management,Create role with duplicate name,Enter existing role name > Verify system prevents duplicate role creation,Medium,Medium,Duplicate role name: System Admin
+Unhappy Flow,Administration,Role Management,Create role with empty name,Leave role name field blank > Verify validation error message,Medium,Medium,Role name: empty/blank
+Unhappy Flow,Administration,Role Management,Delete role with assigned users,Try to delete role with active users > Verify system prevents deletion and shows warning,High,High,Role: System Admin (has assigned users)
+Unhappy Flow,Administration,Role Management,Edit system default role,Try to edit default system role > Verify system prevents modification of critical roles,Medium,High,Default role: System Admin
+Unhappy Flow,Administration,Settings,Set invalid auto-update interval,Enter negative number or non-integer value > Verify validation error message,Medium,Medium,Invalid interval: -5 or abc
+Unhappy Flow,Administration,Settings,Set invalid delay time,Enter negative delay time > Verify validation prevents saving invalid values,Medium,Medium,Invalid delay: -10 minutes
+Unhappy Flow,Administration,Settings,Set invalid data retention period,Enter value exceeding maximum limit > Verify system shows error and prevents saving,Medium,Medium,Retention period: 10000 days
+Unhappy Flow,Administration,Settings,Opt-out non-existent customer,Enter invalid customer account > Verify customer not found error,Medium,Medium,Invalid customer account: X9999999
+Unhappy Flow,Administration,Settings,Upload invalid opt-out CSV,Upload CSV with wrong format or invalid customer accounts > Verify detailed error report,Medium,Medium,CSV with invalid customer accounts
+Unhappy Flow,Administration,Settings,Disable communication with active processes,Disable external communication while notifications are being sent > Verify warning about active process termination,High,Critical,Active notification processes running
+Edge Case,Administration,User Management,Add user at system limit,Add user when system is at maximum user capacity > Verify appropriate handling,Low,Medium,System at max user limit
+Edge Case,Administration,User Management,Rapid consecutive user actions,Perform multiple user edit/delete actions rapidly > Verify system handles concurrent operations,Medium,High,Multiple simultaneous operations
+Edge Case,Administration,User Management,Filter with multiple criteria,Apply role AND status filters simultaneously > Verify combined filtering works correctly,Medium,Low,Filter: System Admin AND Active
+Edge Case,Administration,User Management,Sort by different columns,Click different column headers to sort > Verify sorting works for all sortable columns,Low,Low,Sort by: Name Email Role Status Last Login
+Edge Case,Administration,User Management,Pagination with large dataset,Navigate through multiple pages with 100+ users > Verify pagination functionality,Medium,Medium,Dataset with 150+ users
+Edge Case,Administration,Role Management,Assign same permission multiple times,Try to assign duplicate permissions to role > Verify system handles gracefully,Low,Low,Duplicate permission assignment
+Edge Case,Administration,Role Management,Create role with all permissions,Create role with maximum permissions selected > Verify all permissions are saved,Medium,Medium,All available permissions selected
+Edge Case,Administration,Role Management,Edit role while users are active,Edit role permissions while users with that role are actively using system,Medium,High,Active users with role being modified
+Edge Case,Administration,Settings,Change settings during system maintenance,Modify settings during scheduled maintenance window > Verify appropriate handling,Medium,Medium,During maintenance mode
+Edge Case,Administration,Settings,Simultaneous settings changes,Multiple admins changing different settings simultaneously > Verify no conflicts occur,Medium,High,Two admins modifying settings concurrently
+Edge Case,Administration,Settings,Extreme weather mode during normal weather,Enable extreme weather mode during normal weather conditions > Verify mode functions correctly,Medium,Medium,Normal weather conditions
+Edge Case,Administration,Settings,Large batch opt-out operation,Upload CSV with 10000+ customer opt-out requests > Verify system handles large batch processing,Medium,Medium,CSV with 10000+ records
+Edge Case,Administration,Settings,Rapid toggle of communication switches,Rapidly enable/disable communication switches > Verify system state consistency,Medium,High,Rapid toggle operations
+Edge Case,Administration,Settings,Configure alert timing edge values,Set alert time to minimum (1 minute) and maximum allowed values > Verify acceptance,Medium,Medium,Alert time: 1 minute and 1440 minutes
+Exception/Error,Administration,User Management,Database connection failure during user add,Simulate database failure while adding user > Verify appropriate error handling and rollback,High,Critical,Database connectivity issues
+Exception/Error,Administration,User Management,Session timeout during user edit,User session expires while editing user information > Verify session handling,Medium,High,Session timeout scenario
+Exception/Error,Administration,User Management,Concurrent user deletion,Two admins try to delete same user simultaneously > Verify conflict resolution,Medium,High,Concurrent deletion attempts
+Exception/Error,Administration,User Management,CSV processing system error,System error occurs during CSV processing > Verify error logging and user notification,Medium,High,System error during bulk upload
+Exception/Error,Administration,Role Management,Permission update failure,System failure while updating role permissions > Verify rollback and error handling,High,Critical,Permission update system failure
+Exception/Error,Administration,Role Management,Role deletion during assignment,Role is deleted while being assigned to user > Verify transaction integrity,Medium,Critical,Concurrent role operations
+Exception/Error,Administration,Settings,Configuration save failure,Network interruption during settings save > Verify data integrity and error recovery,High,Critical,Network interruption during save
+Exception/Error,Administration,Settings,Invalid configuration state,System enters invalid state due to conflicting settings > Verify error detection and correction,High,Critical,Conflicting configuration values
+Exception/Error,Administration,Settings,External system integration failure,Failure in integration with external systems (ADMS SharePoint) > Verify error handling,High,Critical,External system unavailable
+Exception/Error,Administration,Settings,Extreme weather API failure,Weather service API failure during extreme weather mode > Verify fallback procedures,Medium,High,Weather API connectivity failure
+Exception/Error,Administration,Settings,Alert system failure,Alert notification system failure during triggered events > Verify alternative alert mechanisms,High,Critical,Alert system malfunction
+Exception/Error,Administration,Settings,Opt-out service unavailable,Customer opt-out service unavailable during bulk operation > Verify error handling and retry logic,Medium,High,Opt-out service failure
+Exception/Error,Administration,All Functions,System resource exhaustion,System runs out of memory/CPU during peak operations > Verify graceful degradation,High,Critical,Resource exhaustion scenario
+Exception/Error,Administration,All Functions,Unauthorized access attempt,Attempt to access admin functions without proper permissions > Verify security controls,High,Critical,Invalid permission access
+Exception/Error,Administration,All Functions,Audit log failure,System fails to write to audit logs > Verify alternative logging and error notification,Medium,High,Audit logging system failure

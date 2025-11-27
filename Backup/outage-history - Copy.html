@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outage History - E2E Outage Communication Platform - Outage History</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: white;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            color: #2c5aa0;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .menu-icon {
+            background: none;
+            border: none;
+            color:black;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #2c5aa0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .platform-title {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background-color: #4a6fa5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: white;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px 0;
+            overflow-y: auto;
+            position: fixed;
+            top: 70px;
+            left: -280px;
+            height: calc(100vh - 70px);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.show {
+            left: 0;
+        }
+
+        /* Sidebar overlay for mobile/tablet */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 25px;
+            color: #666;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .nav-link.active {
+            background-color: #b3c6e0;
+            color: #2c5aa0;
+            border-left-color: #2c5aa0;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .main-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 18px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #2c5aa0;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #234a87;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .filter-dropdown {
+            min-width: 200px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .search-input {
+            flex: 1;
+            max-width: 300px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        /* Date Filter Dropdown */
+        .date-filter-dropdown {
+            position: relative;
+            min-width: 200px;
+        }
+
+        .date-filter-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .date-filter-trigger:hover {
+            border-color: #2c5aa0;
+        }
+
+        .filter-icon {
+            font-size: 16px;
+        }
+
+        .date-filter-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            min-width: 520px;
+        }
+
+        .date-filter-dropdown.open .date-filter-content {
+            display: block;
+        }
+
+        .date-filter-layout {
+            display: flex;
+        }
+
+        /* Date Preset Options */
+        .date-preset-options {
+            width: 180px;
+            padding: 8px;
+            border-right: 1px solid #e0e0e0;
+            background-color: #f8f9fa;
+        }
+
+        .date-preset-item {
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .date-preset-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .date-preset-item.active {
+            background-color: #2c5aa0;
+            color: white;
+        }
+
+        .date-preset-divider {
+            height: 1px;
+            background-color: #ddd;
+            margin: 8px 0;
+        }
+
+        .date-clear-btn {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.2s;
+        }
+
+        .date-clear-btn:hover {
+            background-color: #f8f9fa;
+            border-color: #2c5aa0;
+        }
+
+        /* Calendar Section */
+        .date-calendar-section {
+            flex: 1;
+            padding: 12px;
+        }
+
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 8px;
+        }
+
+        .calendar-month {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            flex: 1;
+            text-align: center;
+        }
+
+        .calendar-nav-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            padding: 4px 8px;
+            transition: all 0.2s;
+        }
+
+        .calendar-nav-btn:hover {
+            color: #2c5aa0;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            padding: 8px 4px;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 8px 4px;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            color: #333;
+        }
+
+        .calendar-day:hover {
+            background-color: #e9ecef;
+        }
+
+        .calendar-day.empty {
+            cursor: default;
+            color: #ccc;
+        }
+
+        .calendar-day.empty:hover {
+            background-color: transparent;
+        }
+
+        .calendar-day.selected {
+            background-color: #2c5aa0;
+            color: white;
+        }
+
+        .calendar-day.in-range {
+            background-color: #d4e3f7;
+        }
+
+        .calendar-day.other-month {
+            color: #999;
+        }
+
+        .calendar-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .calendar-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .calendar-cancel {
+            background-color: white;
+            color: #666;
+        }
+
+        .calendar-cancel:hover {
+            background-color: #f8f9fa;
+        }
+
+        .calendar-apply {
+            background-color: #2c5aa0;
+            color: white;
+            border-color: #2c5aa0;
+        }
+
+        .calendar-apply:hover {
+            background-color: #234a87;
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #f8f9fa;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c5aa0;
+            font-size: 14px;
+            border-bottom: 2px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th.sortable:hover {
+            background-color: #e9ecef;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .status-closed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-progress {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-new {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* Action Button */
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #666;
+            padding: 4px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            color: #2c5aa0;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover {
+            background-color: #f8f9fa;
+            border-color: #2c5aa0;
+        }
+
+        .pagination button.active {
+            background-color: #2c5aa0;
+            color: white;
+            border-color: #2c5aa0;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Export Button Container */
+        .export-section {
+            margin-top: 20px;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        /* Modal */
+        .modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 16px 20px;
+        }
+
+        .modal-incident-id {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c5aa0;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-section {
+            margin-bottom: 16px;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #2c5aa0;
+            margin-bottom: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px 16px;
+        }
+
+        .info-item {
+            padding: 0;
+            background-color: white;
+            border-radius: 0;
+            border: none;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .info-value.clickable {
+            color: #2c5aa0;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .info-value.clickable:hover {
+            color: #1e3d6f;
+        }
+
+        .comm-log-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .comm-log-item {
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #2c5aa0;
+        }
+
+        .comm-log-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2c5aa0;
+            margin-bottom: 6px;
+        }
+
+        .comm-channel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+            font-size: 12px;
+        }
+
+        .comm-channel-name {
+            color: #666;
+        }
+
+        .comm-channel-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Customer Impact Summary Modal */
+        .summary-modal {
+            max-width: 700px;
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-arrow {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-arrow:hover {
+            color: #2c5aa0;
+        }
+
+        .summary-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .summary-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .summary-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c5aa0;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-count {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c5aa0;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #333;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .summary-value.clickable {
+            color: #2c5aa0;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .summary-value.clickable:hover {
+            color: #1e3d6f;
+        }
+
+        .total-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+
+        .total-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c5aa0;
+        }
+
+        .total-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2c5aa0;
+        }
+
+        /* Building List Modal */
+        .building-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .building-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .building-table th {
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c5aa0;
+            font-size: 13px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .building-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .building-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .data-source {
+            margin-top: 16px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .data-source strong {
+            color: #333;
+        }
+
+        .building-table tbody td:last-child {
+            color: #2c5aa0;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .building-table tbody td:last-child:hover {
+            color: #1e3d6f;
+        }
+
+        .flat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .flat-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .flat-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c5aa0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .flat-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .flat-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-icon">☰</button>
+            <div class="logo">
+                <span>CLP</span>
+                <div class="logo-icon">中</div>
+                <span>中電</span>
+            </div>
+        </div>
+        <div class="platform-title">E2E Outage Communication Platform</div>
+        <div class="user-avatar">JD</div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <h1 class="page-title">Outage History</h1>
+        
+        <!-- Filters -->
+        <div class="filter-section">
+                <!-- Custom Date Filter -->
+                <div class="date-filter-dropdown" id="dateFilterDropdown">
+                    <div class="date-filter-trigger" onclick="toggleDateFilter()">
+                        <span id="dateFilterDisplay">Date</span>
+                        <span class="filter-icon">📅</span>
+                    </div>
+                    <div class="date-filter-content" id="dateFilterContent">
+                        <div class="date-filter-layout">
+                            <!-- Preset Options -->
+                            <div class="date-preset-options">
+                                <div class="date-preset-item" onclick="selectDatePreset('today')">Today</div>
+                                <div class="date-preset-item" onclick="selectDatePreset('past7')">Past 7 days</div>
+                                <div class="date-preset-item" onclick="selectDatePreset('past30')">Previous 30 days</div>
+                                <div class="date-preset-item" onclick="selectDatePreset('pastYear')">Previous year</div>
+                                <div class="date-preset-divider"></div>
+                                <button class="date-clear-btn" onclick="clearDateFilter()">Clear filter</button>
+                            </div>
+                            
+                            <!-- Calendar Section -->
+                            <div class="date-calendar-section">
+                                <div class="calendar-controls">
+                                    <button class="calendar-nav-btn" onclick="previousMonth('start')">&lt;&lt;</button>
+                                    <button class="calendar-nav-btn" onclick="previousMonth('start', false)">&lt;</button>
+                                    <span class="calendar-month" id="startMonthDisplay">October 2025</span>
+                                    <button class="calendar-nav-btn" onclick="nextMonth('start', false)">&gt;</button>
+                                    <button class="calendar-nav-btn" onclick="nextMonth('start')">&gt;&gt;</button>
+                                </div>
+                                <div class="calendar-grid" id="startCalendar"></div>
+                                
+                                <div class="calendar-controls">
+                                    <button class="calendar-nav-btn" onclick="previousMonth('end')">&lt;&lt;</button>
+                                    <button class="calendar-nav-btn" onclick="previousMonth('end', false)">&lt;</button>
+                                    <span class="calendar-month" id="endMonthDisplay">November 2025</span>
+                                    <button class="calendar-nav-btn" onclick="nextMonth('end', false)">&gt;</button>
+                                    <button class="calendar-nav-btn" onclick="nextMonth('end')">&gt;&gt;</button>
+                                </div>
+                                <div class="calendar-grid" id="endCalendar"></div>
+                                
+                                <div class="calendar-actions">
+                                    <button class="calendar-btn calendar-cancel" onclick="cancelDateSelection()">Cancel</button>
+                                    <button class="calendar-btn calendar-apply" onclick="applyDateSelection()">Apply Dates</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <select class="filter-dropdown" id="statusFilter" onchange="filterHistory()">
+                    <option value="">All Incident Statuses</option>
+                    <option value="Closed">Closed</option>
+                    <option value="In Progress">In Progress</option>
+                </select>
+                
+                <select class="filter-dropdown" id="districtFilter" onchange="filterHistory()">
+                    <option value="">All Districts</option>
+                    <option value="Wan Chai">Wan Chai</option>
+                    <option value="Central">Central</option>
+                    <option value="Causeway Bay">Causeway Bay</option>
+                    <option value="Tsim Sha Tsui">Tsim Sha Tsui</option>
+                    <option value="Mong Kok">Mong Kok</option>
+                    <option value="Kowloon Bay">Kowloon Bay</option>
+                </select>
+                
+                <input type="text" class="search-input" id="incidentSearch" placeholder="Enter Incident ID or address 'lee' to search" oninput="filterHistory()">
+            </div>
+            
+            <!-- Outage History Table -->
+            <div class="table-container">
+                <table id="historyTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" onclick="sortTable('incidentId')">Incident ID ⇅</th>
+                            <th class="sortable" onclick="sortTable('district')">District ⇅</th>
+                            <th>Incident Status</th>
+                            <th>Customers Affected</th>
+                            <th class="sortable" onclick="sortTable('startTime')">Start Time ⇅</th>
+                            <th>ETR</th>
+                            <th>ATR</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <tr>
+                            <td>OUT-2025-0001</td>
+                            <td>Wan Chai</td>
+                            <td><span class="status-badge status-closed">Closed</span></td>
+                            <td>2,850</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td><button class="action-btn" onclick="viewDetails('OUT-2025-0001')" title="View Details">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>OUT-2025-0002</td>
+                            <td>Wan Chai</td>
+                            <td><span class="status-badge status-closed">Closed</span></td>
+                            <td>2,850</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td><button class="action-btn" onclick="viewDetails('OUT-2025-0002')" title="View Details">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>OUT-2025-0003</td>
+                            <td>Wan Chai</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                            <td>2,850</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>N/A</td>
+                            <td><button class="action-btn" onclick="viewDetails('OUT-2025-0003')" title="View Details">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>OUT-2025-0004</td>
+                            <td>Wan Chai</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                            <td>2,850</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>N/A</td>
+                            <td><button class="action-btn" onclick="viewDetails('OUT-2025-0004')" title="View Details">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>OUT-2025-0005</td>
+                            <td>Wan Chai</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                            <td>2,850</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>N/A</td>
+                            <td><button class="action-btn" onclick="viewDetails('OUT-2025-0005')" title="View Details">👁️</button></td>
+                        </tr>
+                        <tr>
+                            <td>OUT-2025-0006</td>
+                            <td>Wan Chai</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                            <td>2,850</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>2025-08-11 13:41:30</td>
+                            <td>N/A</td>
+                            <td><button class="action-btn" onclick="viewDetails('OUT-2025-0006')" title="View Details">👁️</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Export Button -->
+            <div class="export-section">
+                <button class="btn btn-primary" onclick="exportToCSV()">Export as csv file</button>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button onclick="changePage('prev')" id="prevBtn">‹</button>
+                <button class="active" onclick="changePage(1)">1</button>
+                <button onclick="changePage(2)">2</button>
+                <button onclick="changePage(3)">3</button>
+                <span>...</span>
+                <button onclick="changePage(8)">8</button>
+                <button onclick="changePage('next')" id="nextBtn">›</button>
+            </div>
+    </div>
+
+    <!-- Outage Detail Modal -->
+    <div id="outageDetailModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Outage Detail</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-incident-id" id="modalOutageId">OUT-2025-0001</h2>
+                
+                <!-- Location Information -->
+                <div class="modal-section">
+                    <div class="modal-section-title">Location Information</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">District</div>
+                            <div class="info-value" id="modalDistrict">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Crew Status</div>
+                            <div class="info-value" id="modalCrewStatus">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Region</div>
+                            <div class="info-value" id="modalRegion">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Crew Name</div>
+                            <div class="info-value" id="modalCrewName">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Substation</div>
+                            <div class="info-value" id="modalSubstation">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">E-van ETA</div>
+                            <div class="info-value" id="modalEvanETA">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Substation No.</div>
+                            <div class="info-value" id="modalSubstationNo">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">E-van ATA</div>
+                            <div class="info-value" id="modalEvanATA">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outage Details -->
+                <div class="modal-section">
+                    <div class="modal-section-title">Outage Details</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Status</div>
+                            <div class="info-value" id="modalStatus">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Fault Type</div>
+                            <div class="info-value" id="modalFaultType">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Power Status</div>
+                            <div class="info-value" id="modalPowerStatus">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Start Time</div>
+                            <div class="info-value" id="modalStartTime">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">ETR</div>
+                            <div class="info-value" id="modalETR">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">ATR</div>
+                            <div class="info-value" id="modalATR">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Assessment -->
+                <div class="modal-section">
+                    <div class="modal-section-title">Impact Assessment</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Customer Affected</div>
+                            <div class="info-value" id="modalCustomerAffected">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Customer Restored</div>
+                            <div class="info-value" id="modalCustomerRestored">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Residential</div>
+                            <div class="info-value" id="modalResidential">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Life Support</div>
+                            <div class="info-value" id="modalLifeSupport">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Non-residential</div>
+                            <div class="info-value" id="modalNonResidential">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Elderly Homes</div>
+                            <div class="info-value" id="modalElderlyHomes">-</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Sensitive Customer</div>
+                            <div class="info-value" id="modalSensitiveCustomer">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communication Log -->
+                <div class="modal-section">
+                    <div class="modal-section-title">Communication Log</div>
+                    <div class="comm-log-grid">
+                        <div class="comm-log-item">
+                            <div class="comm-log-title">1st notification: <span id="modal1stTotal">-</span></div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">SMS:</span>
+                                <span class="comm-channel-value" id="modal1stSMS">-</span>
+                            </div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">App Push:</span>
+                                <span class="comm-channel-value" id="modal1stAppPush">-</span>
+                            </div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">Email:</span>
+                                <span class="comm-channel-value" id="modal1stEmail">-</span>
+                            </div>
+                        </div>
+                        <div class="comm-log-item">
+                            <div class="comm-log-title">Interim Update: <span id="modalInterimTotal">-</span></div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">SMS:</span>
+                                <span class="comm-channel-value" id="modalInterimSMS">-</span>
+                            </div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">App Push:</span>
+                                <span class="comm-channel-value" id="modalInterimAppPush">-</span>
+                            </div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">Email:</span>
+                                <span class="comm-channel-value" id="modalInterimEmail">-</span>
+                            </div>
+                        </div>
+                        <div class="comm-log-item">
+                            <div class="comm-log-title">Power Restored: <span id="modalRestoredTotal">-</span></div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">SMS:</span>
+                                <span class="comm-channel-value" id="modalRestoredSMS">-</span>
+                            </div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">App Push:</span>
+                                <span class="comm-channel-value" id="modalRestoredAppPush">-</span>
+                            </div>
+                            <div class="comm-channel">
+                                <span class="comm-channel-name">Email:</span>
+                                <span class="comm-channel-value" id="modalRestoredEmail">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Impact Summary Modal -->
+    <div id="customerImpactModal" class="modal-overlay">
+        <div class="modal summary-modal">
+            <div class="modal-header">
+                <div class="summary-header">
+                    <button class="back-arrow" onclick="closeCustomerImpact()">←</button>
+                    <h3 class="modal-title">Summary list of customers impacted</h3>
+                </div>
+                <button class="modal-close" onclick="closeCustomerImpact()">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Residential Customers Section -->
+                <div class="summary-section">
+                    <div class="summary-title">
+                        Total impacted customers
+                        <span class="summary-count" id="summaryResidentialCount">No. of Customer impacted - 201</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Number of Impacted Residential Customers</span>
+                        <span class="summary-value" id="summaryResidential">200</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Number of Impacted Residential Customers with Life Support</span>
+                        <span class="summary-value" id="summaryLifeSupport">1</span>
+                    </div>
+                </div>
+
+                <!-- Non-Residential Customers Section -->
+                <div class="summary-section">
+                    <div class="summary-title">
+                        Total impacted customers
+                        <span class="summary-count" id="summaryNonResidentialCount">No. of Customer impacted - 32</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total C&I Impacted customers</span>
+                        <span class="summary-value" id="summaryNonResidential">32</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Number of Impacted Customer with Elderly home</span>
+                        <span class="summary-value" id="summaryElderlyHomes">0</span>
+                    </div>
+                </div>
+
+                <!-- Total Summary -->
+                <div class="total-summary">
+                    <span class="total-label">Total impacted customers</span>
+                    <span class="total-value" id="summaryTotal">233</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Building List Modal -->
+    <div id="buildingListModal" class="modal-overlay">
+        <div class="modal summary-modal">
+            <div class="modal-header">
+                <div class="summary-header">
+                    <button class="back-arrow" onclick="closeBuildingList()">←</button>
+                    <h3 class="modal-title">Summary list of buildings impacted</h3>
+                </div>
+                <button class="modal-close" onclick="closeAllModalsToOutageDetail()">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="building-table">
+                    <thead>
+                        <tr>
+                            <th>Street</th>
+                            <th>Building</th>
+                            <th>District</th>
+                            <th>No. of Customer impacted - 200</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buildingTableBody">
+                        <tr>
+                            <td>MAN YING STREET</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>YAU MA TEI</td>
+                            <td onclick="openFlatList('MAN KING BUILDING', 65)">65</td>
+                        </tr>
+                        <tr>
+                            <td>MAN YING STREET</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>YAU MA TEI</td>
+                            <td onclick="openFlatList('MAN KING BUILDING', 67)">67</td>
+                        </tr>
+                        <tr>
+                            <td>MAN YING STREET</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>YAU MA TEI</td>
+                            <td onclick="openFlatList('MAN KING BUILDING', 68)">68</td>
+                        </tr>
+                        <tr>
+                            <td>MAN YING STREET</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>YAU MA TEI</td>
+                            <td onclick="openFlatList('MAN KING BUILDING', 0)">XX</td>
+                        </tr>
+                        <tr>
+                            <td>MAN YING STREET</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>YAU MA TEI</td>
+                            <td onclick="openFlatList('MAN KING BUILDING', 0)">XX</td>
+                        </tr>
+                        <tr>
+                            <td>MAN YING STREET</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>YAU MA TEI</td>
+                            <td onclick="openFlatList('MAN KING BUILDING', 0)">XX</td>
+                        </tr>
+                        <tr>
+                            <td>MAN YING STREET</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>YAU MA TEI</td>
+                            <td onclick="openFlatList('MAN KING BUILDING', 0)">XX</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="data-source">
+                    <strong>Data Source:</strong><br>
+                    Column S: Street / Q: Street 2
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flat List Modal -->
+    <div id="flatListModal" class="modal-overlay">
+        <div class="modal summary-modal">
+            <div class="modal-header">
+                <div class="summary-header">
+                    <button class="back-arrow" onclick="closeFlatList()">←</button>
+                    <h3 class="modal-title" id="flatListTitle">Summary list of buildings impacted</h3>
+                </div>
+                <button class="modal-close" onclick="closeAllModalsToOutageDetail()">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="flat-table">
+                    <thead>
+                        <tr>
+                            <th>Block & Flat</th>
+                            <th>Building</th>
+                            <th>No. of Customer Impacted - 65</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flatTableBody">
+                        <tr>
+                            <td>Flat E 7/F</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>24</td>
+                        </tr>
+                        <tr>
+                            <td>Flat D 7/F</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>12 B</td>
+                            <td>MAN KING BUILDING</td>
+                            <td>21</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="data-source">
+                    <strong>Data Source:</strong><br>
+                    Column S: Street / Q: Street 2
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data storage with detailed information
+        let allOutageData = [
+            { 
+                id: 'OUT-2025-0001', 
+                district: 'Wan Chai', 
+                status: 'Closed', 
+                customers: 2850, 
+                startTime: '2025-08-11 13:41:30', 
+                etr: '2025-08-11 13:41:30', 
+                atr: '2025-08-11 13:41:30',
+                address: 'Johnston Road, Wan Chai',
+                region: 'KOWLOON',
+                substation: 'MAN CHEONG ST PACKAGE B',
+                substationNo: 'YMT0001',
+                crewStatus: 'Arrived',
+                crewName: 'Team Alpha-7',
+                evanETA: '2025-08-11 09:15',
+                evanATA: '2025-08-11 09:12',
+                powerStatus: 'Not Restored',
+                faultType: 'CLP Fault',
+                customerAffected: 233,
+                customerRestored: 200,
+                residential: 200,
+                lifeSupport: 1,
+                nonResidential: 32,
+                elderlyHomes: 0,
+                sensitiveCustomer: 0,
+                comm1stTotal: 2900,
+                comm1stSMS: 2500,
+                comm1stAppPush: 300,
+                comm1stEmail: 100,
+                commInterimTotal: 2900,
+                commInterimSMS: 2500,
+                commInterimAppPush: 300,
+                commInterimEmail: 100,
+                commRestoredTotal: 2900,
+                commRestoredSMS: 2500,
+                commRestoredAppPush: 300,
+                commRestoredEmail: 100
+            },
+            { 
+                id: 'OUT-2025-0001', 
+                district: 'Wan Chai', 
+                status: 'Closed', 
+                customers: 2850, 
+                startTime: '2025-08-11 13:41:30', 
+                etr: '2025-08-11 13:41:30', 
+                atr: '2025-08-11 13:41:30',
+                address: 'Lee Garden Road, Wan Chai',
+                region: 'KOWLOON',
+                substationNo: 'YMT0002',
+                crewStatus: 'Arrived',
+                crewName: 'Team Beta-3',
+                evanETA: '2025-08-11 10:20',
+                evanATA: '2025-08-11 10:18',
+                powerStatus: 'Restored',
+                faultType: 'Equipment Failure',
+                customerAffected: 450,
+                customerRestored: 450,
+                residential: 380,
+                lifeSupport: 2,
+                nonResidential: 68,
+                elderlyHomes: 1,
+                sensitiveCustomer: 0,
+                comm1stTotal: 4500,
+                comm1stSMS: 4000,
+                comm1stAppPush: 350,
+                comm1stEmail: 150,
+                commInterimTotal: 4500,
+                commInterimSMS: 4000,
+                commInterimAppPush: 350,
+                commInterimEmail: 150,
+                commRestoredTotal: 4500,
+                commRestoredSMS: 4000,
+                commRestoredAppPush: 350,
+                commRestoredEmail: 150
+            },
+            { 
+                id: 'OUT-2025-0001', 
+                district: 'Wan Chai', 
+                status: 'In Progress', 
+                customers: 2850, 
+                startTime: '2025-08-11 13:41:30', 
+                etr: '2025-08-11 13:41:30', 
+                atr: '---',
+                address: 'Hennessy Road, Wan Chai',
+                region: 'KOWLOON',
+                substationNo: 'TST0001',
+                crewStatus: 'En Route',
+                crewName: 'Team Gamma-5',
+                evanETA: '2025-08-11 14:00',
+                evanATA: '---',
+                powerStatus: 'Not Restored',
+                faultType: 'Under Investigation',
+                customerAffected: 1250,
+                customerRestored: 0,
+                residential: 1100,
+                lifeSupport: 3,
+                nonResidential: 147,
+                elderlyHomes: 0,
+                sensitiveCustomer: 2,
+                comm1stTotal: 12500,
+                comm1stSMS: 11000,
+                comm1stAppPush: 1000,
+                comm1stEmail: 500,
+                commInterimTotal: 0,
+                commInterimSMS: 0,
+                commInterimAppPush: 0,
+                commInterimEmail: 0,
+                commRestoredTotal: 0,
+                commRestoredSMS: 0,
+                commRestoredAppPush: 0,
+                commRestoredEmail: 0
+            },
+            { 
+                id: 'OUT-2025-0001', 
+                district: 'Wan Chai', 
+                status: 'In Progress', 
+                customers: 2850, 
+                startTime: '2025-08-11 13:41:30', 
+                etr: '2025-08-11 13:41:30', 
+                atr: '---',
+                address: 'Castle Peak Road, Tuen Mun',
+                region: 'NEW TERRITORIES',
+                substationNo: 'TM0001',
+                crewStatus: 'Investigating',
+                crewName: 'Team Delta-2',
+                evanETA: '2025-08-11 11:30',
+                evanATA: '2025-08-11 11:25',
+                powerStatus: 'Not Restored',
+                faultType: 'Cable Fault',
+                customerAffected: 890,
+                customerRestored: 250,
+                residential: 750,
+                lifeSupport: 1,
+                nonResidential: 139,
+                elderlyHomes: 0,
+                sensitiveCustomer: 1,
+                comm1stTotal: 8900,
+                comm1stSMS: 7500,
+                comm1stAppPush: 900,
+                comm1stEmail: 500,
+                commInterimTotal: 6400,
+                commInterimSMS: 5500,
+                commInterimAppPush: 600,
+                commInterimEmail: 300,
+                commRestoredTotal: 0,
+                commRestoredSMS: 0,
+                commRestoredAppPush: 0,
+                commRestoredEmail: 0
+            },
+            { 
+                id: 'OUT-2025-0001', 
+                district: 'Wan Chai', 
+                status: 'In Progress', 
+                customers: 2850, 
+                startTime: '2025-08-11 13:41:30', 
+                etr: '2025-08-11 13:41:30', 
+                atr: '---',
+                address: 'Des Voeux Road, Central',
+                region: 'HONG KONG ISLAND',
+                substationNo: 'CTR0001',
+                crewStatus: 'Repairing',
+                crewName: 'Team Epsilon-1',
+                evanETA: '2025-08-11 08:45',
+                evanATA: '2025-08-11 08:40',
+                powerStatus: 'Partially Restored',
+                faultType: 'Transformer Issue',
+                customerAffected: 3200,
+                customerRestored: 1800,
+                residential: 2400,
+                lifeSupport: 5,
+                nonResidential: 795,
+                elderlyHomes: 2,
+                sensitiveCustomer: 3,
+                comm1stTotal: 32000,
+                comm1stSMS: 28000,
+                comm1stAppPush: 2500,
+                comm1stEmail: 1500,
+                commInterimTotal: 14000,
+                commInterimSMS: 12000,
+                commInterimAppPush: 1200,
+                commInterimEmail: 800,
+                commRestoredTotal: 0,
+                commRestoredSMS: 0,
+                commRestoredAppPush: 0,
+                commRestoredEmail: 0
+            },
+            { 
+                id: 'OUT-2025-0001', 
+                district: 'Wan Chai', 
+                status: 'In Progress', 
+                customers: 2850, 
+                startTime: '2025-08-11 13:41:30', 
+                etr: '2025-08-11 13:41:30', 
+                atr: '---',
+                address: 'Nathan Road, Mong Kok',
+                region: 'KOWLOON',
+                substationNo: 'MK0001',
+                crewStatus: 'Arrived',
+                crewName: 'Team Zeta-4',
+                evanETA: '2025-08-11 12:00',
+                evanATA: '2025-08-11 11:58',
+                powerStatus: 'Not Restored',
+                faultType: 'Weather Related',
+                customerAffected: 1650,
+                customerRestored: 0,
+                residential: 1450,
+                lifeSupport: 2,
+                nonResidential: 198,
+                elderlyHomes: 1,
+                sensitiveCustomer: 1,
+                comm1stTotal: 16500,
+                comm1stSMS: 14500,
+                comm1stAppPush: 1300,
+                comm1stEmail: 700,
+                commInterimTotal: 0,
+                commInterimSMS: 0,
+                commInterimAppPush: 0,
+                commInterimEmail: 0,
+                commRestoredTotal: 0,
+                commRestoredSMS: 0,
+                commRestoredAppPush: 0,
+                commRestoredEmail: 0
+            },
+            { 
+                id: 'OUT-2025-0007', 
+                district: 'YAU MA TEI', 
+                status: 'New', 
+                customers: 233, 
+                startTime: '2025-08-11 08:30:00', 
+                etr: '2025-08-11 14:30:00', 
+                atr: '2025-08-11 15:37:00',
+                address: 'Man Cheong Street, Yau Ma Tei',
+                region: 'KOWLOON',
+                substation: 'MAN CHEONG ST PACKAGE B',
+                substationNo: 'YMT0001',
+                crewStatus: 'Arrived',
+                crewName: 'Team Alpha-7',
+                evanETA: '2025-08-11 09:15',
+                evanATA: '2025-08-11 09:12',
+                powerStatus: 'Not Restored',
+                faultType: 'CLP Fault',
+                customerAffected: 233,
+                customerRestored: 200,
+                residential: 200,
+                lifeSupport: 1,
+                nonResidential: 32,
+                elderlyHomes: 0,
+                sensitiveCustomer: 0,
+                comm1stTotal: 2900,
+                comm1stSMS: 2500,
+                comm1stAppPush: 300,
+                comm1stEmail: 100,
+                commInterimTotal: 2900,
+                commInterimSMS: 2500,
+                commInterimAppPush: 300,
+                commInterimEmail: 100,
+                commRestoredTotal: 2900,
+                commRestoredSMS: 2500,
+                commRestoredAppPush: 300,
+                commRestoredEmail: 100
+            }
+        ];
+
+        let currentPage = 1;
+        let sortColumn = null;
+        let sortDirection = 'asc';
+
+        // Date filter state
+        let dateFilterState = {
+            startDate: null,
+            endDate: null,
+            startMonth: new Date(2025, 9, 1), // October 2025
+            endMonth: new Date(2025, 10, 1), // November 2025
+            selecting: 'start'
+        };
+
+        // Toggle date filter dropdown
+        function toggleDateFilter() {
+            const dropdown = document.getElementById('dateFilterDropdown');
+            dropdown.classList.toggle('open');
+            
+            if (dropdown.classList.contains('open')) {
+                renderCalendar('start');
+                renderCalendar('end');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dateFilterDropdown');
+            if (dropdown && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        // Select date preset
+        function selectDatePreset(preset) {
+            const today = new Date(2025, 9, 30); // October 30, 2025
+            let startDate, endDate;
+
+            // Remove active class from all preset items
+            document.querySelectorAll('.date-preset-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            switch(preset) {
+                case 'today':
+                    startDate = new Date(today);
+                    endDate = new Date(today);
+                    event.target.classList.add('active');
+                    break;
+                case 'past7':
+                    startDate = new Date(today);
+                    startDate.setDate(today.getDate() - 6);
+                    endDate = new Date(today);
+                    event.target.classList.add('active');
+                    break;
+                case 'past30':
+                    startDate = new Date(today);
+                    startDate.setDate(today.getDate() - 29);
+                    endDate = new Date(today);
+                    event.target.classList.add('active');
+                    break;
+                case 'pastYear':
+                    startDate = new Date(today);
+                    startDate.setFullYear(today.getFullYear() - 1);
+                    endDate = new Date(today);
+                    event.target.classList.add('active');
+                    break;
+            }
+
+            dateFilterState.startDate = startDate;
+            dateFilterState.endDate = endDate;
+            
+            updateDateDisplay();
+            renderCalendar('start');
+            renderCalendar('end');
+            filterHistory();
+        }
+
+        // Clear date filter
+        function clearDateFilter() {
+            dateFilterState.startDate = null;
+            dateFilterState.endDate = null;
+            document.getElementById('dateFilterDisplay').textContent = 'Date';
+            document.querySelectorAll('.date-preset-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            renderCalendar('start');
+            renderCalendar('end');
+            filterHistory();
+        }
+
+        // Update date display in trigger
+        function updateDateDisplay() {
+            const display = document.getElementById('dateFilterDisplay');
+            if (dateFilterState.startDate && dateFilterState.endDate) {
+                const formatDate = (date) => {
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${date.getFullYear()}-${month}-${day}`;
+                };
+                display.textContent = `${formatDate(dateFilterState.startDate)} ~ ${formatDate(dateFilterState.endDate)}`;
+            } else {
+                display.textContent = 'Date';
+            }
+        }
+
+        // Render calendar
+        function renderCalendar(type) {
+            const calendarGrid = document.getElementById(type + 'Calendar');
+            const month = dateFilterState[type + 'Month'];
+            const monthDisplay = document.getElementById(type + 'MonthDisplay');
+            
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+            monthDisplay.textContent = `${monthNames[month.getMonth()]} ${month.getFullYear()}`;
+            
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            const dayHeaders = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                calendarGrid.appendChild(header);
+            });
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(month.getFullYear(), month.getMonth(), 1).getDay();
+            const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
+            
+            // Add empty cells for days before month starts
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Add days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                dayCell.textContent = day;
+                
+                const cellDate = new Date(month.getFullYear(), month.getMonth(), day);
+                
+                // Check if this day is selected
+                if (dateFilterState.startDate && cellDate.toDateString() === dateFilterState.startDate.toDateString()) {
+                    dayCell.classList.add('selected');
+                }
+                if (dateFilterState.endDate && cellDate.toDateString() === dateFilterState.endDate.toDateString()) {
+                    dayCell.classList.add('selected');
+                }
+                
+                // Check if this day is in range
+                if (dateFilterState.startDate && dateFilterState.endDate) {
+                    if (cellDate > dateFilterState.startDate && cellDate < dateFilterState.endDate) {
+                        dayCell.classList.add('in-range');
+                    }
+                }
+                
+                dayCell.onclick = () => selectDate(cellDate, type);
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+
+        // Select date in calendar
+        function selectDate(date, calendarType) {
+            if (!dateFilterState.startDate || (dateFilterState.startDate && dateFilterState.endDate)) {
+                // Start new selection
+                dateFilterState.startDate = date;
+                dateFilterState.endDate = null;
+                dateFilterState.selecting = 'end';
+            } else {
+                // Complete selection
+                if (date >= dateFilterState.startDate) {
+                    dateFilterState.endDate = date;
+                } else {
+                    dateFilterState.endDate = dateFilterState.startDate;
+                    dateFilterState.startDate = date;
+                }
+                dateFilterState.selecting = 'start';
+            }
+            
+            renderCalendar('start');
+            renderCalendar('end');
+        }
+
+        // Navigate months
+        function previousMonth(type, single = true) {
+            const month = dateFilterState[type + 'Month'];
+            if (single) {
+                month.setMonth(month.getMonth() - 1);
+            } else {
+                month.setFullYear(month.getFullYear() - 1);
+            }
+            renderCalendar(type);
+        }
+
+        function nextMonth(type, single = true) {
+            const month = dateFilterState[type + 'Month'];
+            if (single) {
+                month.setMonth(month.getMonth() + 1);
+            } else {
+                month.setFullYear(month.getFullYear() + 1);
+            }
+            renderCalendar(type);
+        }
+
+        // Apply date selection
+        function applyDateSelection() {
+            if (dateFilterState.startDate && dateFilterState.endDate) {
+                updateDateDisplay();
+                document.getElementById('dateFilterDropdown').classList.remove('open');
+                filterHistory();
+            }
+        }
+
+        // Cancel date selection
+        function cancelDateSelection() {
+            document.getElementById('dateFilterDropdown').classList.remove('open');
+        }
+
+        // Filter history based on selected filters
+        function filterHistory() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const districtFilter = document.getElementById('districtFilter').value;
+            const incidentSearch = document.getElementById('incidentSearch').value.toLowerCase();
+
+            const filteredData = allOutageData.filter(item => {
+                // Date filter
+                let matchesDate = true;
+                if (dateFilterState.startDate && dateFilterState.endDate) {
+                    const itemDate = new Date(item.startTime);
+                    const startDate = new Date(dateFilterState.startDate);
+                    startDate.setHours(0, 0, 0, 0);
+                    const endDate = new Date(dateFilterState.endDate);
+                    endDate.setHours(23, 59, 59, 999);
+                    matchesDate = itemDate >= startDate && itemDate <= endDate;
+                }
+                
+                const matchesStatus = !statusFilter || item.status === statusFilter;
+                const matchesDistrict = !districtFilter || item.district === districtFilter;
+                // Check both incident ID and address
+                const matchesSearch = !incidentSearch || 
+                    item.id.toLowerCase().includes(incidentSearch) ||
+                    (item.address && item.address.toLowerCase().includes(incidentSearch));
+                
+                return matchesDate && matchesStatus && matchesDistrict && matchesSearch;
+            });
+
+            updateTable(filteredData);
+        }
+
+        // Sort table by column
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+
+            const sortedData = [...allOutageData].sort((a, b) => {
+                let aVal = a[column];
+                let bVal = b[column];
+
+                if (column === 'startTime') {
+                    aVal = new Date(aVal);
+                    bVal = new Date(bVal);
+                }
+
+                if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+                if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            updateTable(sortedData);
+        }
+
+        // Update table with data
+        function updateTable(data) {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const statusClass = item.status === 'Closed' ? 'closed' : item.status === 'New' ? 'new' : 'progress';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.district}</td>
+                    <td><span class="status-badge status-${statusClass}">${item.status}</span></td>
+                    <td>${item.customers.toLocaleString()}</td>
+                    <td>${item.startTime}</td>
+                    <td>${item.etr}</td>
+                    <td>${item.atr}</td>
+                    <td><button class="action-btn" onclick="viewDetails(${index})" title="View Details">👁️</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // View details - open modal with outage information
+        let currentOutageData = null;
+
+        function viewDetails(index) {
+            const outage = allOutageData[index];
+            currentOutageData = outage; // Store for customer impact modal
+            
+            // Populate modal with data
+            document.getElementById('modalOutageId').textContent = outage.id;
+            
+            // Location Information - Make district clickable
+            const districtElement = document.getElementById('modalDistrict');
+            districtElement.textContent = outage.district;
+            districtElement.className = 'info-value clickable';
+            districtElement.onclick = function() { openCustomerImpact(); };
+            
+            document.getElementById('modalCrewStatus').textContent = outage.crewStatus;
+            document.getElementById('modalRegion').textContent = outage.region;
+            document.getElementById('modalCrewName').textContent = outage.crewName;
+            document.getElementById('modalSubstation').textContent = outage.substation;
+            document.getElementById('modalEvanETA').textContent = outage.evanETA;
+            document.getElementById('modalSubstationNo').textContent = outage.substationNo;
+            document.getElementById('modalEvanATA').textContent = outage.evanATA;
+            
+            // Outage Details
+            document.getElementById('modalStatus').textContent = outage.status;
+            document.getElementById('modalFaultType').textContent = outage.faultType;
+            document.getElementById('modalPowerStatus').textContent = outage.powerStatus;
+            document.getElementById('modalStartTime').textContent = outage.startTime;
+            document.getElementById('modalETR').textContent = outage.etr;
+            document.getElementById('modalATR').textContent = outage.atr;
+            
+            // Impact Assessment
+            document.getElementById('modalCustomerAffected').textContent = outage.customerAffected;
+            document.getElementById('modalCustomerRestored').textContent = outage.customerRestored;
+            document.getElementById('modalResidential').textContent = outage.residential;
+            document.getElementById('modalLifeSupport').textContent = outage.lifeSupport;
+            document.getElementById('modalNonResidential').textContent = outage.nonResidential;
+            document.getElementById('modalElderlyHomes').textContent = outage.elderlyHomes;
+            document.getElementById('modalSensitiveCustomer').textContent = outage.sensitiveCustomer;
+            
+            // Communication Log
+            document.getElementById('modal1stTotal').textContent = outage.comm1stTotal;
+            document.getElementById('modal1stSMS').textContent = outage.comm1stSMS;
+            document.getElementById('modal1stAppPush').textContent = outage.comm1stAppPush;
+            document.getElementById('modal1stEmail').textContent = outage.comm1stEmail;
+            
+            document.getElementById('modalInterimTotal').textContent = outage.commInterimTotal;
+            document.getElementById('modalInterimSMS').textContent = outage.commInterimSMS;
+            document.getElementById('modalInterimAppPush').textContent = outage.commInterimAppPush;
+            document.getElementById('modalInterimEmail').textContent = outage.commInterimEmail;
+            
+            document.getElementById('modalRestoredTotal').textContent = outage.commRestoredTotal;
+            document.getElementById('modalRestoredSMS').textContent = outage.commRestoredSMS;
+            document.getElementById('modalRestoredAppPush').textContent = outage.commRestoredAppPush;
+            document.getElementById('modalRestoredEmail').textContent = outage.commRestoredEmail;
+            
+            // Show modal
+            document.getElementById('outageDetailModal').classList.add('show');
+        }
+
+        // Open customer impact summary modal
+        function openCustomerImpact() {
+            if (!currentOutageData) return;
+            
+            const outage = currentOutageData;
+            
+            // Calculate residential total (residential + life support)
+            const residentialTotal = outage.residential + outage.lifeSupport;
+            
+            // Populate customer impact summary
+            document.getElementById('summaryResidentialCount').textContent = `No. of Customer impacted - ${residentialTotal}`;
+            
+            // Make residential value clickable
+            const residentialElement = document.getElementById('summaryResidential');
+            residentialElement.textContent = outage.residential;
+            residentialElement.className = 'summary-value clickable';
+            residentialElement.onclick = function() { openBuildingList('residential', outage.residential); };
+            
+            const lifeSupportElement = document.getElementById('summaryLifeSupport');
+            lifeSupportElement.textContent = outage.lifeSupport;
+            lifeSupportElement.className = 'summary-value clickable';
+            lifeSupportElement.onclick = function() { openBuildingList('lifeSupport', outage.lifeSupport); };
+            
+            document.getElementById('summaryNonResidentialCount').textContent = `No. of Customer impacted - ${outage.nonResidential}`;
+            
+            const nonResidentialElement = document.getElementById('summaryNonResidential');
+            nonResidentialElement.textContent = outage.nonResidential;
+            nonResidentialElement.className = 'summary-value clickable';
+            nonResidentialElement.onclick = function() { openBuildingList('nonResidential', outage.nonResidential); };
+            
+            const elderlyElement = document.getElementById('summaryElderlyHomes');
+            elderlyElement.textContent = outage.elderlyHomes;
+            elderlyElement.className = 'summary-value clickable';
+            elderlyElement.onclick = function() { openBuildingList('elderly', outage.elderlyHomes); };
+            
+            document.getElementById('summaryTotal').textContent = outage.customerAffected;
+            
+            // Hide outage detail modal and show customer impact modal
+            document.getElementById('outageDetailModal').classList.remove('show');
+            document.getElementById('customerImpactModal').classList.add('show');
+        }
+
+        // Open building list modal
+        function openBuildingList(type, count) {
+            // Update the table header with the count
+            const headerCell = document.querySelector('.building-table th:last-child');
+            headerCell.textContent = `No. of Customer impacted - ${count}`;
+            
+            // Hide customer impact modal and show building list modal
+            document.getElementById('customerImpactModal').classList.remove('show');
+            document.getElementById('buildingListModal').classList.add('show');
+        }
+
+        // Close building list modal
+        function closeBuildingList() {
+            document.getElementById('buildingListModal').classList.remove('show');
+            // Reopen the customer impact modal
+            document.getElementById('customerImpactModal').classList.add('show');
+        }
+
+        // Open flat list modal
+        function openFlatList(building, count) {
+            // Hide building list modal and show flat list modal
+            document.getElementById('buildingListModal').classList.remove('show');
+            document.getElementById('flatListModal').classList.add('show');
+            
+            // Update the title with the count
+            document.getElementById('flatListTitle').textContent = 'Summary list of buildings impacted - ' + count;
+        }
+
+        // Close flat list modal
+        function closeFlatList() {
+            document.getElementById('flatListModal').classList.remove('show');
+            // Reopen the building list modal
+            document.getElementById('buildingListModal').classList.add('show');
+        }
+
+        // Close customer impact modal
+        function closeCustomerImpact() {
+            document.getElementById('customerImpactModal').classList.remove('show');
+            // Optionally reopen the outage detail modal
+            document.getElementById('outageDetailModal').classList.add('show');
+        }
+
+        // Close all modals and return to outage detail modal
+        function closeAllModalsToOutageDetail() {
+            document.getElementById('flatListModal').classList.remove('show');
+            document.getElementById('buildingListModal').classList.remove('show');
+            document.getElementById('customerImpactModal').classList.remove('show');
+            document.getElementById('outageDetailModal').classList.add('show');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('outageDetailModal').classList.remove('show');
+            currentOutageData = null;
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('outageDetailModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+
+        document.getElementById('customerImpactModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeCustomerImpact();
+            }
+        });
+
+        document.getElementById('buildingListModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeBuildingList();
+            }
+        });
+
+        document.getElementById('flatListModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeFlatList();
+            }
+        });
+
+        // Export to CSV
+        function exportToCSV() {
+            let csvContent = 'Incident ID,District,Incident Status,Customers Affected,Start Time,ETR,ATR\n';
+            
+            allOutageData.forEach(item => {
+                csvContent += `"${item.id}","${item.district}","${item.status}","${item.customers}","${item.startTime}","${item.etr}","${item.atr}"\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `outage_history_${new Date().toISOString().slice(0, 10)}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Pagination
+        function changePage(page) {
+            if (page === 'prev') {
+                currentPage = Math.max(1, currentPage - 1);
+            } else if (page === 'next') {
+                currentPage = currentPage + 1;
+            } else {
+                currentPage = page;
+            }
+
+            // Update active state
+            document.querySelectorAll('.pagination button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            console.log('Changed to page:', currentPage);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCalendar('start');
+            renderCalendar('end');
+            filterHistory();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1740 @@
+Issue Type,Issue key,Issue id,Summary,Parent,Parent key,Parent summary,Description,Assignee,Assignee Id,Reporter,Reporter Id,Priority,Status,Resolution,Created,Updated,Due date
+Subtask,EP-118,983888,CSV format to show customer detail for each category,977311,EP-96,Access Customer Details CSV for Sensitive Customers,"*As* a user,
+
+*I want* to view the customer detail for selected incident and customer group
+
+*so that* I could contact specific to follow the status.
+
+*Acceptance Critieria:*
+*AC1:* Show the Customer Name/CA Number/Address*(Combined)*/Contact No. for each category.
+*AC2:* The file name would be Date+Time+Incident ID+Category (e.g. 20251023_16:32_INC 1242004458_RT) to represent the report generated time.
+
+!image-20251021-101145.png|width=817,alt=""image-20251021-101145.png""!",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,21/Oct/25 6:10 PM,23/Oct/25 4:37 PM,
+Story,EP-112,980479,Daily opt-out exception report in excel format,971124,EP-1,Administration,"*As* a user,
+
+*I want to* have a daily summary for the customer opt-out exception report
+
+*So that* I could follow and update the opt-out preference for customers.
+
+ 
+
+*Acceptance Criteria:*
+
+*AC1:* The admin could enable the permission of “Receive opt-out exception report” in Administration -> Role.
+
+*AC2:* System generate daily opt-out exception report for accumulated records of customers wrong opt-out replies, in the format of excel (.xlsx)
+
+*AC3:* The report sent to the users who enable the permission of “Receive opt-out exception report” by email.
+
+!image-20250929-144849.png|width=679,alt=""image-20250929-144849.png""!
+
+!image-20250929-144906.png|width=679,alt=""image-20250929-144906.png""!",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Tech & QA Review,,29/Sep/25 6:36 PM,14/Oct/25 5:07 PM,
+Story,EP-111,980477,Built-in opt-out exception report,971124,EP-1,Administration,"*As* a user,
+
+*I want to* view the customer opt-out exception report
+
+*So that* I could quickly answer the customer enquiry about the opt-out situation.
+
+ 
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can log in and navigate to Administration → Settings, clicks to open the Opt-out exception report.
+
+*AC2:* The report shows accumulated records of customers wrong opt-out replies.
+
+*AC3:* The default date filter = Today. And user could select date filter from the dropdown list (Today / Yesterday / Last 7 days / Custom Date).
+
+*AC4:* User could input the customer account number for contains-search.
+
+*AC5:* Report data will refresh to match with the filters.
+
+*AC6:* User could click the “x” to close the window.
+
+!image-20250929-145131.png|width=432,alt=""image-20250929-145131.png""!
+
+!image-20250929-145140.png|width=432,alt=""image-20250929-145140.png""!",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Tech & QA Review,,29/Sep/25 6:35 PM,14/Oct/25 9:41 AM,
+Task,EP-110,980469,I want to configurate the delay time for external communication during extreme weather,971124,EP-1,Administration,"*As* a user,
+
+*I want* to manually configurate a delay time in minutes to postpone the 1^st^ notification to external during extreme weather
+
+*So that* the engineering team can have more time to handle the outage before communication.
+
+ 
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can log in and navigate to Administration → Settings → Delay Control (Stage 1) section.
+
+*AC2*: The current Delay Before External Send (Minutes) is displayed clearly, the time is calculated when first notification is sent (i.e. Assume 5mins after outage reported).
+
+*AC3*: The admin can edit the Delay Before External Notification Send under +*Extreme Weather*+ (Minutes), only positive integer is allowed.
+
+*AC4*: After editing, the admin clicks a “Save” button to apply changes.
+
+*AC5*: The system provides confirmation feedback after successfully update, such as “Delay Time have been updated successfully”
+
+*AC6*: The updated Delay Before External Send (Minutes) is saved correctly and persists after page refresh or next login.
+
+!image-20250929-040141.png|width=679,alt=""image-20250929-040141.png""!",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Tech & QA Review,,29/Sep/25 5:45 PM,22/Oct/25 12:23 PM,26/Sep/25 12:00 AM
+Task,EP-101,978688,I want to enable the extreme weather mode to delay the external communication,971124,EP-1,Administration,"*As* a user,
+
+*I want* to manually enable the extreme weather mode
+
+*So that* the system will postpone the 1^st^ notification to external during extreme weather
+
+
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can log in and navigate to Administration → Settings → Trigger Mode section.
+
+*AC2*: The current Extreme Weather Mode status is displayed clearly.
+
+*AC3*: The admin can turn it on and off the Extreme Weather Mode toggle.
+
+*AC4*: System pop-up a message box to warn the admin will continue to send out all ongoing messages. 
+
+✅ Decision: Continue to send all ongoing notification messages even if there is weather change. (For example: Extreme weather ↔ Normal weather)
+
+*AC5*: The system will send the Extreme Weather message [https://clpdigital.atlassian.net/browse/EP-97|https://clpdigital.atlassian.net/browse/EP-97|smart-link] instead of Normal Weather message when the Extreme Weather mode is on.
+
+*AC6*: When the extreme weather → Message body is empty for selected template, system will send the message for normal weather.
+
+!image-20250929-040141.png|width=679,alt=""image-20250929-040141.png""!",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,19/Sep/25 10:32 AM,22/Oct/25 12:24 PM,26/Sep/25 12:00 AM
+Story,EP-90,976046,Configurable time between the first notification & the second notification,971124,EP-1,Administration,"*As* an admin user,
+
+*I want* to manually configurate the expected max time between the first notification and the second notification (stage 3)
+
+*So that* CAs who fails to receive the updated information will trigger alter to notify alert group users
+
+
+
+*Acceptance Criteria*:
+
+*AC1:* The admin can log in and navigate to Administration → Settings section → Alert Message Triggering.
+
+*AC2*: The current alert time between stage 1 & stage 3 (minutes) is displayed clearly, the time is calculated when 1^st^ internal notification is sent.
+
+*AC3*: The admin can edit the alert time (minutes) and only positive integers is valid. If not, there will be error message to remind the user to correct the input.
+
+*AC4*: After the user clicks “Save”, the update alert time (minutes) is saved correctly and persists after page refresh or next login.
+
+*AC5*: The update will not be saved, if the user clicks “Cancel”.
+
+*AC6:* System generate an email to alert group with excel attached to show the affected customer without second notification (stage 3) per incident.
+
+!image-20250924-055847.png|width=530,alt=""image-20250924-055847.png""!
+
+!image-20250929-034333.png|width=679,alt=""image-20250929-034333.png""!
+
+!image-20250929-034345.png|width=679,alt=""image-20250929-034345.png""!",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,04/Sep/25 10:45 AM,22/Oct/25 12:22 PM,25/Sep/25 12:00 AM
+Story,EP-89,976045,Alert Group,971124,EP-1,Administration,"*As* an admin user,
+
+*I want to* configurate the alert group so that people in this group can receive e-mail notification (alert message) when affected CAs who can’t receive the second notification (stage 3) after the first notification is sent within defined time range
+
+*So that* I can deal with the delay issue quickly and update the following notification as soon as possible. 
+
+*Acceptance Criteria*:
+
+*AC1*: After the user click the “Add New Role” button, each permission except “Receive Alert Message” of Alert Group can be changed. If the user clicks save, the changes will be saved and updated. If the user clicks cancel, the changes will be cancelled.
+
+*AC2*: The permission “Receive Alert Message” is mandatory for Alert Group and cannot be changed.
+
+*AC3:* Every time the alert message is triggered, it will be sent to users in Alert Group.
+
+
+
+!image-20250924-082306.png|width=530,alt=""image-20250924-082306.png""!
+
+!image-20250924-083501.png|width=530,alt=""image-20250924-083501.png""!",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,04/Sep/25 10:44 AM,22/Oct/25 5:04 PM,25/Sep/25 12:00 AM
+Story,EP-44,972331,Setting: Enable/Disable Internal Communication,971124,EP-1,Administration,"As an admin,
+I want to be able to enable or disable internal communication,
+So that the system’s internal communication behavior can be controlled as needed.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can log into the E2E outage platform and navigate to Administration → Settings section.
+
+*AC2:* The current status of the internal communication toggle (enabled or disabled) is displayed clearly.
+
+*AC3:* The admin can toggle the internal communication setting on or off.
+
+*AC4:* After toggling, the admin clicks the “Save” button to apply the change.
+
+*AC5:* If toggling internal communication impacts active processes, the system warns the admin before saving changes. The warning should include “Existing active communication will be terminated immediately”
+
+*AC6:* The updated internal communication status is saved correctly and persists after page refresh or subsequent logins.
+
+*AC7:* The system provides a confirmation message indicating that the internal communication setting has been updated successfully.
+
+*AC8:* All the active communication process will also be terminated immediately after communication setting has been updated successfully.
+
+!image-20250819-080308.png|width=1110,height=594,alt=""image-20250819-080308.png""!",Kelvin Yat Sing Sa,62eb30495111209f4fded697,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,19/Aug/25 3:58 PM,06/Oct/25 2:42 PM,
+Story,EP-41,972260,Role Management: delete role,971124,EP-1,Administration,"As an admin,
+I want to delete a specific role
+So that obsolete or unnecessary roles can be removed to maintain a clean and secure role management system in the E2E platform.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can navigate to the Administration module and access the Roles section.
+
+*AC2:* The admin can select a specific role from the roles list to delete.
+
+*AC3:* Clicking the “Delete” button prompts a confirmation dialog asking the admin to confirm or cancel the deletion.
+
+*AC4:* If the admin confirms, the role is deleted from the system.
+
+*AC5:* The system prevents deletion of any default or critical system roles and informs the admin accordingly.
+
+*AC6:* If the role is assigned to any users, the system warns the admin and either prevents deletion or requires reassignment of those users before proceeding.
+
+*AC7:* After successful deletion, the deleted role no longer appears in the roles list.
+
+*AC8:* The system displays a confirmation message stating the role has been deleted successfully.
+
+*AC10:* After deletion, the users originally assigned to this role will become inactive if no new role is assigned ",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,19/Aug/25 10:48 AM,14/Oct/25 9:40 AM,
+Story,EP-40,972183,Setting: Configurate the max number of update,971124,EP-1,Administration,"As an admin,
+I want to limit the number of updates between first interim and final restoration
+So that the system prevents excessive updates
+
+*Acceptance Criteria:*
+
+*AC1:* The system enforces a configurable maximum number of updates allowed between interim and final update.
+
+*AC2:* If the update limit is reached, further auto-updates are blocked
+
+*AC3:* The admin receives a clear notification when the update limit has been reached and further updates are paused.
+
+*AC4:* The update limit settings are configurable by the admin via the Settings page. ",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 12:02 PM,22/Oct/25 12:17 PM,
+Story,EP-39,972181,Settings: Opt-out/Opt-in customer by upload file,971124,EP-1,Administration,"As an admin,
+I want to bulk update opt-in/out statuses via CSV upload
+So that I can save time for updating opt-in/out status for multiple customers 
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can navigate to the Setting section.
+
+*AC2:* The admin can download a sample CSV template containing columns for Customer Account (CA) and Opt-in/Out action.
+
+*AC3:* The admin can upload a CSV file following the sample format with CA and desired opt-in or opt-out status for each customer.
+
+*AC4:* Upon uploading, the system validates the CSV file for required columns, proper formatting, and existence of customer accounts.
+
+*AC5:* Clicking the “Save” button applies the opt-in/out status changes from the CSV file to the corresponding customers.
+
+*AC6:* The system displays a summary report indicating the number of successful updates and any errors encountered with details.
+
+*AC7:* The System sends details of the summary report to admin
+
+*AC8:* The updated opt-in/out statuses are immediately reflected in the customer records.
+
+*AC9:* The system displays a confirmation message after successful bulk update.
+
+*AC10*: The system sends the summary report via e-mail indicating the number of successful updates and any errors encountered with details to admin",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:51 AM,06/Oct/25 2:45 PM,
+Story,EP-38,972180,Settings: Opt-out/Opt-in customer by manual input,971124,EP-1,Administration,"As an admin,
+I want to manually set opt-in or opt-out status for customers
+So that customer communication preferences can be managed accurately.
+
+*Acceptance Criteria:* 
+
+*AC1:* The admin can navigate to the Settings section.
+
+*AC2:* The admin can manually input one Customer Accounts (CA) identifiers.
+
+*AC3:* The admin can select an opt-in or opt-out toggle for the specified customers.
+
+*AC4:* Clicking the “Save” button saves the changes to the customers’ opt-in/out statuses.
+
+*AC5:* The updated opt-in/out statuses are immediately reflected in the customer records.
+
+*AC6:* The admin receives a confirmation message after successfully saving the opt-in/out status updates.
+
+*AC7:* The admin can only opt-in or opt-out one customer per each manual operation 
+
+!image-20250827-014946.png|width=1102,height=595,alt=""image-20250827-014946.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:51 AM,14/Oct/25 9:41 AM,
+Story,EP-37,972179,Settings: Set external notification delay,971124,EP-1,Administration,"As an admin,
+I want to configure a delay for external notifications after sending notifications to internal stakeholders
+So that external communications are appropriately timed following internal alerts.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can navigate to the Delay & Control section within the administration settings.
+
+*AC2:* The current delay value for external notifications is displayed clearly to the admin.
+
+*AC3:* The admin can edit the delay interval (e.g., time in minutes) for external notifications.
+
+*AC4:* Upon clicking the “Save” button, the updated delay is saved and applied immediately.
+
+*AC5:* The updated delay value persists after page refresh or subsequent logins.
+
+*AC6:* The system validates the delay input to ensure it is within acceptable ranges (e.g., minimum zero or positive integer).
+
+*AC7:* The system displays a confirmation message indicating the delay setting has been updated successfully.
+
+*AC8:* While the delay is active, the system sends internal notifications immediately and holds external notifications until the delay time has elapsed.
+
+*AC9:* If the delay is changed while notifications are pending, the new delay setting takes effect for subsequent notifications only.",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:51 AM,22/Oct/25 12:24 PM,
+Story,EP-36,972178,Settings: Set trigger mode,971124,EP-1,Administration,"As an admin,
+I want to enable or disable trigger modes for notifications
+So that I can control whether notifications are sent automatically or manually in the E2E platform.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can navigate to the “Trigger Mode” section after logging in.
+
+*AC2:* The admin can see toggle switches for both “Auto Trigger” and “Manual Trigger” modes.
+
+*AC3:* The admin can independently toggle “Auto Trigger” and “Manual Trigger” modes on or off.
+
+*AC4:* After adjusting the toggles, the admin can click the “Save” button to apply changes.
+
+*AC5:* The system saves the updated trigger mode settings and applies them immediately.
+
+*AC6:* The system displays a confirmation message indicating that the trigger mode settings have been successfully updated.
+
+!image-20250818-035433.png|width=1110,height=601,alt=""image-20250818-035433.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:51 AM,14/Oct/25 9:42 AM,
+Story,EP-35,972177,Setting: Enable/Disable External Communication,971124,EP-1,Administration,"As an admin,
+I want to be able to enable or disable external communication
+So that the system’s communication behavior can be controlled as needed.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can log into the E2E outage platform and navigate to Administration → Settings section.
+
+*AC2:* The current status of the external communication toggle (enabled or disabled) is displayed clearly.
+
+*AC3:* The admin can toggle the external communication setting on or off.
+
+*AC4:* After toggling, the admin clicks the “Save” button to apply the change.
+
+*AC5:* The updated external communication status is saved correctly and persists after page refresh or subsequent logins.
+
+*AC6:* The system provides a confirmation message indicating that the external communication setting has been updated successfully.
+
+*AC7:* If toggling external communication impacts active processes, the system warns the admin before saving changes.
+
+*AC8:* All the active communication process will also be terminated immediately after communication setting has been updated successfully.",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:51 AM,06/Oct/25 2:43 PM,
+Story,EP-34,972176,Setting: Configure Auto-Update Interval,971124,EP-1,Administration,"As an admin,
+I want to check and edit the auto-update interval
+So that the interim notification frequency aligns with operational needs.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can log into the E2E outage platform and navigate to Administration → Settings.
+
+*AC2:* The current auto-update interval value is displayed clearly to the admin.
+
+*AC3:* The admin can edit the auto-update interval value in an input field.
+
+*AC4:* The admin can click the “Save” button to save the updated auto-update interval.
+
+*AC5:* The updated auto-update interval value is saved correctly and persists after page refresh or subsequent logins.
+
+*AC6:* The system validates the interval input to ensure it is within allowed limits (e.g., positive integer, minimum/maximum thresholds), and show error msg if input is incorrect
+
+*AC7:* The system displays a confirmation message after successfully saving the updated interval.",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:51 AM,27/Oct/25 3:58 PM,
+Story,EP-33,972175,Setting: Configure Data Retention Period,971124,EP-1,Administration,"As an admin,
+I want to check and edit the data retention period of Customer data in SharePoint as well as outage data in the E2E platform
+So that the system retains data according to current compliance and business requirements.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can log in and navigate to Administration → Settings section.
+
+*AC2:* The current data retention periods for both Customer data (stored in SharePoint) and outage data (in the E2E platform) are displayed clearly.
+
+*AC3:* The admin can edit the data retention period values for both Customer data and outage data.
+
+*AC4:* After editing, the admin clicks a “Save” button to apply changes.
+
+*AC5:* The updated data retention periods are saved correctly and persist after page refresh or next login.
+
+*AC6:* The system validates that retention period values are within acceptable ranges (e.g., positive integers with upper limit).
+
+*AC7:* The system provides confirmation feedback after successful update, such as “Data retention periods have been updated successfully.”
+
+ 
+
+!image-20250827-015053.png|width=1110,height=609,alt=""image-20250827-015053.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:51 AM,22/Oct/25 12:15 PM,
+Story,EP-32,972174,Role Management: create new role,971124,EP-1,Administration,"As an admin,
+I want to add a new role
+So that I can define custom access permissions for new user groups in the E2E platform.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can navigate to the Administration module and open the Roles section.
+
+*AC2:* The admin can click an “Add New Role” button to start creating a new role.
+
+*AC3:* The system displays a form with an input field for the role name and a list of permissions with toggles or checkboxes, similar to existing roles.
+
+*AC4:* The admin enters a unique role name and selects the desired permissions from the list.
+
+*AC5:* Clicking the “Save” button creates the new role with the specified name and permissions.
+
+*AC6:* The new role appears immediately in the list of roles.
+
+*AC7:* The system confirms role creation by displaying a message such as “Role [Role Name] has been created successfully.”
+
+*AC8:* The system validates that the role name is unique and not empty; if invalid, it displays an error and prevents saving.
+
+*AC9:* The permissions assigned to the new role take effect immediately.
+
+!image-20250822-013056.png|width=1216,height=671,alt=""image-20250822-013056.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:48 AM,14/Oct/25 9:38 AM,
+Story,EP-31,972172,Role Management: Edit each role,971124,EP-1,Administration,"As an admin,
+I want to modify the name and permission associated with each role
+So that all roles can have correct access to E2E platform
+
+*Acceptance Criteria:*
+
+*AC1:* The admin user can log in and navigate to the Administration module, then to the Roles section.
+
+*AC2:* The admin can select any role from the roles list to edit.
+
+*AC3:* Upon selecting a role, the system displays the current role name in an editable input field.
+
+*AC4:* The system displays a comprehensive list of permissions as toggles or checkboxes for features/modules such as:
+
+* Full Dashboard Access
+* Outage Management
+* Emergency Stop
+* User Administration
+* Template Management
+* Send Notifications
+* Receive Notifications
+* Access Residential Customer Information
+* Access Non-Residential Customer Information
+* Download Data
+* Receive Outage Notification
+
+*AC5:* The admin can edit the role name as needed.
+
+*AC6:* The admin can toggle on or off any permissions for the role.
+
+*AC7:* Clicking the “Save” button saves both the updated role name and the updated permission settings.
+
+*AC8:* The updated role name and permissions take effect immediately across the platform.
+
+*AC9:* The system displays a confirmation message: “Permissions for role [Updated Role Name] have been updated.”
+
+*AC10:* The system validates that the new role name is unique and not empty before saving changes.
+
+*AC11:* If the role name is invalid (e.g., duplicate or blank), the system displays an appropriate error message and prevents saving.
+
+!image-20250903-062537.png|width=1147,height=614,alt=""image-20250903-062537.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:43 AM,14/Oct/25 9:39 AM,
+Story,EP-30,972169,Role Management: Display role list,971124,EP-1,Administration,"As an admin,
+I want to view all roles and their permissions in the platform
+So that I can understand the permissions assigned to each role and manage them effectively.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can navigate to the Roles section after logging in.
+
+*AC2:* The admin can view a complete list of all roles in the platform.
+
+*AC3:* For each role, the list clearly displays the associated access permissions.
+
+*AC4:* Display the #of active users of each role
+
+!image-20250818-034219.png|width=1132,height=619,alt=""image-20250818-034219.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:40 AM,14/Oct/25 9:38 AM,
+Story,EP-29,972168,User Management: adding multiple users via CSV upload,971124,EP-1,Administration,"As an admin user,
+I want to add multiple users by uploading a CSV file
+so that I can save time when onboarding new users to the E2E outage platform
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can navigate to the Users section and see an option/button to “Upload CSV” for adding users in bulk.
+
+*AC2:* Clicking the “Upload CSV” button opens a file selection dialog allowing the admin to choose a CSV file.
+
+*AC3:* The system accepts CSV files that contain mandatory fields such as staffID, and role in a specified format.
+
+*AC4:* After selecting a valid CSV file, the system validates the file format and data.
+
+*AC5:* If validation fails (e.g., missing fields, invalid email format, duplicate entries), the system displays detailed error messages for each issue identified, and the upload is rejected.
+
+*AC6:* If validation succeeds, the system adds all valid users from the CSV with default status set to “Active.”
+
+*AC7:* Newly added users appear in the user list immediately upon successful upload.
+
+*AC8:* The admin can cancel the upload process before confirmation without adding users.
+
+*AC9:* The system prevents uploading of users who already exist (identified by staffID) and notifies the admin accordingly.
+
+*AC10*: to show the sample CSV for download and edit, and upload to make sure user use the right format",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:33 AM,14/Oct/25 9:39 AM,
+Story,EP-28,972167,User Management: Identify user by search name/e-mail,971124,EP-1,Administration,"As an admin,
+I want to search users by names and emails
+So that I can quickly find a specific user in the E2E outage platform.
+
+*Acceptance Criteria:*
+
+*AC1:* The admin can see a search input box prominently placed in the Users section.
+
+*AC2:* The admin can enter a full or partial name or email address into the search box.
+
+*AC3:* As the admin types, the user list dynamically updates to display users whose name or email matches the search term (case-insensitive, partial match allowed).
+
+*AC4:* The admin can submit the search by pressing Enter or clicking a “Search” button (if applicable).
+
+*AC5:* If no matching users are found, the user list displays an appropriate message such as “No users found.”
+
+*AC6:* Clearing the search input or clicking a “Clear” button restores the full user list.
+
+*AC7:* The search feature supports searching across both first and last names as well as complete email addresses.
+
+*AC8:* Search results respect any other applied filters (e.g., Role or Status filtering combined with search).",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:30 AM,14/Oct/25 9:39 AM,
+Story,EP-27,972165,User Management: Identify user by filter,971124,EP-1,Administration,"*As* an admin,
+*I* want to filter users by roles and status
+*So that* I can find the specific user quickly
+
+Acceptance Criteria
+
+*AC1:* The admin can navigate to the Users section and see a “Filter” icon near the Role and Status columns.
+
+*AC2:* When the admin clicks the “Filter” icon near Role or Status, a filtering popup appears.
+
+*AC3:* The filtering popup allows the admin to select filter criteria—for example, select one or multiple Roles and/or Status values.
+
+*AC4:* The admin can apply the filter by clicking an “Apply” button in the popup.
+
+*AC5:* After applying the filter, the user list updates to show only users that match the selected Role(s) and/or Status(es).
+
+*AC6:* The admin can clear the filter criteria and see the full user list again by clicking a “Clear” or “Reset” button.
+
+*AC7:* The system allows combination filters (e.g., filtering by Role = ""Admin"" and Status = ""Active"" simultaneously).
+
+*AC8:* If no users match the filter criteria, the user list displays an appropriate message such as “No users found.”
+
+!image-20250818-032905.png|width=1106,height=591,alt=""image-20250818-032905.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:26 AM,14/Oct/25 9:39 AM,
+Story,EP-26,972164,User Management: Delete existing user,971124,EP-1,Administration,"*As* an admin,
+*I want* to delete existing users
+*So that* I can remove outdated or unauthorized accounts from the E2E outage platform and maintain a clean and secure user environment.
+
+*Acceptance Criteria:*
+
+*AC1:* Clicking the “Delete” button opens a confirmation dialog asking the admin to confirm or cancel the deletion.
+
+*AC2:* If the admin confirms deletion, the selected user is permanently removed from the system and no longer appears in the user list.
+
+*AC3:* If the admin cancels, the deletion does not proceed and the user remains in the list unchanged.
+
+*AC4:* The system prevents the admin from deleting their own user account to avoid accidental self-removal.
+
+*AC5:* After successful deletion, the admin receives a feedback message confirming the user has been deleted.
+
+*AC6:* Deleted users immediately lose access to the E2E outage platform.",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 11:21 AM,06/Oct/25 2:42 PM,
+Story,EP-25,972154,User Management: Disable/enable User,971124,EP-1,Administration,"*As* an admin,
+
+*I want* to disable or enable users
+
+*So that* only necessary user can access E2E outage platform
+
+Acceptance Criteria
+
+*AC1:* The admin can view the user list with each user’s current status displayed.
+
+*AC2:* For users with status “Active,” the action buttons shown are “Edit” and “Disable.”
+
+*AC3:* For users with status “Inactive,” the action buttons shown are “Edit” and “Enable.”
+
+*AC4:* Clicking the “Disable” button changes the user’s status from “Active” to “Inactive.”
+
+*AC5:* Once disabled, the user is blocked from logging into the E2E outage platform.
+
+*AC6:* Once enabled, the user is allowed to log into the platform according to their assigned role.
+
+*AC7:* The change in user status is immediately reflected in the user list.
+
+*AC8*: The system should pop up a msg “user [name] has been disabled” 
+
+!image-20250818-031918.png|width=1146,height=631,alt=""image-20250818-031918.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 10:14 AM,14/Oct/25 9:40 AM,
+Story,EP-24,972153,User Management: Edit user information,971124,EP-1,Administration,"*As* an admin,
+
+*I want* to edit user information
+
+*So tha*t E2E platform can keep latest user information
+
+Acceptance Criteria
+
+*AC1:* The admin user can navigate to the Users page.
+
+*AC2:* The admin can click the “Edit” button on any user record.
+
+*AC3:* When “Edit” is clicked on a user record, the “Edit”, “Delete”, and “Disable/Enable” buttons for that user are replaced by “Save” and “Cancel” buttons.
+
+*AC4:* The admin can edit the user’s role fields only; the name and email field are not editable.
+
+*AC5:* When the admin clicks “Save,” the updated user information is saved and immediately reflected in the user list.
+
+*AC6:* When the admin clicks “Cancel,” any changes made are discarded, and the buttons revert back to “Edit” and “Disable/Enable.”
+
+!image-20250818-021320.png|width=1154,height=624,alt=""image-20250818-021320.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 10:09 AM,14/Oct/25 9:40 AM,
+Story,EP-23,972151,User Management: Add new user,971124,EP-1,Administration,"*As* an admin,
+*I want* to be able to add new user when needed
+*So tha*t new stakeholders can use E2E outage platform.
+
+Acceptance Criteria
+
+*AC1:* The admin can navigate to Administration > Users after logging in with admin privileges.
+
+*AC2:* The admin can see and click the “+ Add New User” button on the Users tab.
+
+*AC3:* Clicking the “+ Add New User” button opens a popup form with input fields and “Cancel” and “Create” buttons.
+
+*AC4:* When the admin inputs a valid [staffID], the system auto-fills the corresponding [name] and [e-mail] fields in the popup.
+
+*AC5:* The admin can edit or confirm the auto-filled information before creating the user.
+
+*AC6:* Clicking “Create” adds the new user to the system with a default status of “Active.”
+
+*AC7:* The newly added user appears in the first row of the user list immediately after creation.
+
+*AC8:* The new user gains access to the platform according to the assigned role.
+
+*AC9:* Clicking “Cancel” closes the popup without adding a new user or making any changes.
+
+!image-20250822-012143.png|width=486,height=529,alt=""image-20250822-012143.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,18/Aug/25 10:06 AM,14/Oct/25 9:40 AM,
+Story,EP-3,971126,User Management: Display user list,971124,EP-1,Administration,"*As* an admin,
+*I want* to have the full list of users in E2E outage platform under “Users” tab
+*So that* I will know who is using the platform, enabling me to manage roles, monitor access, and ensure the right stakeholders are engaged during outage communication and resolution.
+
+
+
+*Acceptance Criteria*
+
+*AC1:* The admin user can access the ""Users"" tab under the Administration section after logging in.
+
+*AC2:* The ""Users"" tab displays a complete list of all users in the E2E outage platform in alphabetical order
+
+*AC3:* For each user in the list, the following details are visible: name, email, role, status, and last login time.
+
+*AC4:* The admin user can see action buttons for each user: “Edit”, “Delete”, and “Disable/Enable.”
+
+*AC5:* The admin user can successfully perform the following actions using the buttons: edit user details, disable or enable a user account, and delete a user if needed.
+
+
+
+!image-20250818-085802.png|width=1107,height=592,alt=""image-20250818-085802.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,12/Aug/25 10:59 AM,06/Oct/25 2:42 PM,
+Subtask,EP-104,979014,Study existing interface PON used to write the log to CCMS ,978781,EP-103,Communication log in CCMS,,Oliver Xiaolei Zhang,712020:6461eb7b-083d-462f-aaa2-18430f1bdbca,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Backlog,,22/Sep/25 11:14 AM,22/Sep/25 11:16 AM,
+Subtask,EP-114,982027,The URL for the outage details should be included within the message body.,971138,EP-9,Configure Message Template with Defined Variables,"*As* a user,
+
+*I want* to check the detailed incident information when I received the incident notification message
+
+*so that* I can ensure timely and effectively incident response.
+
+*Acceptance Criteria*:
+
+*AC1*: The link of outage detail page should be embedded in the message body when the “Incident ID“ variable is used in the message body.
+
+*AC2*: After the recipient clicks the URL embedded in the “Incident ID” variable, an outage detail page will appear as an overlay.
+
+!image-20251013-063416.png|width=280,alt=""image-20251013-063416.png""!
+
+!image-20251013-063446.png|width=280,alt=""image-20251013-063446.png""!",,,Erxi Xu,712020:0a179bb9-e05c-4f72-b489-211125b82c80,Medium,Backlog,,13/Oct/25 2:32 PM,13/Oct/25 2:56 PM,
+Subtask,EP-22,971300,Provide Message Templates for CLP internal and External,971138,EP-9,Configure Message Template with Defined Variables,,,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,To Do,,12/Aug/25 4:00 PM,12/Aug/25 4:00 PM,
+Subtask,EP-21,971298,Provide Message Templates for Different Channels,971138,EP-9,Configure Message Template with Defined Variables,"As a user, I want to create and manage message templates for different communication channels so that content is optimized for each channel's format.
+
+AC:
+
+Given the user is creating a message template
+When the user selects a channel (SMS, Email, App Push)
+Then the system provides a channel-specific template layout
+And allows saving and activating the template for that channel",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,To Do,,12/Aug/25 3:59 PM,12/Aug/25 3:59 PM,
+Subtask,EP-20,971295,Configure Message Template with Defined Variables,971138,EP-9,Configure Message Template with Defined Variables,"As a user, I want to configure message templates with defined variables so that outage notifications can be dynamically populated with incident-specific information.
+
+
+
+AC:
+Given the user is on the message template creation page
+When the user adds variables such as {incident_id}, {location}, {ETR}
+Then the system allows saving the template with these variables
+And replaces the variables with actual outage data when sending notifications",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,To Do,,12/Aug/25 3:55 PM,12/Aug/25 3:58 PM,
+Subtask,EP-100,978392,Technical feasibility to get update from HK-Observation via API,977712,EP-97,Extreme weather mode to allow use of designated templates,[~accountid:712020:a90249dc-ef0a-49f5-8436-00ef137d5bf1]  [~accountid:712020:6461eb7b-083d-462f-aaa2-18430f1bdbca]  please explore if we can integrate with Hong Kong Observation to get the weather condition to switch to extreme weather mode automatically so that designated templates are selected for communication.,Oliver Xiaolei Zhang,712020:6461eb7b-083d-462f-aaa2-18430f1bdbca,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,In Progress,,17/Sep/25 8:50 AM,19/Sep/25 10:31 AM,
+Task,EP-103,978781,Communication log in CCMS,971128,EP-5,Notifications Management,"*As* a call center colleague,
+*I want* to access the detailed communication log of outage notifications in CCMS for customers who call in
+*So that* I can quickly reference their communication history, provide accurate and timely information, and improve customer service during outage inquiries.
+
+
+
+*Acceptance Criteria:*
+*AC1*: Update the communication log from E2E platform to CCMS by using same columns mapping with PON interface.
+
+!Screenshot 2025-09-26 161542-20250926-081545.png|width=679,alt=""Screenshot 2025-09-26 161542-20250926-081545.png""!
+
+Reference: [https://clpdigital.atlassian.net/browse/EP-66|https://clpdigital.atlassian.net/browse/EP-66|smart-link] 
+
+
+
+*[Assumption]* CCS also having the same columns for data mapping.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,19/Sep/25 5:10 PM,24/Oct/25 10:40 AM,25/Sep/25 12:00 AM
+Story,EP-98,977817,Self-service for customers to opt-out SMS/email notification,971128,EP-5,Notifications Management,"*As* a customer,
+*I want* to reply to an outage-related SMS/Email with a specific keyword (e.g., ""0""),
+*So that* I can opt out of receiving future outage-related SMS and email notifications.
+
+ 
+
+*Acceptance Criteria:*
+
+*AC1:* The system sends outage-related SMS/Email messages that include opt-out instructions with the keyword “0”.
+
+*AC2: T*he system validates the keyword replied by customer.
+
+*AC3:* The customer receives an auto-reply message for acknowledgement.
+
+*AC4:* If the keyword is valid, the system auto-updates the customer’s communication preferences to disable *ALL* future outage-related notification.
+
+*TBC:*
+
+*AC5:* If the keyword is invalid or malformed, the system store and send a weekly report in excel to capture the wrong reply.
+
+!image-20250929-032256.png|width=612,alt=""image-20250929-032256.png""!
+
+!image-20250929-032343.png|width=679,alt=""image-20250929-032343.png""!
+
+Reference: [https://clpdigital.atlassian.net/browse/EP-65|https://clpdigital.atlassian.net/browse/EP-65|smart-link] 
+
+[https://clpdigital.atlassian.net/browse/EP-38|https://clpdigital.atlassian.net/browse/EP-38|smart-link] ",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Sun Hin San Hung,712020:32c40c32-0b70-478d-b194-335f4ddc269f,Medium,Ready for Tech & QA Review,,11/Sep/25 5:32 PM,23/Oct/25 3:09 PM,
+Story,EP-66,973036,View Notification History with Detailed Metrics,971128,EP-5,Notifications Management,"As a user, 
+
+I want to view notification history including date, stage, channel, internal/external flag, status, recipients count, and incident ID 
+
+So that I can monitor communication effectiveness.
+*Acceptance Criteria:*
+
+* AC1: The system shows a notification history list with columns for date, communication stage, channel, internal/external indicator, notification status (sent, failed, pending), number of CA sent, number successfully received, number failed, and associated incident ID.
+
+!image-20250901-033353.png|width=1065,height=579,alt=""image-20250901-033353.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:52 PM,14/Oct/25 9:49 AM,
+Story,EP-64,973033,"Use Incident Data Points (Status, ETR, Affected Customers, Power Status) for Logic Configuration",971128,EP-5,Notifications Management,"As a user, 
+
+I want to use incident status, estimated time of restoration (ETR), number of affected customers, and power status as data points 
+
+So that I can configure notification triggers to automate effective communication.
+*Acceptance Criteria:*
+
+* AC1: The system provides incident status, ETR, affected customers count, and power status as selectable data points for trigger logic.
+* AC2: The user can combine these data points with logical operators to create complex trigger rules.
+
+!image-20250904-083915.png|width=934%,alt=""image-20250904-083915.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:49 PM,06/Oct/25 2:48 PM,16/Oct/25 12:00 AM
+Story,EP-63,973032,Configure Triggering Logic Based on Upstream OMS Data Points,971128,EP-5,Notifications Management,"As a user, 
+
+I want to configure the triggering logic of auto notifications based on data points from upstream OMS 
+
+So that I can automate communication effectively.
+
+*Acceptance Criteria:*
+
+* AC1: The system imports relevant data points from the OMS (Outage Management System).
+* AC2: The user can define rules/conditions based on these data points (e.g., incident status changes).
+* AC3: Changes in OMS data automatically trigger notifications based on defined logic.
+
+!image-20250901-033058.png|width=1078,height=603,alt=""image-20250901-033058.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:47 PM,14/Nov/25 3:58 PM,
+Story,EP-62,973031,Option to Send to All Channels with the Same Priority in Auto-Trigger Notification,971128,EP-5,Notifications Management,"As a user, 
+
+I want the flexibility to send notifications to all selected channels with equal priority 
+
+So that customers can receive the message via all available channels.
+
+*Acceptance Criteria:*
+
+* AC1: The system allows the user to configure the notification to send through all selected channels simultaneously.
+* AC2: Customers with multiple contact methods receive distinct notifications on each selected channel.
+* AC3: The system confirms this setting clearly to the user before saving.
+
+!image-20250827-024927.png|width=1154,height=621,alt=""image-20250827-024927.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:46 PM,06/Oct/25 2:49 PM,
+Story,EP-61,973030,Set Priority Among Multiple Channels in Auto-Trigger Notification,971128,EP-5,Notifications Management,"As a user, 
+
+I want to set the priority of multiple channels in auto-trigger notifications 
+
+So that customers receive only one notification based on priority.
+*Acceptance Criteria:*
+
+* AC1: The system provides a mechanism to rank or order multiple selected channels by priority.
+* AC2: When a customer has multiple contact methods, only the highest priority channel delivers the notification.
+* AC3: The channel priority order can be updated by the user at any time.
+* AC4: The priority is applied to communications in all 3 stages.
+
+!image-20250901-032843.png|width=1062,height=575,alt=""image-20250901-032843.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:44 PM,06/Oct/25 2:49 PM,
+Story,EP-60,973028,Select One or Multiple Channels for Auto-Trigger Notification,971128,EP-5,Notifications Management,"As a user, 
+
+I want to select one or multiple notification channels for auto-trigger notifications 
+
+So that I can notify recipients with different channels
+*Acceptance Criteria:*
+
+* AC1: The system allows selecting one or more channels for auto-trigger notifications.
+* AC2: The selection UI supports adding or removing channels before saving the configuration.
+* AC3: The system should use the selected channel for communication at all 3 stages. 
+
+!image-20250901-032713.png|width=1062,height=575,alt=""image-20250901-032713.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:42 PM,06/Oct/25 2:48 PM,
+Story,EP-59,973025,Select Templates for Different Channels in Auto-Trigger Notification,971128,EP-5,Notifications Management,"As a user, 
+
+I want to select specific templates for different channels in auto-trigger notifications
+
+So that I can optimize content per delivery method.
+*Acceptance Criteria:*
+
+* AC1: The system allows selecting and assigning channel-specific templates for auto-trigger notifications
+
+!image-20250901-032536.png|width=1062,height=575,alt=""image-20250901-032536.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:41 PM,06/Oct/25 2:48 PM,
+Story,EP-58,973022,Select Templates for Different Stages in Auto-Trigger Notification,971128,EP-5,Notifications Management,"As a user, 
+
+I want to select templates for different stages of communication in auto-trigger notifications 
+
+So that I can tailor messages appropriately.
+*Acceptance Criteria:*
+
+* AC1: The system allows associating distinct templates with various communication stages (e.g., 1st initial, 2nd interim update, 3rd resolution).
+* AC2: The user can review and update templates associated with each stage.
+
+!image-20250827-023912.png|width=1107,height=628,alt=""image-20250827-023912.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:40 PM,21/Oct/25 12:18 PM,
+Story,EP-57,973021,Save Draft ,971128,EP-5,Notifications Management,"As a user, 
+
+I want to save the manual notification as a draft
+
+So that I can manage messaging timelines flexibly.
+*Acceptance Criteria:*
+
+* AC1: The system allows saving partially composed notifications as drafts.
+* AC2: The user can access and edit saved drafts anytime before sending.
+* AC3: Drafts clearly show status and last edited date.
+* AC4: The system allows confirmation and sending of drafted notifications.
+* AC5: The system allows all users with permission to edit templates to see and edit the drafts.
+!image-20250904-085045.png|width=910%,alt=""image-20250904-085045.png""!
+
+!image-20250827-023724.png|width=1141,height=646,alt=""image-20250827-023724.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:38 PM,14/Oct/25 9:49 AM,
+Story,EP-55,972951,Manually Compose Message Content,971128,EP-5,Notifications Management,"As a user, 
+
+I want to manually compose the message content
+
+So that I can customize communication for specific needs.
+*Acceptance Criteria:*
+
+* AC1: The system provides a rich text editor for composing message content.
+* AC2: Users can insert variables into the message.
+* AC3: The system validates message length and formatting before sending.
+
+!image-20250827-023700.png|width=1141,height=646,alt=""image-20250827-023700.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 3:33 PM,14/Oct/25 9:48 AM,
+Story,EP-54,972948,Select Particular Outage Incident for Manual Notification,971128,EP-5,Notifications Management,"As a user, 
+
+I want to select a particular outage incident when sending manual notifications 
+
+So than I can align messages with relevant incident
+
+*Acceptance Criteria:*
+
+* AC1: The system shows a list of active and recent outage incidents for selection.
+* AC2: The user can associate the manual notification with one selected outage incident.
+* AC3: The selected incident’s details are displayed to confirm the correct association.
+* AC4: The variables in the message content are updated accordingly 
+
+!image-20250827-023640.png|width=1141,height=646,alt=""image-20250827-023640.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 2:57 PM,14/Oct/25 9:48 AM,
+Story,EP-53,972945,Select Specific Channel for Manual Notification,971128,EP-5,Notifications Management,"As a user, 
+
+I want to select a specific channel to send the manual notification 
+
+So that I can choose the most appropriate delivery method.
+
+*Acceptance Criteria:*
+
+* AC1: The system presents available channels (e.g., SMS, email, app push) for manual notifications.
+* AC2: The user can select one or multiple channels for delivering the notification.
+* AC3: The system allows changing the selected channels prior to sending.
+
+!image-20250827-023525.png|width=1141,height=646,alt=""image-20250827-023525.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 2:53 PM,14/Nov/25 4:32 PM,
+Story,EP-52,972944,Manual Send to Specific Recipient Group,971128,EP-5,Notifications Management,"As a user, 
+
+I want to manually send the notification to a specific recipient group 
+
+So that I can target communications precisely.
+*Acceptance Criteria:*
+
+* AC1: The system allows the user to select one or more predefined recipient groups for manual notification.
+* AC2: The system displays a list of predefined recipient groups 
+* AC3: The user can confirm the recipient group selection before sending.
+
+!image-20250827-023508.png|width=1141,height=646,alt=""image-20250827-023508.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,21/Aug/25 2:51 PM,14/Oct/25 9:48 AM,
+Story,EP-51,972689,Select Templates for Different Recipient Groups,971128,EP-5,Notifications Management,"As a user
+
+I want to select templates for different recipient groups 
+
+So that the correct message is sent to each audience.
+
+*Acceptance Criteria:*
+
+*AC1:* When the user selects a recipient group while sending a notification, the system displays a list of templates applicable to that group.
+
+*AC2:* The user must select one template from the displayed list to associate with the chosen recipient group.
+
+*AC3:* The system sends the selected template content to all members within the corresponding recipient group.
+
+*AC4:* If no templates are available or assigned for a selected customer group, the system alerts the user and prevents sending until a template is selected or assigned.
+
+*AC5:* The system ensures that only templates of selected recipient group are displayed for selection.
+
+*AC6:* The user can review and modify the template selection for each recipient group before finalizing notification configuration.
+
+!image-20250901-032111.png|width=1087,height=596,alt=""image-20250901-032111.png""!
+
+!image-20250901-032131.png|width=1057,height=573,alt=""image-20250901-032131.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,20/Aug/25 2:18 PM,06/Oct/25 2:49 PM,
+Story,EP-14,971146,Download the notification history with detailed information,971128,EP-5,Notifications Management,"As a user, 
+
+I want to download the notification history with all detailed columns 
+
+So that I can analyze communication effectiveness offline and share records.
+
+Acceptance Criteria:
+AC1: The system provides a download button on the notification history page.
+AC2: When clicked, the system exports all visible notification history data (date, stage, channels, internal/external flag, status, CA count, success, failure, incident ID) into a CSV file.
+AC3: The downloaded CSV file includes column headers matching the table view.
+AC4: The download feature is accessible to authorised users only who have permission to download notification history.
+
+!image-20250901-040307.png|width=1065,height=579,alt=""image-20250901-040307.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,12/Aug/25 11:33 AM,14/Oct/25 9:49 AM,
+Subtask,EP-134,989516,Incident with Power Partially Restored without incidentUsagePoints​,987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Could happen if there is some problem with network, ONT or Kafka
+* Power *Partially* Restored _incidents_ message is received, but no corresponding _incidentUsagePoints_ message is received. (Power status = Partially Restored)
+
+!image-20251113-090512.png|width=268,alt=""image-20251113-090512.png""!
+
+
+
+*Potential handling:*
+
+* Discard the Power Partially Restored notification.
+* When power is fully restored (Power status = {{Partially Restored}} -> {{Restored}}), Stage 3 (Power Restore) notification will be sent to the affected customers same as stage 1 Incidnet UsagePoints.
+
+
+
+*Decision:*
+
+Agreed the handling.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,13/Nov/25 4:56 PM,17/Nov/25 5:58 PM,
+Subtask,EP-131,988836,incidentUsagePoints for New and other status incidents does not match,987319,EP-120,Operation exception scenario,"*Cause:*
+
+Due to the system design or limitation of ADMS, it might not have UsagePoint for interim update. As a result, E2E don’t know who to inform for interim update.
+
+
+
+*Case Study:*
+
+0:00 - Outage occurred
+
+0:03 - Receive verified event from MSV, with {{incident}} + {{UsagePoint}}, affected customer (meter ID) = 10.
+
+0:10 - Interim update by PSBG, with {{incident}} data but no {{UsagePoint}}.
+
+
+
+*Potential Handling:*
+
+* Use the {{UsagePoint}} for new outage (Incident status = NEW) to recognize the affected customer to be informed. 
+
+
+
+*Decision:*
+
+* Discard interim update and send alerts to stakeholders for acknowledgement.
+* Send the Stage 3: power restoration notification as remaining journey.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,10/Nov/25 2:28 PM,17/Nov/25 5:58 PM,
+Subtask,EP-130,988829,Receive fully Restore event after the PartiallyRestore event,987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Large incident impact multiple affected customer which PSBG restored power to partially and update the status in ADMS as power status = Partially Restore.
+* And PSBG would update the power status = Restored after the power is fully restored.
+
+ 
+
+*Case Study:*
+
+* An incident having 2000 affected customers.
+* 1500 of them are restored, and PSBG update Power status = Partially Restored.
+* Send stage 3 notification to those *1500* customers
+* Send stage 3 notification to remaining *500* customers when PSBG update Power status = Restored.
+
+ 
+
+*Potential Handling:*
+
+* Send notification only to the restored customers when Power Status update from {{Partially Restored}} → {{Restored}}, by finding difference between the UsagePoints of {{PartialRestore}} and stage 1 initial {{New}} list (Incident status = New).
+
+ 
+
+*Decision:*
+
+* Agreed with handling.
+* When multiple partially restored, send “delta” for each notification. For example: Partially restore 1 = 1500,  partially restore 2 = 300,  then remaining 200 when Power Status update from {{Partially Restored}} → {{Restored}}.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,10/Nov/25 12:25 PM,19/Nov/25 9:32 AM,
+Subtask,EP-129,988827,Power Status become PartialRestore (PartialRestore is the Stage 3 condition),987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Large incident impact multiple affected customer which PSBG restored power to partially and update the status in ADMS as Power Status = Partially Restore.
+
+
+
+*Case Study:*
+
+* An incident having *2000* affected customers.
+* 1500 of them are restored, and PSBG update Power status = Partially Restored.
+* Send stage 3 notification to those *1500* customers
+
+
+
+*Potential Handling:*
+
+* Send stage 3: Power restore notification only to the “restored customers” by using the UsagePoints of {{PartiallyRestored}}. 
+
+
+
+*Decision:*
+
+* Agreed with the handling.
+* When multiple partially restored, send “delta” for each notification. ",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,10/Nov/25 12:24 PM,17/Nov/25 5:58 PM,
+Subtask,EP-128,988825,	 Incident with Power Restored without incidentUsagePoints​,987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Could happen if there is some problem with network, ONT or Kafka
+* Power Restored _incidents_ message is received, but no corresponding _incidentUsagePoints_ message is received. (Power status = Restored)
+
+!image-20251113-032743.png|width=261,alt=""image-20251113-032743.png""!
+
+
+
+*Potential handling:*
+
+# Stage 3 (Power Restored) notification will be sent to the affected customers same as stage 1 Incidnet UsagePoints.
+# Consider same handling as system: permanent errors. Update SLS log and send alerts to E2E system admin to follow-up.
+## Add retry connection logic (x times) for timeout.
+##* Success: Continue the stage 3 notification
+##* Failed: Follow the system: permanent errors handling
+
+
+
+*Decision:*
+
+* Option 1
+* Add a separated scenario [https://clpdigital.atlassian.net/browse/EP-134|https://clpdigital.atlassian.net/browse/EP-134|smart-link] for partially restored without UsagePoint. ",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,10/Nov/25 12:24 PM,17/Nov/25 5:58 PM,
+Subtask,EP-126,987831,Deviation – incidentUsagePoints without incidents,987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Could happen if there is some problem with network, ONT or Kafka
+* _incidentUsagePoints_ message is received, but no corresponding _incidents_ message
+
+!image-20251106-071851.png|width=672,alt=""image-20251106-071851.png""!
+
+*Potential solution: Same handling as* [https://clpdigital.atlassian.net/browse/EP-125|https://clpdigital.atlassian.net/browse/EP-125|smart-link] 
+
+* Consider same handling as system: permanent errors. Update SLS log and send alerts to E2E system admin to follow-up. 
+** Eventually to have PSBG update the {{Affected Customer}}, and operator send missing notification manually.
+*  Add retry connection logic (x times) for timeout.
+** Success: Continue the notification journey
+** Failed: Follow the system: permanent errors handling
+
+
+
+*Decision:*
+
+Agreed, same follow-up as [https://clpdigital.atlassian.net/browse/EP-125|https://clpdigital.atlassian.net/browse/EP-125|smart-link] ",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,06/Nov/25 3:17 PM,17/Nov/25 5:58 PM,
+Subtask,EP-125,987828,Deviation – New incident without incidentUsagePoints,987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Could happen if PSBG has manually created an incident without any affected customers.
+* Could happen if there is some problem with network, ONT or Kafka
+* New Outage _incidents_ message is received, but no corresponding _incidentUsagePoints_ message is received.
+
+!image-20251106-065958.png|width=667,alt=""image-20251106-065958.png""!
+
+*Potential solution:*
+
+* Consider same handling as system: permanent errors. Update SLS log and send alerts to E2E system admin to follow-up. 
+** Eventually to have PSBG update the {{Affected Customer}}, and operator send missing notification manually.
+*  Add retry connection logic (x times) for timeout.
+** Success: Continue the notification journey
+** Failed: Follow the system: permanent errors handling
+
+
+
+*Decision:*
+
+* Agree the handling. Retry mechanism follow the technical design standard.
+* Add [https://clpdigital.atlassian.net/browse/EP-133|https://clpdigital.atlassian.net/browse/EP-133|smart-link] to follow the manual handling when UsagePoint is missing.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,06/Nov/25 2:58 PM,17/Nov/25 5:58 PM,
+Subtask,EP-124,987789,Deviation – interim happens after power restored,987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Could happen if the incident has not gone to “Field Completed”, but the same customers are affected by an outage again.
+* Can be identified if incident status goes to “Site Restored” or Power Status goes to “Restored” / “Partially Restored”; then incident status changes back to “Dispatched” or “In Progress” and/or Power Status changes back to an outage status.
+
+
+
+*Case study:*
+
+0:00 - Outage occurred.
+
+0:10 - PSBG completed repair, update Incident status = Site Restored OR Power Status = Restored.
+
+0:12 - Before closing the incident (-> Incident status = Field Completed), outage occurred again.
+
+0:13 - PSBG assign job, and incident status is update back to “Dispatch” or “In Progress”.
+
+!image-20251106-063733.png|width=667,alt=""image-20251106-063733.png""!
+
+*Potential handling:*
+
+# Complete the original journey (Stage 1/2/3), and continue stage 2/3 on same incident (Interim update → Power restoration).
+## Optional: If stage 1 message needed when outage occurred again?
+
+||*Event*||*E2E comm. journey*||*Status update*||
+|Outage occurred|Stage 1|Incident status = New|
+|Interim update|Stage 2|{{ATA}} is updated|
+|Power Restored|Stage 3|Incident status = Site Restored *OR*
+Power status = Restored|
+|Outage occurred again before updating {{Incident status = Field Completed}}|Stage 2|Incident status = Dispatched or In Progress|
+|Power Restored again|Stage 3|Incident status = Site Restored *OR*
+Power status = Restored|
+
+# Discard the “interim update” & “power restoration” for same incident which Incident status = Site Restored goes back to “In Progress” Or “Dispatch”. 
+#* Optional: Add if logic (ETR for 2nd outage > xx mins). The purpose is we still need to inform customer if the new outage can’t resolve in short period of time
+
+
+
+*Decision:*
+
+* Expect customer to have completed communication journey (Stage 1/2/3) when incidents happen again.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,06/Nov/25 2:29 PM,17/Nov/25 5:58 PM,
+Subtask,EP-121,987321,Deviation – interim first before the New Outage,987319,EP-120,Operation exception scenario,"*Cause:*
+
+* Could happen if Interim update happens while new outage is still under 3-minute checking by MSV (or network/kafka issue)
+* Can be identified when the incident status is not “New” but the incident ID has not been seen before
+
+
+
+*Case study:*
+
+0:00 - Outage occurred
+
+0:02 - Interim update by PSBG (E.g. ATA is updated)
+
+0:03 - Outage verified by MSV, send JSON to E2E (Incident status = New)
+
+Which “interim update” is earlier than “new outage notification”.
+
+!image-20251104-082847.png|width=688,alt=""image-20251104-082847.png""!
+
+*Potential handling:*
+
+# When this “interim update” happened, wait xx minutes if there is “new outage notification”.
+#* True: Send “New outage notification” & “Interim update” by sequence.
+#* False: Send the “Interim update” and follow the rest journey for stage 3 (Power restoration). Discard the “New outage notification” if receive later.
+# Send the interim update as normal, then discard the “new outage notification“ and follow the rest journey for stage 3 (Power restoration).
+# Discard the interim update.
+
+
+
+*Decision:*
+
+Option 1, with below timeline of how system operates:
+
+||*Time*||*Detail*||*Notification*||
+|0:00|Outage occurred, MSV is verifying the event| |
+|0:02|PSBG arrived, update ATA in ADMS| |
+| |Wait 5 minutes for “new outage notification”|Hold Stage 2 notification|
+|0:07|Received verified “new outage” from MSV|# Send Stage 1 notification|
+| | |# Send Stage 2 notification|",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Business Review,,04/Nov/25 4:28 PM,17/Nov/25 3:00 PM,
+Story,EP-96,977311,Access Customer Details CSV for Sensitive Customers,971129,EP-6,Outage History,"*As* an account manager, 
+
+*I want* to access sensitive customers / life support /elderly homes customer details stored in CSV format by clicking the corresponding count on the incident details, 
+
+*so that* I can follow up appropriately. 
+
+Acceptance Criteria: 
+
+AC1: Clicking the sensitive customers /life support/ elderly homes count triggers an access to the appropriate CSV file on CLP SharePoint. 
+
+AC2: Role-based access control is enforced.
+
+AC3: For the user with no “Access Residential Customer Information” and “Access Non-Residential Customer Information” permission, there is no link inserted in the count of other type of customer breakdown.
+
+!image-20250919-034050.png|width=456%,alt=""image-20250919-034050.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,10/Sep/25 3:21 PM,06/Oct/25 2:50 PM,
+Story,EP-95,977310,Access Customer Details CSV for NRT Customers,971129,EP-6,Outage History,"*As* an account manager,
+
+*I* *want* to access NRT customer details stored in CSV format by clicking the NRT count on the incident details,
+
+*so that* I can follow up appropriately.
+
+Acceptance Criteria:
+
+AC1: Clicking the NRT count triggers an access to the appropriate CSV file on CLP SharePoint.
+
+AC2: Role-based access control is enforced.
+
+AC3: For the user with NRT information permission, there is no link inserted in the count of other type of customer breakdown.
+
+!image-20250919-034200.png|width=456%,alt=""image-20250919-034200.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,10/Sep/25 3:19 PM,06/Oct/25 2:50 PM,
+Story,EP-94,977309,Access Customer Details CSV for RT Customers,971129,EP-6,Outage History,"*As* a call center colleague,
+
+*I* *want* to access RT customer details stored in CSV format by clicking the RT count on the incident details,
+
+*so that* I can provide timely support.
+
+Acceptance Criteria:
+
+AC1: Clicking the RT count triggers an access to the correct CSV file stored on CLP SharePoint.
+
+AC2: Access permissions restrict CSV downloads only to authorized roles.
+
+AC3: For the user without RT information permission, there is no link inserted in the count of other type of customer breakdown.
+
+!image-20250919-034224.png|width=456%,alt=""image-20250919-034224.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,10/Sep/25 3:16 PM,06/Oct/25 2:50 PM,
+Story,EP-93,977308,View summary list of building block impacted,971129,EP-6,Outage History,"*As* a user,
+
+*I want to* view the full list of building blocks and the corresponding number of customer impacted in each block
+
+*So tha*t I can get a better understanding of the outage impact and deal with the incident more efficiently.
+
+Acceptance Criteria:
+
+*AC1:* After clicking the name of “Estate” on the detailed outage information page, the user can view the summary list of building impacted.
+
+*AC2:* After clicking the “X” mark button, the user can return to the detailed outage information page.
+
+!image-20250910-071625.png|width=679%,alt=""image-20250910-071625.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,10/Sep/25 3:14 PM,14/Oct/25 9:51 AM,
+Story,EP-92,977307,Search outages by entering the incident ID in the search box,971129,EP-6,Outage History,"*As* a user,
+
+*I want* to search a particular outage information via incident ID
+
+*so that* I can quickly get the detailed information of the specific outage I would like to check.
+
+Acceptance Criteria:
+
+*AC1*: The Incident ID column in the search result should be aligned with the incident ID (case sensitive) which the user entered in the search box.
+
+*AC2*: If there is no incident can be found by the incident ID which the user entered, there is no search result.
+
+!image-20250919-034437.png|width=456%,alt=""image-20250919-034437.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,10/Sep/25 3:13 PM,14/Oct/25 9:50 AM,
+Story,EP-85,973919,View detailed information for an outage,971129,EP-6,Outage History,"*As* a user,
+*I want* to click the “View” button on any outage listed,
+*so that* I can see detailed information about the specific outage incident. 
+
+Acceptance Criteria: 
+
+AC1: Each outage row has a “View” action button. 
+
+AC2: Clicking “View” navigates the user to a detailed outage page or expands an inline panel showing detailed outage data. 
+
+AC3: The detailed view includes all summary fields plus more context such as detailed description, affected areas, crew status, E-van ATA, etc 
+
+AC4: The user can easily return to the outage list after viewing details. 
+
+!image-20250919-035440.png|width=397%,alt=""image-20250919-035440.png""!",Fanny Yim Fan Li,712020:5a00f3e7-92c6-4da6-874b-ece1cfa64724,Erxi Xu,712020:0a179bb9-e05c-4f72-b489-211125b82c80,Medium,Ready for Tech & QA Review,,25/Aug/25 5:36 PM,14/Oct/25 9:51 AM,
+Story,EP-84,973917,View full list of outages with summary information,971129,EP-6,Outage History,"*As* a user,
+*I want* to view a full list of outage incidents across all statuses,
+*so that* I can quickly see a summary including Incident ID, District, Incident Status, Number of Customer Affacted, Start Time, and Estimated Time of Restoration (ETR) or “N/A” for ongoing incidents.
+
+Acceptance Criteria: 
+
+AC1: The list displays all outages by default, before any filters are applied. 
+
+AC2: Columns shown in the list include: Incident ID, District, Incident Status, Number of customers impacted, Start Time, Estimated Time of Restoration (ETR), Actual Time of Restoration (ATR). 
+
+AC3: For ongoing or active cases, the ATR column should display ""N/A"". 
+
+AC4: Pagination or scrolling is supported if the list grows large (not shown in wireframe but best practice). 
+
+AC5: The list updates dynamically based on filter changes.
+
+!image-20250919-034746.png|width=397%,alt=""image-20250919-034746.png""!",,,Erxi Xu,712020:0a179bb9-e05c-4f72-b489-211125b82c80,Medium,Ready for Tech & QA Review,,25/Aug/25 5:36 PM,14/Oct/25 9:51 AM,
+Story,EP-83,973915,Filter outages by incident status,971129,EP-6,Outage History,"*As* a user,{{ }}
+*I want* to filter the outage list by selecting an incident status from a dropdown,{{ }}
+*so that* I can see only outages with that specific status. 
+
+Acceptance Criteria: 
+
+AC1: A dropdown filter labeled “All Statuses” is available above the outage list. 
+
+AC2: When a user selects an incident status (e.g., ""Dispatched"", ""New""), the outage list updates immediately to show only outages with that status. 
+
+AC3: If the user selects ""All Statuses,"" the outage list displays outages with all statuses without filtering. 
+
+AC4: The filtering should work in combination with other filters (e.g., district filter). 
+
+!image-20250919-034706.png|width=397%,alt=""image-20250919-034706.png""!",,,Erxi Xu,712020:0a179bb9-e05c-4f72-b489-211125b82c80,Medium,Ready for Tech & QA Review,,25/Aug/25 5:36 PM,14/Oct/25 9:51 AM,
+Story,EP-82,973913,Filter outages by district,971129,EP-6,Outage History,"*As* a user, 
+
+*I want* to filter the outage list by selecting a district from a dropdown, 
+
+*so that* I can see only the outages affecting that specific district. 
+
+Acceptance Criteria: 
+
+AC1: A dropdown filter labeled “All Districts” is available above the outage list. 
+
+AC2: When a user selects a district from the dropdown, the outage list updates immediately to show only outages in the selected district. 
+
+AC3: If the user selects ""All Districts,"" the outage list should show outages from all districts without filtering. 
+
+AC4: The filtering should work in combination with other filters (e.g., status filter). 
+
+!image-20250919-034641.png|width=397%,alt=""image-20250919-034641.png""!",,,Erxi Xu,712020:0a179bb9-e05c-4f72-b489-211125b82c80,Medium,Ready for Tech & QA Review,,25/Aug/25 5:36 PM,14/Oct/25 9:50 AM,
+Story,EP-15,971148,Export full list of outage incidents as CSV file,971129,EP-6,Outage History,"*As* a user,
+
+*I want* to export the list of outage incidents as a CSV file from the system
+
+*so that* I can check the list offline or send it to my colleague efficiently.
+
+Acceptance Criteria:
+
+*AC1:* The full list can be exported as a CSV file after the user with permission click the button “Export as CSV File”.
+
+*AC2:* Role-based access control is enforced.
+
+!image-20250919-034516.png|width=456%,alt=""image-20250919-034516.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,12/Aug/25 11:36 AM,09/Oct/25 11:50 AM,
+Subtask,EP-116,983837,Preview format should fit to channels selected,972673,EP-48,Preview Template,"*As* a user,
+
+*I want* to preview the template in true format to fit the selected channels
+
+*so that* I can see how the final message look like.
+
+*Acceptance Criteria:*
+*AC1:* The system should show corresponding format according to the selected channels. For example: Email having a subject line, ",Fanny Yim Fan Li,712020:5a00f3e7-92c6-4da6-874b-ece1cfa64724,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,21/Oct/25 12:21 PM,21/Oct/25 3:40 PM,
+Subtask,EP-132,989382,Preview auto-triggering notification,973022,EP-58,Select Templates for Different Stages in Auto-Trigger Notification,"*As* an user,
+*I want* to preview the 21 templates content used by auto-triggering notification
+*so that* I can see how the final message look like.
+
+*Acceptance Criteria:*
+*AC1:* The system provides a preview option accessible from the notification list.
+*AC2:* The system opens a window to show the summary of templates selected for this specific notification (Stage/Event/Template Name).
+*AC3:* The system will render the template with sample data or placeholders replaced by example values, when user click the template name on summary page.
+*AC4:* The preview reflects text formatting, images, and layout as it will appear in the actual message.
+*AC5:* The user can close the preview and return to original screen without losing changes.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Ready for Tech & QA Review,,13/Nov/25 2:10 PM,13/Nov/25 2:11 PM,
+Subtask,EP-109,980389,Technical study to automate customer's reply for opt-out option,977817,EP-98,Self-service for customers to opt-out SMS/email notification,"*As* an admin,
+
+*I want* to automate the customer reply “0” to
+
+*So that* I do not need to opt-out for each customer in E2E platform.",,,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,29/Sep/25 11:25 AM,29/Sep/25 11:30 AM,
+Subtask,EP-123,987701,Permanent errors,987699,EP-122,System exception scenario,"*Cause:*
+Permanent errors (schema violations, join timeouts, invalid payloads) are routed to corresponding DLQ topics with redacted details. (Reference: [https://clpdigital.atlassian.net/wiki/spaces/E2E/pages/965904898/Low-Level+Design?focusedCommentId=984122037|https://clpdigital.atlassian.net/wiki/spaces/E2E/pages/965904898/Low-Level+Design?focusedCommentId=984122037|smart-link] )
+
+
+
+*Case study:*
+
+# Outage occurs, data pass from MSV to E2E
+# MSV data: (CA *no.* = B1012345)
+# E2E requested format (CA *number* = B1012345)
+# Format (JSON) mismatch, E2E cannot recognize the incident and stop processing.
+
+
+
+*Partial Handling:* 
+
+* To send alert to pre-set stakeholder -> Login SLS for error log -> Located and manually fix it. 
+* Long-term solution is requested by business users (e.g. Fix the schema violation which not happen again)
+
+Reference: [https://clpdigital.atlassian.net/wiki/x/b4OuOg|https://clpdigital.atlassian.net/wiki/x/b4OuOg|smart-link] 
+
+
+
+*Decision:*
+
+Agreed on handling.",,,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,06/Nov/25 12:27 PM,17/Nov/25 2:49 PM,
+Task,EP-99,978390,Predefined variables for templates and manual notification,971127,EP-4,Template management,"business want the following predefined variables in to be added in message body:
+
+{noformat}1. Summary List of residential buildings impacted with life support customers
+2. Summary List of C&I buildings impacted with elderly home
+3. Summary List of residential buildings impacted
+4. Summary List of C&I customers' buildings impacted
+5. Timestamp of the email
+6. OutageLocation
+7. OutageRegion
+8. IncidentID
+9. StartTime
+10. Estimate time of Restoration (ETR)
+11. Number of affected Customers: AffectedCustomersCount
+12. Actual Time of Arrival (ATA)
+13. URL to the details of the outage (URL)
+14. Power Outage Incident Date and Time
+15. Substation Name
+16. Impacted District
+17. No. of Impacted Residential Customers
+18. No. of Impacted Customers on Life Support
+19. No. of Impacted C&I customers
+20. No. of Impacted Elderly home Customers
+21. Report generated time
+22. Incident status (e.g. New, Dispatched, Damage Assessed, Field Completed, Closed, Archived, Cancelled, etc)
+23. Incident power status (e.g. No outage, restored, partially restored, etc)
+24. Outage classification (CLP or customer fault)
+25. E-van dispatch status
+26. Crew Name
+27. Crew contact (email, business phone, email){noformat}
+
+
+
+Quick-win E-mail sample:
+
+*Please be reminded that the content of this email is strictly confidential.*
+
+|*Power Outage Incident Date and Time:*|2025-08-27 10:41|
+|*Incident details (substation name):*|MAYFAIR BY THE SEA E|
+|*Impacted District:*|PAK SHEK KOK TAI PO|
+
+ 
+
+|*Total impacted customers*|312|
+|No. of Impacted Residential Customers|286|
+|No. of Impacted Customers on Life Support|0|
+|No. of Impacted C&I customers:|26|
+|No. of Impacted Elderly home Customers|0|
+
+
+
+*Summary List of residential buildings impacted with life support customers:*
+
+|Building Block|District|No. of Customer impacted|
+
+
+
+*Summary List of C&I buildings impacted with elderly home:*
+
+|Building Block|District|No. of Customer impacted|
+
+
+
+*Summary List of residential buildings impacted:*
+
+|Building Block|District|No. of Customer impacted|
+|TOWER 16 FO CHUN ROAD,MAYFAIR BY THE SEA I 23|PAK SHEK KOK TAI PO|59|
+|TOWER 17 FO CHUN ROAD,MAYFAIR BY THE SEA I 23|PAK SHEK KOK TAI PO|57|
+|TOWER 18 FO CHUN ROAD,MAYFAIR BY THE SEA I 23|PAK SHEK KOK TAI PO|56|
+|TOWER 19 FO CHUN ROAD,MAYFAIR BY THE SEA I 23|PAK SHEK KOK TAI PO|56|
+|TOWER 20 FO CHUN ROAD,MAYFAIR BY THE SEA I 23|PAK SHEK KOK TAI PO|58|
+
+
+
+*Summary List of C&I customers' buildings impacted:*
+
+|Building Block|District|No. of Customer impacted|
+|FO CHUN ROAD,MAYFAIR BY THE SEA I 23|PAK SHEK KOK TAI PO|26|
+
+ 
+
+|*SharePoint Link to the detailed report*|[Folder link to RT and life support customer details [Sensitive]|https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2Fclpgroup.sharepoint.com%2Fsites%2FE2EOutageCommunication%2FShared*20Documents%2FGeneral%2F*5BSensitive*5D*20Incident*20Communication*20(Production)__%3BJSUlJSUl!!ACUi__RbTRP-!fjGE8F8trxgH5XebSiLF4IBI-PDAXo7EpwGXTPbxFDzsQXWSf7FIzJ7nZ5U4zL0j4qblv1OhpU4ioDKzk3Bl%24&data=05%7C02%7Csun.hung%40clp.com.hk%7C94ea398ce0c54b7ae8f208dde5dfed0f%7C33893f4e33974cabbb3c9224bf7eafba%7C1%7C0%7C638919472097976654%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=HEVXsQzZq%2FK1g2%2FfxWbVngxUGnkZKCutzzJlBU%2BSP48%3D&reserved=0]|
+| |[Folder link to C&I and elderly home list|https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2Fclpgroup.sharepoint.com%2Fsites%2FE2EOutageCommunication%2FShared*20Documents%2FGeneral%2FIncident*20Communication*20(Production)__%3BJSUl!!ACUi__RbTRP-!fjGE8F8trxgH5XebSiLF4IBI-PDAXo7EpwGXTPbxFDzsQXWSf7FIzJ7nZ5U4zL0j4qblv1OhpU4ioJ2EzcVw%24&data=05%7C02%7Csun.hung%40clp.com.hk%7C94ea398ce0c54b7ae8f208dde5dfed0f%7C33893f4e33974cabbb3c9224bf7eafba%7C1%7C0%7C638919472098008715%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=V%2BM01vuLJyyNA5WiRaQARomjGH8KO05hHvEP3x1yYPA%3D&reserved=0]|
+
+
+
+Report generated at 2025-08-27 10:43
+
+
+
+Information Class : PROPRIETARY
+
+*** Please DO NOT reply to this email as this is an auto-generated email.***
+
+[~accountid:712020:a90249dc-ef0a-49f5-8436-00ef137d5bf1]  [~accountid:712020:6461eb7b-083d-462f-aaa2-18430f1bdbca]  pleaes help confirm technical feasibility",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Backlog,,17/Sep/25 8:49 AM,13/Oct/25 11:51 AM,
+Story,EP-97,977712,Extreme weather mode to allow use of designated templates,971127,EP-4,Template management,"*As* a user,
+
+*I want* to configure message templates with for extreme weather mode
+
+*So that* the outage notification can be dynamically populated when extreme weather mode is on.
+
+ 
+
+*Acceptance Criteria:*
+
+*AC1*: The user can log in and navigate to Template Management to find all message templates clearly.
+
+*AC2*: The user can add a new template.
+
+*AC3*: The user can click the weather condition tag (Normal / Extreme) to edit message for different weather conditions.
+
+*AC4*: The user can edit the message content by manually typing or drag and drop the variables to the message content.
+
+*AC5*: The user can preview the template same as [https://clpdigital.atlassian.net/browse/EP-48|https://clpdigital.atlassian.net/browse/EP-48|smart-link], and view both normal and extreme weather message at the same time.
+
+*AC6*: After editing, the admin clicks a “Save” button to apply changes.
+
+*AC7*: The system provides confirmation feedback after successfully update, such as “The template is updated”
+
+*AC8*: The updated template is saved correctly and persists after page refresh or next login.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,11/Sep/25 1:46 PM,06/Oct/25 2:47 PM,26/Sep/25 12:00 AM
+Story,EP-87,974055,Create templates with English version only for internal stakeholder,971127,EP-4,Template management,"As a user, 
+
+I want internal stakeholders to only be allowed to create and use English templates 
+
+So that internal communications remain consistent in language.
+
+*Acceptance Criteria:*
+
+* AC1: When internal stakeholders are selected, the language selection defaults to English and is disabled for editing or changing
+* AC2: Before saving edits, the system must validate that only the English version of the template has been created.
+
+!image-20250904-082516.png|width=456%,alt=""image-20250904-082516.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,26/Aug/25 10:26 AM,06/Oct/25 2:47 PM,
+Story,EP-86,974053,Create templates with both Chinese and English version for external customers,971127,EP-4,Template management,"As a user, 
+
+I want to create templates that include both Chinese and English versions 
+
+So that messages can be sent appropriately to external customers based on their language preference. 
+
+*Acceptance Criteria:*
+
+* AC1: The system provides language selection for both Chinese and English content when creating or editing a template.
+* AC2: Both language versions of the template are saved and linked together as one template entity.
+* AC3: The user can preview both the Chinese and English versions separately before saving or sending.
+* AC4: When selecting a template for notifications, the system automatically selects based on recipient language preference.
+* AC5: Both language versions can be independently edited or updated without affecting the other.
+* AC6: The system validates that both language versions (Chinese and English) are provided before saving the template.
+
+!image-20250904-085634.png|width=456%,alt=""image-20250904-085634.png""!
+
+!image-20250904-085715.png|width=456%,alt=""image-20250904-085715.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,26/Aug/25 10:20 AM,14/Oct/25 9:44 AM,
+Story,EP-50,972675,Activate Template for Outage Communication,971127,EP-4,Template management,"As a user
+
+I want to activate a template 
+
+So that it can be selected and used for outage communications.
+
+*Acceptance Criteria:*
+
+AC1: The system provides an option to activate/deactivate templates for outage communication use.
+
+AC2: Only activated templates are available for selection when configuring outage communication messages.
+
+AC3: The user can toggle the activation status of a template at any time.
+
+AC4: The system visually indicates whether a template is active or inactive for outage communications.
+
+AC5: The system prevents selection of inactive templates during the template mapping process in notification module.
+
+AC6: The system prevents changes of in-use templates which are mapped to designated scenarios in notification module
+
+AC7: When the status is “in-use”, it is not allowed to perform any action to those templates till their status is changed to “active” or “inactive” 
+
+!image-20250904-090038.png|width=456%,alt=""image-20250904-090038.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,20/Aug/25 2:10 PM,14/Oct/25 9:47 AM,
+Story,EP-49,972674,Delete Template,971127,EP-4,Template management,"As a user
+
+I want to delete a template 
+
+So that obsolete or unnecessary templates do not clutter the system.
+
+*Acceptance Criteria:*
+
+AC1: The system allows the user to delete a template from the template list.
+
+AC2: The system prompts the user with a confirmation message before deletion.
+
+AC3: Once confirmed, the template is permanently removed and no longer available for selection.
+
+AC4: If the template is currently in use (e.g., by active notification configuration), the system warns or prevents deletion as appropriate.
+
+!image-20250904-090010.png|width=456%,alt=""image-20250904-090010.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,20/Aug/25 2:08 PM,14/Oct/25 9:43 AM,
+Story,EP-48,972673,Preview Template,971127,EP-4,Template management,"As a user
+
+I want to preview a template 
+
+so that I can see how the final message will look before using it.
+
+*Acceptance Criteria:*
+
+AC1: The system provides a preview option accessible from the template list.
+
+AC2: The preview renders the template with sample data or placeholders replaced by example values.
+
+AC3: The preview reflects text formatting, images, and layout as it will appear in the actual message.
+
+AC4: The user can close the preview and return to original screen without losing changes.
+
+!image-20250904-085946.png|width=456%,alt=""image-20250904-085946.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,Done,20/Aug/25 2:06 PM,14/Oct/25 9:43 AM,
+Story,EP-47,972672,Edit Template,971127,EP-4,Template management,"As a user 
+
+I want to edit an existing template 
+
+So that I can update its content or settings as needed.
+
+*Acceptance Criteria:*
+
+* AC1: The system allows the user to open an existing template in edit mode.
+* AC2: The user can update template content, including text, placeholders, channel, recipient group, and variables. 
+* AC3: The system validates template changes and prevents invalid content from being saved.
+* AC4: The user can save the updated template and confirms the successful update notification.
+* AC5: The original template version is safely overwritten 
+
+!image-20250904-085851.png|width=456%,alt=""image-20250904-085851.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,20/Aug/25 2:03 PM,14/Oct/25 9:43 AM,
+Story,EP-43,972300,Predefined Recipient Groups ,971127,EP-4,Template management,"As a user, 
+
+I want to select from predefined recipient groups (Residential, Non-Residential, and Internal) 
+
+So that I can target messages accurately while simplifying group management.
+
+*Acceptance Criteria:*
+
+* AC1: The system provides three fixed recipient group options for selection: Residential (RT), Non-Residential (NRT), and Internal.
+* AC2: Users cannot create, edit, or delete recipient groups beyond these predefined options.
+* AC3: Internal recipient group communications are restricted to English templates only (as agreed).",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,19/Aug/25 2:02 PM,14/Oct/25 9:44 AM,
+Story,EP-42,972286,Provide Message Templates for Different Channels,971127,EP-4,Template management,"*User Story:*
+As a user, I want to create and manage message templates for different communication channels so that content is optimized for each channel's format.
+
+*Acceptance Criteria:*
+
+AC1: The system allows the user to select the communication channel (SMS, Email, App Push) when creating a message template.
+
+AC2: The system displays a channel-specific template layout suitable for the selected channel.
+
+AC3: The system enforces channel-specific content constraints, such as character limits for SMS.
+
+AC4: Users can save and activate templates for each communication channel independently.
+
+AC5: The system provides a preview mode displaying how the message appears on the selected channel.
+
+!image-20250904-082001.png|width=456%,alt=""image-20250904-082001.png""!
+
+!image-20250904-082332.png|width=448%,alt=""image-20250904-082332.png""!
+
+!image-20250904-085002.png|width=456%,alt=""image-20250904-085002.png""!",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,19/Aug/25 11:41 AM,06/Oct/25 2:47 PM,
+Story,EP-9,971138,Configure Message Template with Defined Variables,971127,EP-4,Template management,"*User Story:*
+As a user, 
+
+I want to configure message templates with defined variables 
+
+so that outage notifications can be dynamically populated with incident-specific information.
+
+*Acceptance Criteria:*
+
+AC1: The system allows the user to add predefined variables such as {incident_id}, {location}, {ETR} when creating a message template.
+
+AC2: The system validates the syntax of inserted variables and prevents saving templates with unsupported or misspelled variables.
+
+AC3: The system saves message templates containing these variables.
+
+AC4: When sending notifications, the system replaces the variables with actual outage-specific data dynamically.
+
+AC5: An error message is displayed if invalid variables are detected during template creation or editing.
+
+!image-20250904-083342.png|width=456%,alt=""image-20250904-083342.png""!
+
+
+
+[https://clpdigital.atlassian.net/wiki/x/ooIiNQ|https://clpdigital.atlassian.net/wiki/x/ooIiNQ|smart-link] ",,,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,12/Aug/25 11:29 AM,06/Oct/25 2:47 PM,
+Subtask,EP-119,983983,Enable multiple roles for a single user,972151,EP-23,User Management: Add new user,"*As* an admin,
+*I want* to be able to set multiple roles for a single user
+*So tha*t one user can have diverse roles to fulfil the requirements in different scenarios.
+
+Acceptance Criteria
+
+*AC1:* When admin try to add new user or edit user information, the multiple roles can be chosen for one user.
+
+*AC2:* For the user with multiple roles, the user permission will be the combination among all the roles.
+
+!image-20251022-040424.png|width=268,alt=""image-20251022-040424.png""!
+
+!image-20251022-040507.png|width=268,alt=""image-20251022-040507.png""!",,,Erxi Xu,712020:0a179bb9-e05c-4f72-b489-211125b82c80,Medium,Backlog,,22/Oct/25 11:59 AM,22/Oct/25 12:07 PM,
+Subtask,EP-102,978694,data structure to allow this visualisation of location info of an outage incident ,973919,EP-85,View detailed information for an outage,"*As* a user,
+*I want* to view the affected customer summary for each category and the detail breakdown by address
+*so that* I could have a full picture of the outage distribution.
+
+*Acceptance Criteria:*
+*AC1:* User could click the ""District"" value to open the location breakdown page
+*AC2:* The system show the affected customer summary page for each category (RT/LS/CI/Elderly)
+*AC3:* User could click the number[Blue] for level 2 breakdown by Street & Building. System have grouping when Street & Building is the same.
+Remark: Data source ([CCMS output to other systems|https://clpgroup.sharepoint.com/:x:/r/sites/E2ETechTeamTCSextsite/Shared%20Documents/General/Sample%20file%20from%20CCMS/ZDM422_20240724_080000_0001.csv?d=w718decade98d4295bc99aca59bd2cd29&csf=1&web=1&e=Ur100t]) Column S: Street / Q: Street 2
+*AC4:* User could click the number[Blue] for level 3 breakdown by Block/Flat.
+Remark: Data source ([CCMS output to other systems|https://clpgroup.sharepoint.com/:x:/r/sites/E2ETechTeamTCSextsite/Shared%20Documents/General/Sample%20file%20from%20CCMS/ZDM422_20240724_080000_0001.csv?d=w718decade98d4295bc99aca59bd2cd29&csf=1&web=1&e=Ur100t]) Column P: Street Supplement 1
+
+!image-20251021-100845.png|width=922,alt=""image-20251021-100845.png""!
+
+!image-20251021-100756.png|width=922,alt=""image-20251021-100756.png""!
+
+!image-20251021-100812.png|width=922,alt=""image-20251021-100812.png""!
+
+
+
+[~accountid:712020:6461eb7b-083d-462f-aaa2-18430f1bdbca]  [~accountid:712020:a90249dc-ef0a-49f5-8436-00ef137d5bf1]  please confirm the data structure from CCMS allow us to present the location info for a outage incident in the UI in this format",Oliver Xiaolei Zhang,712020:6461eb7b-083d-462f-aaa2-18430f1bdbca,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Backlog,,19/Sep/25 11:04 AM,21/Oct/25 6:08 PM,
+Subtask,EP-117,983841,Contains search for address,973917,EP-84,View full list of outages with summary information,"*As* a user,
+
+*I want* to use the address to filter the outage history
+
+*so that* I could quickly find out the related outage records by street or building level.
+
+
+
+*Acceptance Criteria:*
+*AC1:* User could type the address (Street name / Building name) in contains search filter.
+
+*AC2:* The system should look up the outage history database for match incidents (Specific source from: [CCMS output to other systems|https://clpgroup.sharepoint.com/:x:/r/sites/E2ETechTeamTCSextsite/Shared Documents/General/Sample file from CCMS/ZDM422_20240724_080000_0001.csv?d=w718decade98d4295bc99aca59bd2cd29&csf=1&web=1&e=v2Fwd3&xsdata=MDV8MDJ8YXJ0aHVyLmNoYW5AY2xwLmNvbS5oa3w2YmJkMTdkM2M2NDk0YmJkZjIxODA4ZGRmYzAwNjM5OXwzMzg5M2Y0ZTMzOTc0Y2FiYmIzYzkyMjRiZjdlYWZiYXwxfDB8NjM4OTQzODAwNzgxNjQyMjQ3fFVua25vd258VFdGcGJHWnNiM2Q4ZXlKRmJYQjBlVTFoY0draU9uUnlkV1VzSWxZaU9pSXdMakF1TURBd01DSXNJbEFpT2lKWGFXNHpNaUlzSWtGT0lqb2lUV0ZwYkNJc0lsZFVJam95ZlE9PXwwfHx8&sdata=ZXhLSExqV1FBSFpWakoxaVlDUUE2OWtaS1FIVzJESGxpMElmUGNvOEh2cz0%3d] Columns S: Street 2 & Q: Street)
+
+*AC3:* The system shows the outage summary records matched the address.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,21/Oct/25 12:29 PM,21/Oct/25 12:38 PM,
+Task,EP-133,989515,Discussion manual handling when UsagePoint is missing,,,,"*As* a user,
+
+*I want* to import the affected customer list (excel) extracted from ADMS to E2E, 
+
+*so that* I could send the manual notification when the UsagePoint is missing and auto-triggering is not working.
+
+
+
+*Update:*
+
+11/13/2025 - Agreed no need the new FD at this moment, instead to use marketing platform “Reddicale” for mass notification.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,13/Nov/25 4:51 PM,14/Nov/25 9:50 AM,
+Task,EP-127,988814,Communication log for SMS,,,,"*Purpose:* 
+
+Cost optimalization for notification sent quantity, especially on SMS.
+
+PEC reference: HKD50,000/year for *all* channels
+
+
+
+*Cost Estimated:* 
+
+Assumption (Data average from 2022-2025): 
+
+* Annual incidents = 30k
+* Average customers = 6, affected customers = 180,000
+* Number of messages = 3 (stages)
+* Total = 30,000 * 6 * 3 = 540,000
+
+
+
+Scenario: 
+
+# Upper Limit (All message via SMS)
+#* 540,000 * 0.0418 (USD per SMS) * 7.8 = *HKD 176,062*
+# Average (Each 33%)
+#* Email: HKD 20,000
+#* App push: HKD 15,000
+#* SMS: 540,000/3 * 0.0418 (USD per SMS) * 7.8 = HKD 58,687
+#* Total: *HKD 93,687*
+# Optimal
+#* Email: HKD 20,000
+#* App push: HKD 15,000
+#* SMS: 43,000 (~8%) * 0.0418 (USD per SMS) * 7.8 = HKD 14,020
+#* Total: *HKD 49,020*
+# Assume no cost for email / App Push
+#* Assume 3 msg for each, could inform 50,000 affected customers (~28%) would send SMS
+#* SMS: 150,000 * 0.0418 (USD per SMS) * 7.8 = *HKD 48,906*
+# Bottom Limit (All message via App Push + Email)
+#* Around *HKD 35,000*
+
+
+
+*Consideration:*
+
+# Affected Customers
+
+||*Affected customer for each incident*||*Sum of affected customers*||*No. of incidents*||
+|1|10,430|10,430|
+|2-80|38,965|1,998|
+|81-397|51,372|297|
+|Over 380|49,831|75|
+
+# ETR
+# Number of messages (Stage 1/2/3)
+
+
+
+Remark (Quote from AI): 
+
+||*Channels*||*Message Cost*||*Infra Cost*||
+|SMS|USD0.0418/ea|HKD1,400|
+|Email|Nil|Internal: HKD20,000 (i.e. Increase bandwidth)
+Outsource: HKD46,000|
+|App Push|Nil|Around HKD15,000|",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,10/Nov/25 10:02 AM,17/Nov/25 3:40 PM,
+Task,EP-122,987699,System exception scenario,,,,"*Definition:* 
+
+Scenario triggered by system errors, usually required manual fixing.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,06/Nov/25 12:24 PM,13/Nov/25 11:59 AM,
+Task,EP-120,987319,Operation exception scenario,,,,"*Definition:* 
+
+Scenario triggered by operator (e.g. Business / PSBG), could have multiple solution for handling.",Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Arthur Man Him Chan,712020:93caf0c6-3059-47d3-9226-01fe6f341685,Medium,Backlog,,04/Nov/25 4:27 PM,13/Nov/25 11:59 AM,
+Task,EP-108,980228,Opt-in/out record in CCS,,,,E2E should have a synchronization of opt-in/out record back to CCS such that CCS will be the single source of truth for the opt-in/out record,Oliver Xiaolei Zhang,712020:6461eb7b-083d-462f-aaa2-18430f1bdbca,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Backlog,,26/Sep/25 3:17 PM,15/Oct/25 5:20 PM,
+Task,EP-107,980226,Single Sign-On,,,,"E2E platform will support Single Sign-On via CLP network account and no need user to log in with username and password
+
+[~accountid:712020:a90249dc-ef0a-49f5-8436-00ef137d5bf1] [~accountid:712020:6461eb7b-083d-462f-aaa2-18430f1bdbca] ",Oliver Xiaolei Zhang,712020:6461eb7b-083d-462f-aaa2-18430f1bdbca,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Ready for Tech & QA Review,,26/Sep/25 3:14 PM,30/Sep/25 5:20 PM,
+Task,EP-106,980225,Communication log in CCS,,,,"E2E will re-use the PON <=> CCS interface to write the communication log in CCS after it goes live
+
+[~accountid:712020:a90249dc-ef0a-49f5-8436-00ef137d5bf1]  [~accountid:712020:6461eb7b-083d-462f-aaa2-18430f1bdbca] ",Oliver Xiaolei Zhang,712020:6461eb7b-083d-462f-aaa2-18430f1bdbca,Kelvin Yat Sing Sa,62eb30495111209f4fded697,Medium,Backlog,,26/Sep/25 3:11 PM,30/Sep/25 10:58 AM,

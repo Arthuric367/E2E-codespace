@@ -1,0 +1,55 @@
+{
+    "python.defaultInterpreterPath": "/home/codespace/.python/current/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestArgs": [
+        "python_tests",
+        "-v",
+        "--tb=short"
+    ],
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "python.testing.pytestPath": "pytest",
+    
+    "code-runner.executorMap": {
+        "python": "$pythonPath -u $fullFileName"
+    },
+    "code-runner.runInTerminal": false,
+    "code-runner.preserveFocus": false,
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.showExecutionMessage": true,
+    "code-runner.fileDirectoryAsCwd": true,
+    "code-runner.executorMapByGlob": {
+        "test_*.py": "python -m pytest $fullFileName -v",
+        "*_test.py": "python -m pytest $fullFileName -v"
+    },
+    
+    "coverage-gutters.showLineCoverage": true,
+    "coverage-gutters.showRulerCoverage": true,
+    "coverage-gutters.showGutterCoverage": true,
+    "coverage-gutters.lcovname": "coverage.lcov",
+    
+    "files.associations": {
+        "*.py": "python",
+        "pytest.ini": "ini",
+        "requirements.txt": "pip-requirements"
+    },
+    
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": false,
+    
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "test_*.py": "${capture}_test.html,${capture}_test.xml",
+        "*_test.py": "${capture}.html,${capture}.xml"
+    },
+    
+    "workbench.colorCustomizations": {
+        "testing.iconFailed": "#f14c4c",
+        "testing.iconErrored": "#f14c4c", 
+        "testing.iconPassed": "#73c991",
+        "testing.runAction": "#73c991"
+    },
+    "terminal.integrated.defaultProfile.windows": "Command Prompt"
+}
