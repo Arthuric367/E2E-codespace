@@ -7,12 +7,6 @@
       "stepDetail": null
     },
     {
-      "name": "Running postCreateCommand...",
-      "status": "succeeded",
-      "description": null,
-      "stepDetail": "/usr/local/share/pull-git-lfs-artifacts.sh"
-    },
-    {
       "name": "Done",
       "status": "succeeded",
       "description": null,
