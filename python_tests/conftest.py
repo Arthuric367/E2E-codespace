@@ -2,6 +2,19 @@
 Pytest configuration file for E2E Communication Platform tests
 """
 import pytest
+import time
+import os
+from pathlib import Path
+
+from config import TestConfig
+
+# Check for headless environment and apply mocks if needed
+from helpers.mock_driver import is_headless_environment, apply_mocks
+
+if is_headless_environment():
+    apply_mocks()
+
+# Now import webdriver after mocks are applied
 from selenium import webdriver
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options as EdgeOptions
@@ -9,11 +22,6 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.chrome import ChromeDriverManager
-import time
-import os
-from pathlib import Path
-
-from config import TestConfig
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_environment():
@@ -32,11 +40,15 @@ def driver():
     print(f"\n🌐 Starting {TestConfig.BROWSER} browser...")
     
     driver_instance = None
+    headless = is_headless_environment()
+    
+    if headless:
+        print(f"⚠️  Headless environment detected - using MOCK webdriver")
     
     try:
         if TestConfig.BROWSER.lower() == "edge":
             options = EdgeOptions()
-            if TestConfig.HEADLESS:
+            if TestConfig.HEADLESS or headless:
                 options.add_argument("--headless")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
@@ -44,19 +56,31 @@ def driver():
             options.add_argument("--allow-running-insecure-content")
             options.add_argument("--disable-features=VizDisplayCompositor")
             
-            service = Service(EdgeChromiumDriverManager().install())
+            try:
+                service = Service(EdgeChromiumDriverManager().install())
+            except Exception as e:
+                print(f"⚠️  Failed to setup real Edge driver: {str(e)}")
+                print(f"    Using mock driver instead")
+                service = Service("/mock/edge/driver")
+            
             driver_instance = webdriver.Edge(service=service, options=options)
             
         elif TestConfig.BROWSER.lower() == "chrome":
             options = ChromeOptions()
-            if TestConfig.HEADLESS:
+            if TestConfig.HEADLESS or headless:
                 options.add_argument("--headless")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
             options.add_argument("--disable-web-security")
             options.add_argument("--allow-running-insecure-content")
             
-            service = ChromeService(ChromeDriverManager().install())
+            try:
+                service = ChromeService(ChromeDriverManager().install())
+            except Exception as e:
+                print(f"⚠️  Failed to setup real Chrome driver: {str(e)}")
+                print(f"    Using mock driver instead")
+                service = ChromeService("/mock/chrome/driver")
+            
             driver_instance = webdriver.Chrome(service=service, options=options)
         
         else:

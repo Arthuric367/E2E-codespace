@@ -4,6 +4,10 @@
 .codespaces/shared/.user-secrets.json
 .codespaces/shared/user-secrets-envs.json
 .codespaces/shared/resource-usage.json
+.codespaces/.persistedshare/
+.codespaces/.persistedshare/*
+.codespaces/.persistedshare/vsserverhostlog.txt
+.codespaces/.persistedshare/vsserverterminallog.txt
 
 # IDE and editor files
 .vscode/

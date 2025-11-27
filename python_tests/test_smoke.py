@@ -36,7 +36,9 @@ def test_required_packages():
 
 def test_project_files():
     """Verify required project files exist"""
-    project_root = Path(__file__).parent.parent.parent
+    # Correct path: /workspaces/python_tests/test_smoke.py -> /workspaces
+    # Up 2 levels from /workspaces/python_tests to /workspaces
+    project_root = Path(__file__).parent.parent
     
     required_files = [
         "admin-prototype.html",
@@ -52,7 +54,8 @@ def test_project_files():
 
 def test_test_structure():
     """Verify test project structure"""
-    test_dir = Path(__file__).parent.parent
+    # test_dir should point to the python_tests directory
+    test_dir = Path(__file__).parent
     
     required_dirs = [
         "administration",
