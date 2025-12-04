@@ -1,0 +1,32 @@
+{
+  "name": "e2e-playwright-tests",
+  "version": "1.0.0",
+  "description": "Playwright test suite migrated from Python/Pytest for performance comparison",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test smoke.spec.js",
+    "test:users": "playwright test administration/user-management.spec.js",
+    "test:roles": "playwright test administration/role-management.spec.js",
+    "test:settings": "playwright test administration/settings.spec.js",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report reports/playwright-html",
+    "report:performance": "start reports/performance-comparison.html",
+    "install:browsers": "playwright install msedge",
+    "compare": "echo 'Run pytest with --json-report first, then run this script' && playwright test && start reports/performance-comparison.html"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "e2e",
+    "automation",
+    "performance",
+    "comparison"
+  ],
+  "author": "E2E Platform Team",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
