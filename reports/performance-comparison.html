@@ -1,0 +1,798 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Comparison Report - Playwright vs Pytest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .header .timestamp {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #f6f8fb 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .metric-card .label {
+            font-size: 0.9em;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .metric-card .value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2d3748;
+            line-height: 1;
+        }
+        
+        .metric-card .unit {
+            font-size: 0.5em;
+            color: #94a3b8;
+            font-weight: 400;
+        }
+        
+        .metric-card.passed { border-left: 5px solid #10b981; }
+        .metric-card.failed { border-left: 5px solid #ef4444; }
+        .metric-card.skipped { border-left: 5px solid #f59e0b; }
+        .metric-card.duration { border-left: 5px solid #3b82f6; }
+        
+        .metric-card.passed .value { color: #10b981; }
+        .metric-card.failed .value { color: #ef4444; }
+        .metric-card.skipped .value { color: #f59e0b; }
+        .metric-card.duration .value { color: #3b82f6; }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            font-size: 1.8em;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .framework-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .framework-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .framework-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+        }
+        
+        .playwright-icon {
+            background: linear-gradient(135deg, #2d9c68 0%, #1e7a4d 100%);
+        }
+        
+        .pytest-icon {
+            background: linear-gradient(135deg, #0a9edc 0%, #0667a1 100%);
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            color: #2d3748;
+        }
+        
+        .winner-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        .test-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .test-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .test-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+        
+        .test-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .test-table tbody tr:hover {
+            background: #f8fafc;
+        }
+        
+        .test-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-passed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-skipped {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .duration-cell {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+        
+        .comparison-placeholder {
+            background: #fef3c7;
+            border: 2px dashed #f59e0b;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .comparison-placeholder h2 {
+            color: #92400e;
+            border: none;
+            margin-bottom: 15px;
+        }
+        
+        .comparison-placeholder pre {
+            background: #fffbeb;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+        
+        .chart-container {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 300px;
+            margin-top: 20px;
+        }
+        
+        .bar {
+            width: 100px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        
+        .bar:hover {
+            transform: scaleY(1.05);
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 600;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #2d3748;
+        }
+        
+        .footer {
+            background: #f8fafc;
+            padding: 30px;
+            text-align: center;
+            color: #64748b;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎭 Performance Comparison Report</h1>
+            <div class="subtitle">Playwright vs Pytest Test Execution Analysis</div>
+            <div class="timestamp">Generated: 12/4/2025, 6:14:54 AM</div>
+        </div>
+        
+        <div class="content">
+            <!-- Playwright Metrics -->
+            <div class="section">
+                <h2>Playwright Test Results</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card duration">
+                        <div class="label">Total Duration</div>
+                        <div class="value">41.55 <span class="unit">seconds</span></div>
+                    </div>
+                    <div class="metric-card passed">
+                        <div class="label">Passed</div>
+                        <div class="value">2</div>
+                    </div>
+                    <div class="metric-card failed">
+                        <div class="label">Failed</div>
+                        <div class="value">50</div>
+                    </div>
+                    <div class="metric-card skipped">
+                        <div class="label">Skipped</div>
+                        <div class="value">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        <div class="comparison-placeholder">
+          <h2>⏳ Pytest Comparison Pending</h2>
+          <p>To compare with pytest results, run:</p>
+          <pre>cd /workspaces && python run_tests.py --json-report</pre>
+          <p>Then re-run the Playwright tests to generate the comparison.</p>
+        </div>
+      
+            
+            <!-- Detailed Test Results -->
+            <div class="section">
+                <h2>Detailed Test Results</h2>
+                <table class="test-table">
+                    <thead>
+                        <tr>
+                            <th>Test Name</th>
+                            <th>File</th>
+                            <th>Status</th>
+                            <th>Duration (ms)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr>
+                                <td>EP-30: Add new role with valid data</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">68ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-30: Add role with duplicate name (should fail)</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">63ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-31: Edit existing role information</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">69ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-32: Delete role with confirmation</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">63ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-32: Cancel role deletion</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">82ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-40: Assign permissions to roles</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">64ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-41: View role permissions</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">59ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-89: Alert Group assignment for roles</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">68ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Role form validation for required fields</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">106ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Role with all permissions selected</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">61ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Role with no permissions selected</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">65ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Role table display and structure</td>
+                                <td><code>playwright_tests/administration/role-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">68ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-33: Email notifications toggle</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">66ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-34: SMS notifications toggle</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">75ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-35: Push notifications configuration</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">60ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-44: Planned outage delay settings</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">65ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-44: Unplanned outage delay settings</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">67ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-44: Emergency delay settings</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">63ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-90: Extreme weather mode toggle</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">70ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-101: Weather threshold temperature settings</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">68ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-101: Weather threshold wind speed settings</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">66ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>All communication channels enabled</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">61ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>All communication channels disabled</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">63ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Settings reset functionality</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">66ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Extreme weather complete configuration</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">67ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Delay settings for all notification types</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">86ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Settings page navigation and structure</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">67ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Save settings without changes</td>
+                                <td><code>playwright_tests/administration/settings.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">61ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-3: Display users in tabular format</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">64ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-23: Add new user with valid data</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">63ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-23: Add user with invalid email format</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">72ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-24: Edit existing user information</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">70ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-25: Delete user with confirmation</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">62ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-25: Cancel user deletion</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">66ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-26: Filter users by department</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">70ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-27: Filter users by role</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">65ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-28: Search users by name</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">78ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-28: Search users by email</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">94ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>EP-29: Bulk upload users button functionality</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">62ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Filter users by Active status</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">63ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>User form validation for required fields</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">60ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>User table column sorting functionality</td>
+                                <td><code>playwright_tests/administration/user-management.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">67ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify Node environment</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-passed">PASSED</span></td>
+                                <td class="duration-cell">41ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify required packages</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-passed">PASSED</span></td>
+                                <td class="duration-cell">23ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify project files</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">63ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify test structure</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">64ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>basic browser setup</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">59ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>load admin prototype page</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">59ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify page object model</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">52ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify test data helper</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">50ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify config helper</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">52ms</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>verify performance reporter</td>
+                                <td><code>playwright_tests/smoke.spec.js</code></td>
+                                <td><span class="status-badge status-failed">FAILED</span></td>
+                                <td class="duration-cell">49ms</td>
+                            </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Performance Metrics -->
+            <div class="section">
+                <h2>Performance Metrics</h2>
+                <div class="chart-container">
+                    <h3>Average Test Duration</h3>
+                    <div class="bar-chart">
+                        <div class="bar" style="height: 100%;">
+                            <div class="bar-value">799.00ms</div>
+                            <div class="bar-label">Playwright</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>E2E Communication Platform</strong> - Automated Test Performance Analysis</p>
+            <p>Generated on 12/4/2025 at 6:14:54 AM</p>
+        </div>
+    </div>
+</body>
+</html>
+    

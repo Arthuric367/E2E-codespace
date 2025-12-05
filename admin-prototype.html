@@ -2405,10 +2405,10 @@
         <!-- Tab Navigation -->
         <nav class="tab-navigation">
             <div class="tab-list">
-                <a href="#" class="tab active">Users</a>
-                <a href="#" class="tab">Customer</a>
-                <a href="#" class="tab">Roles</a>
-                <a href="#" class="tab">Settings</a>
+                <a href="#" id="nav-users" class="tab active">Users</a>
+                <a href="#" id="nav-customer" class="tab">Customer</a>
+                <a href="#" id="nav-roles" class="tab">Roles</a>
+                <a href="#" id="nav-settings" class="tab">Settings</a>
             </div>
         </nav>
 
@@ -2417,16 +2417,17 @@
             <div class="section-header">
                 <h2 class="section-title">User Management</h2>
                 <div class="action-buttons">
-                    <button class="btn btn-primary" onclick="showAddUserModal()">+ Add New User</button>
-                    <button class="btn btn-secondary" onclick="showBulkUploadUserModal()">+ Add New User by Bulk Upload</button>
+                    <button id="addUserBtn" class="btn btn-primary" onclick="showAddUserModal()">+ Add New User</button>
+                    <button id="bulkUploadBtn" class="btn btn-secondary" onclick="showBulkUploadUserModal()">+ Add New User by Bulk Upload</button>
+                    <button id="deleteSelectedBtn" class="btn btn-danger" onclick="deleteSelectedUsers()">Delete Selected</button>
                 </div>
             </div>
 
             <!-- Filters -->
             <div class="filters">
                 <div class="filter-group">
-                    <div class="multi-select-dropdown" id="roleFilterDropdown">
-                        <button class="multi-select-button" onclick="toggleMultiSelect('roleFilterDropdown')">
+                    <div class="multi-select-dropdown" id="roleFilter">
+                        <button class="multi-select-button" onclick="toggleMultiSelect('roleFilter')">
                             <span id="roleFilterText">All Roles</span>
                             <span class="multi-select-dropdown-arrow">▼</span>
                         </button>
@@ -2463,18 +2464,18 @@
                     </div>
                 </div>
                 <div class="filter-group">
-                    <select class="filter-select" id="statusFilter">
+                    <select class="filter-select" id="statusFilter" onchange="filterUsers()">
                         <option value="">All Statuses</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
                 </div>
                 <div class="filter-group">
-                    <input type="text" class="search-box" id="nameSearch" placeholder="Search for user by name">
+                    <input type="text" class="search-box" id="userSearch" placeholder="Search by name or email" oninput="filterUsers()">
                     <span class="search-icon">🔍</span>
                 </div>
                 <div class="filter-group">
-                    <button class="btn btn-secondary" onclick="clearAllFilters()" title="Reset all filters">
+                    <button id="clearFiltersBtn" class="btn btn-secondary" onclick="clearAllFilters()" title="Reset all filters">
                         🔄 Clear Filters
                     </button>
                 </div>
@@ -2482,9 +2483,10 @@
 
             <!-- User Table -->
             <div class="user-table">
-                <table>
+                <table id="userTable">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" id="selectAllUsers" onclick="toggleSelectAll(this)"></th>
                             <th class="sortable" data-column="name" onclick="sortTable('name')">Name</th>
                             <th class="sortable" data-column="email" onclick="sortTable('email')">Email</th>
                             <th class="sortable" data-column="role" onclick="sortTable('role')">Role</th>
@@ -2495,6 +2497,7 @@
                     </thead>
                     <tbody>
                         <tr data-status="active" data-role="system admin" data-name="john smith" data-email="john.smith@clp.com.hk" data-lastlogin="2025-08-11 13:41:30">
+                            <td><input type="checkbox" class="user-checkbox"></td>
                             <td>John Smith</td>
                             <td>john.smith@clp.com.hk</td>
                             <td class="role-cell">System Admin</td>
@@ -2509,6 +2512,7 @@
                             </td>
                         </tr>
                         <tr data-status="inactive" data-role="Account Manager" data-name="James smith" data-email="james.smith@clp.com.hk" data-lastlogin="2025-08-11 13:41:30">
+                            <td><input type="checkbox" class="user-checkbox"></td>
                             <td>James Smith</td>
                             <td>james.smith@clp.com.hk</td>
                             <td class="role-cell">Account Manager</td>
@@ -2523,6 +2527,7 @@
                             </td>
                         </tr>
                         <tr data-status="active" data-role="system admin" data-name="john smith" data-email="john.smith@clp.com.hk" data-lastlogin="2025-08-11 13:41:30">
+                            <td><input type="checkbox" class="user-checkbox"></td>
                             <td>John Smith</td>
                             <td>john.smith@clp.com.hk</td>
                             <td class="role-cell">System Admin</td>
@@ -2537,6 +2542,7 @@
                             </td>
                         </tr>
                         <tr data-status="active" data-role="system admin" data-name="jane doe" data-email="jane.doe@clp.com.hk" data-lastlogin="2025-08-10 09:15:22">
+                            <td><input type="checkbox" class="user-checkbox"></td>
                             <td>Jane Doe</td>
                             <td>jane.doe@clp.com.hk</td>
                             <td class="role-cell">System Admin</td>
@@ -2551,6 +2557,7 @@
                             </td>
                         </tr>
                         <tr data-status="active" data-role="user" data-name="mike johnson" data-email="mike.johnson@clp.com.hk" data-lastlogin="2025-08-12 16:30:45">
+                            <td><input type="checkbox" class="user-checkbox"></td>
                             <td>Mike Johnson</td>
                             <td>mike.johnson@clp.com.hk</td>
                             <td class="role-cell">User</td>
@@ -2565,6 +2572,7 @@
                             </td>
                         </tr>
                         <tr data-status="inactive" data-role="user" data-name="sarah wilson" data-email="sarah.wilson@clp.com.hk" data-lastlogin="2025-08-09 14:22:10">
+                            <td><input type="checkbox" class="user-checkbox"></td>
                             <td>Sarah Wilson</td>
                             <td>sarah.wilson@clp.com.hk</td>
                             <td class="role-cell">User</td>
@@ -2719,12 +2727,12 @@
             <div class="section-header">
                 <h2 class="section-title">Role Management</h2>
                 <div class="action-buttons">
-                    <button class="btn btn-primary" onclick="showCreateRoleModal()">Create New Role</button>
+                    <button id="addRoleBtn" class="btn btn-primary" onclick="showCreateRoleModal()">Create New Role</button>
                 </div>
             </div>
 
             <!-- Roles Grid -->
-            <div class="roles-grid">
+            <div id="roleTable" class="roles-grid">
                 <!-- System Admin Role -->
                 <div class="role-card">
                     <div class="role-header">
@@ -2733,12 +2741,12 @@
                             <p class="role-users">5 Users</p>
                         </div>
                         <div class="role-actions">
-                            <button class="btn-icon" onclick="editRole('system-admin')" title="Edit Role">
+                            <button class="btn-icon edit-role-btn" onclick="editRole('system-admin')" title="Edit Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 9.207l-3-3L12.146.146zM11.207 10.5l-3-3L2.854 13.854a.5.5 0 0 0-.146.353V16h1.793a.5.5 0 0 0 .353-.146L11.207 10.5z"/>
                                 </svg>
                             </button>
-                            <button class="btn-icon btn-danger" onclick="deleteRole('system-admin')" title="Delete Role">
+                            <button class="btn-icon btn-danger delete-role-btn" onclick="deleteRole('system-admin')" title="Delete Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -2798,12 +2806,12 @@
                             <p class="role-users">5 Users</p>
                         </div>
                         <div class="role-actions">
-                            <button class="btn-icon" onclick="editRole('cic-team')" title="Edit Role">
+                            <button class="btn-icon edit-role-btn" onclick="editRole('cic-team')" title="Edit Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 9.207l-3-3L12.146.146zM11.207 10.5l-3-3L2.854 13.854a.5.5 0 0 0-.146.353V16h1.793a.5.5 0 0 0 .353-.146L11.207 10.5z"/>
                                 </svg>
                             </button>
-                            <button class="btn-icon btn-danger" onclick="deleteRole('cic-team')" title="Delete Role">
+                            <button class="btn-icon btn-danger delete-role-btn" onclick="deleteRole('cic-team')" title="Delete Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -2863,12 +2871,12 @@
                             <p class="role-users">5 Users</p>
                         </div>
                         <div class="role-actions">
-                            <button class="btn-icon" onclick="editRole('account-manager')" title="Edit Role">
+                            <button class="btn-icon edit-role-btn" onclick="editRole('account-manager')" title="Edit Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 9.207l-3-3L12.146.146zM11.207 10.5l-3-3L2.854 13.854a.5.5 0 0 0-.146.353V16h1.793a.5.5 0 0 0 .353-.146L11.207 10.5z"/>
                                 </svg>
                             </button>
-                            <button class="btn-icon btn-danger" onclick="deleteRole('account-manager')" title="Delete Role">
+                            <button class="btn-icon btn-danger delete-role-btn" onclick="deleteRole('account-manager')" title="Delete Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -2928,12 +2936,12 @@
                             <p class="role-users">5 Users</p>
                         </div>
                         <div class="role-actions">
-                            <button class="btn-icon" onclick="editRole('corporate-affairs')" title="Edit Role">
+                            <button class="btn-icon edit-role-btn" onclick="editRole('corporate-affairs')" title="Edit Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 9.207l-3-3L12.146.146zM11.207 10.5l-3-3L2.854 13.854a.5.5 0 0 0-.146.353V16h1.793a.5.5 0 0 0 .353-.146L11.207 10.5z"/>
                                 </svg>
                             </button>
-                            <button class="btn-icon btn-danger" onclick="deleteRole('corporate-affairs')" title="Delete Role">
+                            <button class="btn-icon btn-danger delete-role-btn" onclick="deleteRole('corporate-affairs')" title="Delete Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -2993,12 +3001,12 @@
                             <p class="role-users">5 Users</p>
                         </div>
                         <div class="role-actions">
-                            <button class="btn-icon" onclick="editRole('management')" title="Edit Role">
+                            <button class="btn-icon edit-role-btn" onclick="editRole('management')" title="Edit Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 9.207l-3-3L12.146.146zM11.207 10.5l-3-3L2.854 13.854a.5.5 0 0 0-.146.353V16h1.793a.5.5 0 0 0 .353-.146L11.207 10.5z"/>
                                 </svg>
                             </button>
-                            <button class="btn-icon btn-danger" onclick="deleteRole('management')" title="Delete Role">
+                            <button class="btn-icon btn-danger delete-role-btn" onclick="deleteRole('management')" title="Delete Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -3058,12 +3066,12 @@
                             <p class="role-users">5 Users</p>
                         </div>
                         <div class="role-actions">
-                            <button class="btn-icon" onclick="editRole('psbg-engineers')" title="Edit Role">
+                            <button class="btn-icon edit-role-btn" onclick="editRole('psbg-engineers')" title="Edit Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708L10.5 9.207l-3-3L12.146.146zM11.207 10.5l-3-3L2.854 13.854a.5.5 0 0 0-.146.353V16h1.793a.5.5 0 0 0 .353-.146L11.207 10.5z"/>
                                 </svg>
                             </button>
-                            <button class="btn-icon btn-danger" onclick="deleteRole('psbg-engineers')" title="Delete Role">
+                            <button class="btn-icon btn-danger delete-role-btn" onclick="deleteRole('psbg-engineers')" title="Delete Role">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -3150,24 +3158,30 @@
                             <label class="setting-label">Internal/External Communication</label>
                             <div class="toggle-group">
                                 <div class="toggle-item">
-                                    <div class="toggle-switch active" id="internalCommToggle" onclick="toggleCommunicationSetting(this, 'internal')">
+                                    <div class="toggle-switch active" id="emailNotifications" onclick="toggleCommunicationSetting(this, 'internal')">
                                         <div class="toggle-label">ON</div>
                                     </div>
-                                    <span class="toggle-text">Enable internal Communication</span>
+                                    <span class="toggle-text">Enable internal Communication (Email)</span>
                                 </div>
                                 <div class="toggle-item">
-                                    <div class="toggle-switch active" onclick="toggleSetting(this)">
+                                    <div class="toggle-switch active" id="smsNotifications" onclick="toggleSetting(this)">
                                         <div class="toggle-label">ON</div>
                                     </div>
-                                    <span class="toggle-text">Enable external Communication</span>
+                                    <span class="toggle-text">Enable external Communication (SMS)</span>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-switch" id="pushNotifications" onclick="toggleSetting(this)">
+                                        <div class="toggle-label">OFF</div>
+                                    </div>
+                                    <span class="toggle-text">Enable Push Notifications</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="settings-actions">
-                        <button class="btn btn-primary" onclick="saveSystemSettings()">Save</button>
-                        <button class="btn btn-secondary" onclick="cancelSystemSettings()">Cancel</button>
+                        <button class="btn btn-primary" id="saveSettingsBtn" onclick="saveSystemSettings()">Save</button>
+                        <button class="btn btn-secondary" id="resetSettingsBtn" onclick="cancelSystemSettings()">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -3208,12 +3222,24 @@
                             <div class="trigger-info">
                                 <div class="trigger-header">
                                     <h4 class="trigger-title">Extreme Weather Mode</h4>
-                                    <div class="toggle-switch" onclick="toggleExtremeWeatherSetting(this)">
+                                    <div class="toggle-switch" id="extremeWeatherMode" onclick="toggleExtremeWeatherSetting(this)">
                                         <div class="toggle-label">OFF</div>
                                     </div>
                                 </div>
                                 <p class="trigger-description">User manually trigger for each stage</p>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Weather Thresholds (shown when extreme weather is enabled) -->
+                    <div class="settings-row" style="margin-top: 20px;">
+                        <div class="setting-item">
+                            <label class="setting-label">Temperature Threshold (°C)</label>
+                            <input type="number" class="setting-input integer-only" id="weatherThresholdTemp" value="35" min="0" max="50" oninput="validateIntegerInput(this)" placeholder="e.g., 35">
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">Wind Speed Threshold (km/h)</label>
+                            <input type="number" class="setting-input integer-only" id="weatherThresholdWind" value="60" min="0" max="200" oninput="validateIntegerInput(this)" placeholder="e.g., 60">
                         </div>
                     </div>
                     
@@ -3234,12 +3260,16 @@
                     <div class="delay-settings">
                         <div class="settings-row">
                             <div class="setting-item">
-                                <label class="setting-label">Delay Before External Notification Send under Normal Weather (Minutes)</label>
-                                <input type="number" class="setting-input integer-only" value="30" min="1" max="1440" oninput="validateIntegerInput(this)" required>
+                                <label class="setting-label">Planned Outage Delay (Minutes)</label>
+                                <input type="number" class="setting-input integer-only" id="plannedOutageDelay" value="30" min="1" max="1440" oninput="validateIntegerInput(this)" required>
                             </div>
                             <div class="setting-item">
-                                <label class="setting-label">Delay Before External Notification Send under Extreme Weather (Minutes)</label>
-                                <input type="number" class="setting-input integer-only" value="30" min="1" max="1440" oninput="validateIntegerInput(this)" required>
+                                <label class="setting-label">Unplanned Outage Delay (Minutes)</label>
+                                <input type="number" class="setting-input integer-only" id="unplannedOutageDelay" value="15" min="1" max="1440" oninput="validateIntegerInput(this)" required>
+                            </div>
+                            <div class="setting-item">
+                                <label class="setting-label">Emergency Delay (Minutes)</label>
+                                <input type="number" class="setting-input integer-only" id="emergencyDelay" value="5" min="1" max="1440" oninput="validateIntegerInput(this)" required>
                             </div>
                         </div>
                     </div>
@@ -3261,7 +3291,7 @@
                     <div class="alert-settings">
                         <div class="alert-description">
                             <p>An alert message will be triggered if no second notification is received within 
-                            <input type="number" class="inline-input integer-only" value="20" min="1" max="60" oninput="validateIntegerInput(this)" required> 
+                            <input type="number" class="inline-input integer-only" id="emergencyDelay" value="20" min="1" max="60" oninput="validateIntegerInput(this)" required> 
                             minute after the first notification has been sent.</p>
                         </div>
                     </div>
@@ -3293,7 +3323,7 @@
                 <form id="addUserForm">
                     <div class="form-group">
                         <label class="form-label">Staff ID<span class="required-asterisk">*</span></label>
-                        <input type="text" class="form-input" id="staffId" placeholder="Enter Staff ID (E.g. 93313)" onchange="autoFillUserData(this.value)" required>
+                        <input type="text" class="form-input" id="userId" placeholder="Enter Staff ID (E.g. 93313)" onchange="autoFillUserData(this.value)" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Name</label>
@@ -3304,46 +3334,45 @@
                         <input type="email" class="form-input" id="userEmail" placeholder="Enter Email" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Role</label>
-                        <div class="multi-select-dropdown" id="addUserRoleDropdown">
-                            <button class="multi-select-button" onclick="toggleMultiSelect('addUserRoleDropdown')" type="button">
-                                <span id="addUserRoleText">Select Roles</span>
+                        <label class="form-label">Role<span class="required-asterisk">*</span></label>
+                        <div class="multi-select-dropdown" id="userRole">
+                            <button class="multi-select-button" type="button" onclick="toggleMultiSelect('userRole')">
+                                <span id="userRoleText">Select Role(s)</span>
                                 <span class="multi-select-dropdown-arrow">▼</span>
                             </button>
                             <div class="multi-select-options">
                                 <div class="multi-select-option">
-                                    <input type="checkbox" id="add_role_system_admin" name="userRole" value="System Admin" onchange="updateAddUserRoleText()">
-                                    <label for="add_role_system_admin">System Admin</label>
+                                    <input type="checkbox" id="user_role_system_admin" value="System Admin" onchange="updateUserRoleSelection()">
+                                    <label for="user_role_system_admin">System Admin</label>
                                 </div>
                                 <div class="multi-select-option">
-                                    <input type="checkbox" id="add_role_cic_team" name="userRole" value="CIC Team" onchange="updateAddUserRoleText()">
-                                    <label for="add_role_cic_team">CIC Team</label>
+                                    <input type="checkbox" id="user_role_cic_team" value="CIC Team" onchange="updateUserRoleSelection()">
+                                    <label for="user_role_cic_team">CIC Team</label>
                                 </div>
                                 <div class="multi-select-option">
-                                    <input type="checkbox" id="add_role_account_manager" name="userRole" value="Account Manager" onchange="updateAddUserRoleText()">
-                                    <label for="add_role_account_manager">Account Manager</label>
+                                    <input type="checkbox" id="user_role_account_manager" value="Account Manager" onchange="updateUserRoleSelection()">
+                                    <label for="user_role_account_manager">Account Manager</label>
                                 </div>
                                 <div class="multi-select-option">
-                                    <input type="checkbox" id="add_role_corporate_affairs" name="userRole" value="Corporate Affairs" onchange="updateAddUserRoleText()">
-                                    <label for="add_role_corporate_affairs">Corporate Affairs</label>
+                                    <input type="checkbox" id="user_role_corporate_affairs" value="Corporate Affairs" onchange="updateUserRoleSelection()">
+                                    <label for="user_role_corporate_affairs">Corporate Affairs</label>
                                 </div>
                                 <div class="multi-select-option">
-                                    <input type="checkbox" id="add_role_management" name="userRole" value="Management" onchange="updateAddUserRoleText()">
-                                    <label for="add_role_management">Management</label>
+                                    <input type="checkbox" id="user_role_management" value="Management" onchange="updateUserRoleSelection()">
+                                    <label for="user_role_management">Management</label>
                                 </div>
                                 <div class="multi-select-option">
-                                    <input type="checkbox" id="add_role_psbg_engineers" name="userRole" value="PSBG Engineers" onchange="updateAddUserRoleText()">
-                                    <label for="add_role_psbg_engineers">PSBG Engineers</label>
+                                    <input type="checkbox" id="user_role_psbg_engineers" value="PSBG Engineers" onchange="updateUserRoleSelection()">
+                                    <label for="user_role_psbg_engineers">PSBG Engineers</label>
                                 </div>
                             </div>
                         </div>
-                        <small class="form-help">Select one or more roles for the user</small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn-modal btn-modal-secondary" onclick="hideAddUserModal()">Cancel</button>
-                <button class="btn-modal btn-modal-primary" onclick="createNewUser()">Create</button>
+                <button id="cancelUserBtn" class="btn-modal btn-modal-secondary" onclick="hideAddUserModal()">Cancel</button>
+                <button id="saveUserBtn" class="btn-modal btn-modal-primary" onclick="createNewUser()">Create</button>
             </div>
         </div>
     </div>
@@ -3573,45 +3602,60 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="roleDescription">Role Description</label>
+                        <textarea id="roleDescription" name="roleDescription" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; resize: vertical;" placeholder="Enter role description..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
                         <label style="color: #2c5aa0; font-weight: 600; margin-bottom: 15px;">Select Permissions</label>
                         <div class="permissions-grid">
                             <div class="permission-item-modal selected" data-permission="dashboard" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="dashboard" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Full Dashboard Access</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="outage" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="outage" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Outage Management</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="emergency" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="emergency" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Emergency Stop</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="user_admin" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="user_admin" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>User Administration</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="template" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="template" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Template Management</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="notifications" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="notifications" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Send Notifications</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="residential" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="residential" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Access Residential Customer Information</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="non_residential" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="non_residential" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Access Non-Residential Customer Information</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="download" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="download" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Download Data</span>
                             </div>
                             <div class="permission-item-modal selected" data-permission="alerts" onclick="togglePermission(this)">
+                                <input type="checkbox" name="permissions" value="alerts" checked style="display: none;">
                                 <span class="permission-icon-modal">✓</span>
                                 <span>Receive Alert Message</span>
                             </div>
@@ -3620,8 +3664,8 @@
                 </form>
             </div>
             <div class="role-modal-footer">
-                <button class="btn btn-primary" onclick="saveRole()">Create</button>
-                <button class="btn btn-secondary" onclick="hideRoleModal()">Cancel</button>
+                <button id="saveRoleBtn" class="btn btn-primary" onclick="saveRole()">Create</button>
+                <button id="cancelRoleBtn" class="btn btn-secondary" onclick="hideRoleModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -3987,17 +4031,17 @@
 
         function createNewUser() {
             const form = document.getElementById('addUserForm');
-            const staffId = document.getElementById('staffId').value;
+            const staffId = document.getElementById('userId').value;
             const userName = document.getElementById('userName').value;
             const userEmail = document.getElementById('userEmail').value;
-            
-            // Get selected roles from the multi-select dropdown
-            const roleCheckboxes = document.querySelectorAll('#addUserRoleDropdown input[type="checkbox"]:checked');
-            const selectedRoles = Array.from(roleCheckboxes).map(checkbox => checkbox.value);
+
+            // Get selected roles from multi-select dropdown
+            const roleCheckboxes = document.querySelectorAll('#userRole input[type="checkbox"]:checked');
+            const selectedRoles = Array.from(roleCheckboxes).map(cb => cb.value);
 
             // Validate form
             if (!staffId || !userName || !userEmail || selectedRoles.length === 0) {
-                showUpdateMessage('Please fill in all fields and select at least one role', 'error');
+                showUpdateMessage('Please fill in all required fields', 'error');
                 return;
             }
 
@@ -4007,17 +4051,15 @@
                 return;
             }
 
-            // Join multiple roles with " + " for display
-            const roleDisplay = selectedRoles.join(' + ');
+            const roleDisplay = selectedRoles.join(', ');
 
-            // Create new user data object
+            // Create new user data object - new users are always Active
             const newUser = {
                 staffId: staffId,
                 name: userName,
                 email: userEmail,
                 role: roleDisplay,
-                roles: selectedRoles, // Keep array for future use
-                status: 'active', // Default new users to active
+                status: 'active',  // Always active for new users
                 lastLogin: 'Never'
             };
 
@@ -4286,7 +4328,7 @@
 
         function updateRoleFilter() {
             const selectedRoles = [];
-            const checkboxes = document.querySelectorAll('#roleFilterDropdown input[type="checkbox"]:checked');
+            const checkboxes = document.querySelectorAll('#roleFilter input[type="checkbox"]:checked');
             
             checkboxes.forEach(checkbox => {
                 selectedRoles.push(checkbox.value);
@@ -4307,6 +4349,28 @@
             
             // Apply filter
             filterUsers();
+        }
+
+        function updateUserRoleSelection() {
+            const selectedRoles = [];
+            const checkboxes = document.querySelectorAll('#userRole input[type="checkbox"]:checked');
+            
+            checkboxes.forEach(checkbox => {
+                selectedRoles.push(checkbox.value);
+            });
+            
+            // Update button text
+            const buttonText = document.getElementById('userRoleText');
+            const selectedCount = selectedRoles.length;
+            
+            if (selectedCount === 0) {
+                buttonText.textContent = 'Select Role(s)';
+            } else if (selectedCount === 1) {
+                const selectedLabel = document.querySelector(`label[for="${checkboxes[0].id}"]`).textContent;
+                buttonText.textContent = selectedLabel;
+            } else {
+                buttonText.innerHTML = `Multiple Roles <span class="multi-select-selected-count">${selectedCount}</span>`;
+            }
         }
 
         function updateEditRoleText(dropdownId) {
@@ -4347,15 +4411,16 @@
 
         // Filter functionality
         function filterUsers() {
-            const selectedRoles = Array.from(document.querySelectorAll('#roleFilterDropdown input[type="checkbox"]:checked')).map(cb => cb.value);
+            const selectedRoles = Array.from(document.querySelectorAll('#roleFilter input[type="checkbox"]:checked')).map(cb => cb.value);
             const statusFilter = document.getElementById('statusFilter').value.toLowerCase();
-            const nameSearch = document.getElementById('nameSearch').value.toLowerCase();
+            const nameSearch = document.getElementById('userSearch').value.toLowerCase();
             const rows = document.querySelectorAll('tbody tr');
 
             rows.forEach(row => {
                 const rowRole = row.getAttribute('data-role').toLowerCase();
                 const rowStatus = row.getAttribute('data-status').toLowerCase();
                 const rowName = row.getAttribute('data-name').toLowerCase();
+                const rowEmail = row.getAttribute('data-email').toLowerCase();
                 
                 // Check role filter (if any roles selected, row must match one of them)
                 const roleMatch = selectedRoles.length === 0 || selectedRoles.some(role => rowRole.includes(role));
@@ -4363,8 +4428,8 @@
                 // Check status filter
                 const statusMatch = !statusFilter || rowStatus === statusFilter;
                 
-                // Check name search
-                const nameMatch = !nameSearch || rowName.includes(nameSearch);
+                // Check name/email search (search in both name and email fields)
+                const nameMatch = !nameSearch || rowName.includes(nameSearch) || rowEmail.includes(nameSearch);
                 
                 // Show/hide row based on all filters
                 if (roleMatch && statusMatch && nameMatch) {
@@ -4382,7 +4447,7 @@
             console.log('🔄 Clearing all filters...');
             
             // Clear role filter checkboxes
-            const roleCheckboxes = document.querySelectorAll('#roleFilterDropdown input[type="checkbox"]');
+            const roleCheckboxes = document.querySelectorAll('#roleFilter input[type="checkbox"]');
             roleCheckboxes.forEach(checkbox => {
                 checkbox.checked = false;
             });
@@ -4400,7 +4465,7 @@
             }
             
             // Clear name search
-            const nameSearch = document.getElementById('nameSearch');
+            const nameSearch = document.getElementById('userSearch');
             if (nameSearch) {
                 nameSearch.value = '';
             }
@@ -4426,7 +4491,7 @@
 
         // Add event listeners for filters
         document.getElementById('statusFilter').addEventListener('change', filterUsers);
-        document.getElementById('nameSearch').addEventListener('input', filterUsers);
+        document.getElementById('userSearch').addEventListener('input', filterUsers);
 
         // Initialize toggle switches
         attachToggleListeners();
@@ -4975,10 +5040,14 @@ CL003,opt-in,opt-out,opt-in`;
         function togglePermission(element) {
             element.classList.toggle('selected');
             const icon = element.querySelector('.permission-icon-modal');
+            const checkbox = element.querySelector('input[name="permissions"]');
+            
             if (element.classList.contains('selected')) {
                 icon.textContent = '✓';
+                if (checkbox) checkbox.checked = true;
             } else {
                 icon.textContent = '✗';
+                if (checkbox) checkbox.checked = false;
             }
         }
 
@@ -4987,7 +5056,9 @@ CL003,opt-in,opt-out,opt-in`;
             permissionItems.forEach(item => {
                 item.classList.remove('selected');
                 const icon = item.querySelector('.permission-icon-modal');
+                const checkbox = item.querySelector('input[name="permissions"]');
                 icon.textContent = '✗';
+                if (checkbox) checkbox.checked = false;
             });
         }
 
@@ -4996,7 +5067,9 @@ CL003,opt-in,opt-out,opt-in`;
             permissionItems.forEach(item => {
                 item.classList.add('selected');
                 const icon = item.querySelector('.permission-icon-modal');
+                const checkbox = item.querySelector('input[name="permissions"]');
                 icon.textContent = '✓';
+                if (checkbox) checkbox.checked = true;
             });
         }
 

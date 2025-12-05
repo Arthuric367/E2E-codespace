@@ -138,6 +138,12 @@ class AdministrationPage {
     const rows = await this.page.locator(this.userTableRows).all();
     
     for (const row of rows) {
+      // Skip hidden rows (filtered out by filter functions)
+      const isVisible = await row.isVisible();
+      if (!isVisible) {
+        continue;
+      }
+      
       const cells = await row.locator('td').all();
       // Table columns: [0] Checkbox, [1] Name, [2] Email, [3] Role, [4] Status, [5] Last Login, [6] Actions
       if (cells.length >= 6) {
@@ -238,7 +244,9 @@ class AdministrationPage {
     // Find and click the checkbox for the role
     const roleId = `role_filter_${role.toLowerCase().replace(/\s+/g, '_')}`;
     await this.page.click(`#${roleId}`);
-    await this.slowAction(200);
+    
+    // Wait for the filter to be applied (onchange triggers filterUsers())
+    await this.slowAction(500);
     
     // Close dropdown by clicking outside or button again
     await this.page.click(`${this.roleFilter} .multi-select-button`);
@@ -310,21 +318,19 @@ class AdministrationPage {
     }
 
     if (permissions) {
-      const checkboxes = await this.page.locator(this.permissionsCheckboxes).all();
-      for (const checkbox of checkboxes) {
-        const permissionName = await checkbox.getAttribute('value');
-        const isChecked = await checkbox.isChecked();
+      // Get all permission items (the clickable divs)
+      const permissionItems = await this.page.locator('.permission-item-modal').all();
+      
+      for (const item of permissionItems) {
+        const permission = await item.getAttribute('data-permission');
+        const isSelected = await item.evaluate(el => el.classList.contains('selected'));
         
-        if (permissions.includes(permissionName)) {
-          if (!isChecked) {
-            await checkbox.check();
-            await this.slowAction(100);
-          }
-        } else {
-          if (isChecked) {
-            await checkbox.uncheck();
-            await this.slowAction(100);
-          }
+        const shouldBeSelected = permissions.includes(permission);
+        
+        // Toggle if current state doesn't match desired state
+        if (shouldBeSelected !== isSelected) {
+          await item.click();
+          await this.slowAction(100);
         }
       }
     }
@@ -346,6 +352,23 @@ class AdministrationPage {
 
   // ===== SETTINGS METHODS =====
   
+  async expandSettingsGroup(groupTitle) {
+    // Find the settings group by its title and expand it if collapsed
+    const groupHeader = this.page.locator(`.settings-group-header:has-text("${groupTitle}")`);
+    await groupHeader.waitFor({ state: 'visible', timeout: 5000 });
+    
+    // Check if the group is collapsed (icon is ▶)
+    const icon = groupHeader.locator('.settings-group-icon');
+    const iconText = await icon.textContent();
+    
+    if (iconText.includes('▶')) {
+      // Group is collapsed, click to expand
+      await groupHeader.click();
+      await this.slowAction(500);
+    }
+    return this;
+  }
+  
   async toggleEmailNotifications(enable = true) {
     const toggle = this.page.locator(this.emailNotificationsToggle);
     await toggle.waitFor({ state: 'visible', timeout: 10000 });
@@ -353,7 +376,16 @@ class AdministrationPage {
     
     if (isActive !== enable) {
       await toggle.click();
-      await this.slowAction();
+      await this.slowAction(300);
+      // Handle confirmation modal if it appears
+      try {
+        const okButton = this.page.locator('#communicationToggleModal button.btn-modal-primary');
+        await okButton.waitFor({ state: 'visible', timeout: 2000 });
+        await okButton.click();
+        await this.slowAction();
+      } catch (e) {
+        // Modal didn't appear, continue
+      }
     }
     return this;
   }
@@ -365,7 +397,16 @@ class AdministrationPage {
     
     if (isActive !== enable) {
       await toggle.click();
-      await this.slowAction();
+      await this.slowAction(300);
+      // Handle confirmation modal if it appears  
+      try {
+        const okButton = this.page.locator('#communicationToggleModal button.btn-modal-primary');
+        await okButton.waitFor({ state: 'visible', timeout: 2000 });
+        await okButton.click();
+        await this.slowAction();
+      } catch (e) {
+        // Modal didn't appear, continue
+      }
     }
     return this;
   }
@@ -383,6 +424,8 @@ class AdministrationPage {
   }
 
   async setPlannedOutageDelay(minutes) {
+    // Expand Delay & Control group if needed
+    await this.expandSettingsGroup('Delay & Control');
     await this.page.fill(this.plannedOutageDelay, '');
     await this.page.fill(this.plannedOutageDelay, String(minutes));
     await this.slowAction();
@@ -390,6 +433,8 @@ class AdministrationPage {
   }
 
   async setUnplannedOutageDelay(minutes) {
+    // Expand Delay & Control group if needed
+    await this.expandSettingsGroup('Delay & Control');
     await this.page.fill(this.unplannedOutageDelay, '');
     await this.page.fill(this.unplannedOutageDelay, String(minutes));
     await this.slowAction();
@@ -397,6 +442,8 @@ class AdministrationPage {
   }
 
   async setEmergencyDelay(minutes) {
+    // Expand Delay & Control group if needed
+    await this.expandSettingsGroup('Delay & Control');
     await this.page.fill(this.emergencyDelay, '');
     await this.page.fill(this.emergencyDelay, String(minutes));
     await this.slowAction();
@@ -404,6 +451,9 @@ class AdministrationPage {
   }
 
   async toggleExtremeWeatherMode(enable = true) {
+    // First expand the Trigger Mode settings group
+    await this.expandSettingsGroup('Trigger Mode');
+    
     const toggle = this.page.locator(this.extremeWeatherToggle);
     await toggle.waitFor({ state: 'visible', timeout: 10000 });
     const isActive = await toggle.evaluate(el => el.classList.contains('active'));
@@ -411,11 +461,22 @@ class AdministrationPage {
     if (isActive !== enable) {
       await toggle.click();
       await this.slowAction();
+      // Handle confirmation modal if it appears
+      try {
+        const okButton = this.page.locator('#extremeWeatherModal button.btn-modal-primary');
+        await okButton.waitFor({ state: 'visible', timeout: 2000 });
+        await okButton.click();
+        await this.slowAction();
+      } catch (e) {
+        // Modal didn't appear, continue
+      }
     }
     return this;
   }
 
   async setWeatherThresholdTemp(celsius) {
+    // Expand Trigger Mode group if needed
+    await this.expandSettingsGroup('Trigger Mode');
     await this.page.fill(this.weatherThresholdTemp, '');
     await this.page.fill(this.weatherThresholdTemp, String(celsius));
     await this.slowAction();
@@ -423,6 +484,8 @@ class AdministrationPage {
   }
 
   async setWeatherThresholdWind(kmh) {
+    // Expand Trigger Mode group if needed
+    await this.expandSettingsGroup('Trigger Mode');
     await this.page.fill(this.weatherThresholdWind, '');
     await this.page.fill(this.weatherThresholdWind, String(kmh));
     await this.slowAction();

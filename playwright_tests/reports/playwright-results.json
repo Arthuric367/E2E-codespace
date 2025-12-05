@@ -10,9 +10,7 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {
-      "actualWorkers": 1
-    },
+    "metadata": {},
     "preserveOutput": "always",
     "reporter": [
       [
@@ -43,9 +41,7 @@
         "outputDir": "/workspaces/playwright_tests/reports/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 1
-        },
+        "metadata": {},
         "id": "chromium",
         "name": "chromium",
         "testDir": "/workspaces/playwright_tests",
@@ -89,32 +85,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1322,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ User table is present\n"
-                        },
-                        {
-                          "text": "✅ Table headers found: , Name, Email, Role, Status, Last Login, Actions\n"
-                        },
-                        {
-                          "text": "📊 Found 6 user rows in table\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:27:48.562Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-f2c37f5f6008adf43bc9",
@@ -133,29 +105,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 8930,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📊 Initial user count: 6\n"
-                        },
-                        {
-                          "text": "📊 Users - before: 6, after: 7\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:27:50.319Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-0e1cfc8c39b5143223e1",
@@ -174,22 +125,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 8727,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:27:59.264Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-6d47ee2c4a627d98daa7",
@@ -204,47 +141,11 @@
               "tests": [
                 {
                   "timeout": 30000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "location": {
-                        "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                        "line": 153,
-                        "column": 14
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
+                  "annotations": [],
+                  "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "skipped",
-                      "duration": 1146,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📝 Editing first user: {\"name\":\"John Smith\",\"email\":\"john.smith@clp.com.hk\",\"role\":\"System Admin\",\"status\":\"Active\",\"lastLogin\":\"2025-08-11 13:41:30\"}\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:08.003Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "location": {
-                            "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                            "line": 153,
-                            "column": 14
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
+                  "results": [],
                   "status": "skipped"
                 }
               ],
@@ -264,26 +165,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 12847,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📊 Users before deletion: 6, after: 6\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:09.161Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-b0462977ae6317b3238e",
@@ -302,26 +185,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 7554,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Deletion cancelled successfully, count unchanged: 6\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:22.022Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-1aa8b39f3c1cf489a4a0",
@@ -349,30 +214,7 @@
                   "expectedStatus": "skipped",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:29.589Z",
-                      "annotations": [
-                        {
-                          "type": "skip",
-                          "location": {
-                            "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                            "line": 215,
-                            "column": 8
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
+                  "results": [],
                   "status": "skipped"
                 }
               ],
@@ -383,7 +225,7 @@
             },
             {
               "title": "EP-27: Filter users by role",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
@@ -392,66 +234,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "failed",
-                      "duration": 2146,
-                      "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"system admin\"\u001b[39m\nReceived string:    \u001b[31m\"account manager\"\u001b[39m",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"system admin\"\u001b[39m\nReceived string:    \u001b[31m\"account manager\"\u001b[39m\n    at /workspaces/playwright_tests/administration/user-management.spec.js:235:41",
-                        "location": {
-                          "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                          "column": 41,
-                          "line": 235
-                        },
-                        "snippet": "  233 |     for (const user of filteredUsers) {\n  234 |       if (user.role) {\n> 235 |         expect(user.role.toLowerCase()).toContain(testRole.toLowerCase());\n      |                                         ^\n  236 |       }\n  237 |     }\n  238 |     "
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                            "column": 41,
-                            "line": 235
-                          },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"system admin\"\u001b[39m\nReceived string:    \u001b[31m\"account manager\"\u001b[39m\n\n  233 |     for (const user of filteredUsers) {\n  234 |       if (user.role) {\n> 235 |         expect(user.role.toLowerCase()).toContain(testRole.toLowerCase());\n      |                                         ^\n  236 |       }\n  237 |     }\n  238 |     \n    at /workspaces/playwright_tests/administration/user-management.spec.js:235:41"
-                        }
-                      ],
-                      "stdout": [
-                        {
-                          "text": "🔍 Users with system admin role: 6\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:29.590Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "/workspaces/playwright_tests/reports/test-results/administration-user-manage-5f797--EP-27-Filter-users-by-role-chromium/test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "/workspaces/playwright_tests/reports/test-results/administration-user-manage-5f797--EP-27-Filter-users-by-role-chromium/video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "/workspaces/playwright_tests/reports/test-results/administration-user-manage-5f797--EP-27-Filter-users-by-role-chromium/error-context.md"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                        "column": 41,
-                        "line": 235
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-2d6880e8a3584e7e2555",
@@ -470,32 +254,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1863,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📝 First user data: {\"name\":\"John Smith\",\"email\":\"john.smith@clp.com.hk\",\"role\":\"System Admin\",\"status\":\"Active\",\"lastLogin\":\"2025-08-11 13:41:30\"}\n"
-                        },
-                        {
-                          "text": "🔍 Searching for users with name containing: John\n"
-                        },
-                        {
-                          "text": "📊 Search results: 6 users found\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:32.645Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-139af8c2068d64d2c1a2",
@@ -514,26 +274,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1636,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📧 Users with CLP email: 6\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:34.812Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-e792702026ee6806ddf5",
@@ -552,26 +294,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1446,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Bulk upload button clicked successfully\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:36.465Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-a655fa23d56dcb59bf74",
@@ -581,7 +305,7 @@
             },
             {
               "title": "Filter users by Active status",
-              "ok": false,
+              "ok": true,
               "tags": [],
               "tests": [
                 {
@@ -590,66 +314,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 0,
-                      "status": "failed",
-                      "duration": 1685,
-                      "error": {
-                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mA\u001b[27mctive\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mIna\u001b[27mctive\"\u001b[39m",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mA\u001b[27mctive\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mIna\u001b[27mctive\"\u001b[39m\n    at /workspaces/playwright_tests/administration/user-management.spec.js:316:29",
-                        "location": {
-                          "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                          "column": 29,
-                          "line": 316
-                        },
-                        "snippet": "  314 |     for (const user of filteredUsers) {\n  315 |       if (user.status) {\n> 316 |         expect(user.status).toBe('Active');\n      |                             ^\n  317 |       }\n  318 |     }\n  319 |   });"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                            "column": 29,
-                            "line": 316
-                          },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mA\u001b[27mctive\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mIna\u001b[27mctive\"\u001b[39m\n\n  314 |     for (const user of filteredUsers) {\n  315 |       if (user.status) {\n> 316 |         expect(user.status).toBe('Active');\n      |                             ^\n  317 |       }\n  318 |     }\n  319 |   });\n    at /workspaces/playwright_tests/administration/user-management.spec.js:316:29"
-                        }
-                      ],
-                      "stdout": [
-                        {
-                          "text": "✅ Active users: 6\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:37.928Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "/workspaces/playwright_tests/reports/test-results/administration-user-manage-9aa52-lter-users-by-Active-status-chromium/test-failed-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "/workspaces/playwright_tests/reports/test-results/administration-user-manage-9aa52-lter-users-by-Active-status-chromium/video.webm"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "/workspaces/playwright_tests/reports/test-results/administration-user-manage-9aa52-lter-users-by-Active-status-chromium/error-context.md"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "/workspaces/playwright_tests/administration/user-management.spec.js",
-                        "column": 29,
-                        "line": 316
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-7c8d2593a5e24830abb9",
@@ -668,22 +334,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 7612,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:40.387Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-43ed85ddd90989e17cae",
@@ -702,29 +354,8 @@
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1797,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📊 Initial user count for sorting test: 6\n"
-                        },
-                        {
-                          "text": "✅ Column header clicked for sorting\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-12-04T09:28:48.271Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "cea417e0380fe73a6fa5-3f982d7f727ffb94270e",
@@ -739,11 +370,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-12-04T09:27:47.350Z",
-    "duration": 62831.856999999996,
-    "expected": 10,
-    "skipped": 2,
-    "unexpected": 2,
+    "startTime": "2025-12-05T04:05:49.172Z",
+    "duration": 38.59399999999994,
+    "expected": 0,
+    "skipped": 14,
+    "unexpected": 0,
     "flaky": 0
   }
 }

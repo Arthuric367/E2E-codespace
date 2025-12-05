@@ -115,6 +115,65 @@
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             }
+        },
+        {
+            "name": "Playwright: Debug All Tests",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/playwright_tests/node_modules/@playwright/test/cli.js",
+            "args": [
+                "test",
+                "--headed",
+                "--debug"
+            ],
+            "cwd": "${workspaceFolder}/playwright_tests",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Playwright: Debug Current Test File",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/playwright_tests/node_modules/@playwright/test/cli.js",
+            "args": [
+                "test",
+                "${relativeFile}",
+                "--headed",
+                "--debug"
+            ],
+            "cwd": "${workspaceFolder}/playwright_tests",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Playwright: Debug Smoke Tests",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/playwright_tests/node_modules/@playwright/test/cli.js",
+            "args": [
+                "test",
+                "smoke.spec.js",
+                "--headed",
+                "--debug"
+            ],
+            "cwd": "${workspaceFolder}/playwright_tests",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Playwright: Debug User Management Tests",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/playwright_tests/node_modules/@playwright/test/cli.js",
+            "args": [
+                "test",
+                "administration/user-management.spec.js",
+                "--headed",
+                "--debug"
+            ],
+            "cwd": "${workspaceFolder}/playwright_tests",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }

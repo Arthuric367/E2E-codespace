@@ -8,6 +8,9 @@ from pathlib import Path
 
 from config import TestConfig
 
+# Import performance reporter for JSON output
+pytest_plugins = ['helpers.pytest_json_reporter']
+
 # Check for headless environment and apply mocks if needed
 from helpers.mock_driver import is_headless_environment, apply_mocks
 
